@@ -1,0 +1,275 @@
+body {
+    background: #aaa;
+}
+
+
+/* figure { */
+/*     background: yellow; */
+/* } */
+
+
+figcaption {
+    /* vertical-align: center; */
+    /* horizontal-align: center; */
+    text-align: center;
+    font-size: larger;
+    background: #ccc;
+}
+
+
+
+figure.tree,
+figure.path
+figure.result {
+    outline: 1px solid #222;
+    background: #ccc;
+}
+
+
+div.tree, div.path, div.result {
+    display: inline-block;
+    /* width:100%; */
+    width:fit-content;
+    /* height:100%; */
+    height:fit-content;
+}
+
+
+div.tree:hover svg>g.graph>polygon,
+div.path:hover svg>g.graph>polygon,
+div.result:hover svg>g.graph>polygon {
+    fill: lightyellow;
+}
+
+
+div.tree {
+    background: gray;
+}
+
+div.tree:hover {
+    background: black;
+    color: white;
+}
+
+div.tree:hover figcaption {
+    background: dimgray;
+}
+
+
+div.path {
+    background: deepskyblue;
+}
+
+div.path:hover {
+    background: royalblue;
+    color: white;
+}
+
+div.path:hover figcaption {
+    background: blue;
+}
+
+
+div.result {
+    background: mediumaquamarine;
+}
+
+div.result:hover {
+    background: seagreen;
+    color: white;
+}
+
+div.result:hover figcaption {
+    background: darkgreen;
+}	       
+
+
+div.result[has-errors] {
+    background: pink;
+}
+
+div.result[has-errors]:hover {
+    background: indianred;
+}
+
+div.result[has-errors]:hover figcaption {
+    background: firebrick;
+}	       
+
+
+svg>g.graph>g.node>polygon {
+    fill: lightgray;
+}
+
+svg>g.graph>g.node>polygon[data-stax-err-type~="error=parse-illegal-operation"] {
+    fill: orangered;
+}
+
+svg>g.graph>g.node>polygon[data-stax-err-type^="error=parse-invoke"] {
+    fill: orange;
+}
+
+svg>g.graph>g.node>polygon[data-stax-err-type~="error=static-var-not-defined"] {
+    fill: orchid;
+}
+
+svg>g.graph>g.node>polygon[data-stax-err-type~="error=static-insufficient-stack"] {
+    fill: magenta;
+}
+
+svg>g.graph>g.node>polygon[data-stax-err-type^="error=runtime"] {
+    fill: mediumpurple;
+}
+
+figure.result>svg>g.graph>g.node>polygon[data-stax-path~="good"] {
+    fill: palegreen;
+}
+
+figure.path>svg>g.graph>g.node>polygon[data-stax-path~="good"] {
+    fill: deepskyblue;
+}
+
+figure.path>svg>g.graph>g.node>polygon[data-stax-path~="good"],
+figure.path>svg>g.graph>g.node>ellipse[data-stax-path~="good"],
+figure.path>svg>g.graph>g.edge>path[data-stax-path~="good"] {
+    stroke: deepskyblue;
+}
+
+figure.path>svg>g.graph>g.node>ellipse[data-stax-path~="good"] {
+    fill: deepskyblue;
+}
+
+figure.path>svg>g.graph>g.node>ellipse[data-stax-path~="bad"] {
+    fill: deeppink;
+}
+
+figure.result>svg>g.graph>g.node>ellipse[data-stax-path~="good"] {
+    fill: mediumspringgreen;
+}
+
+figure.result>svg>g.graph>g.node>ellipse[data-stax-path~="bad"] {
+    fill: deeppink;
+}
+
+figure.path>svg>g.graph>g.node>polygon[data-stax-path="bad"],
+figure.path>svg>g.graph>g.node>ellipse[data-stax-path="bad"],
+figure.path>svg>g.graph>g.edge>path[data-stax-path="bad"] {
+    stroke: deeppink;
+}
+
+figure.result>svg>g.graph>g.node>polygon[data-stax-path~="good"],
+figure.result>svg>g.graph>g.node>ellipse[data-stax-path~="good"],
+figure.result>svg>g.graph>g.edge>path[data-stax-path~="good"] {
+    stroke: mediumspringgreen;
+}
+
+figure.result>svg>g.graph>g.node>polygon[data-stax-path="bad"],
+figure.result>svg>g.graph>g.node>ellipse[data-stax-path="bad"],
+figure.result>svg>g.graph>g.edge>path[data-stax-path="bad"] {
+    stroke: deeppink;
+}
+
+/* table.result, table.result>tr>th, table.result>tr>td */
+/* { */
+/*     border-collapse: collapse; */
+/*     border: 1px red solid; */
+/* } */
+
+/* table.result>tr, table.result>tr */
+/* { */
+/*     padding: 10px; */
+/*     vertical-align: top; */
+/* } */
+
+/* table.result>tr>th */
+/* { */
+/*     text-align: right; */
+/* } */
+
+/* table.result>tr>td */
+/* { */
+/*     text-align: left; */
+/* } */
+
+
+div.lside, div.rside {
+    width: fit-content;
+}
+
+div.rside {
+    float: right;
+}
+
+div.lside {
+    
+    justify-content: right;
+    align-items: top;
+    padding-right: 3px; */
+    font-weight: bold;
+    float: left;
+}
+
+div.variables, div.output, div.stack {
+    float: left;
+    padding: 10px;
+
+}
+
+
+div.output div.empty,
+div.stack div.empty {
+    align-items: top;
+    font-size: larger;
+    font-weight: bold;
+}
+
+table.variables {
+    color: inherit;
+    border-collapse: collapse;
+}
+
+table.variables th, table.variables td {
+    text-align: center;
+    border: 1px solid;
+    padding: 5px;
+}
+
+table.output {
+    color: inherit;
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+table.output td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+table.stack {
+    color: inherit;
+    border-collapse: collapse;
+    /* border: 0px; */
+}
+
+table.stack th, table.stack td {
+    text-align: center;
+    border: 1px solid;
+    padding: 5px;
+}
+
+
+table.stack td:empty {
+    background-color: black;
+}
+
+table.output td:empty {
+    background-color: black;
+}
+
+table.errors {
+    color: inherit;
+    border: 1px solid;
+    border-collapse: collapse;
+    /* border: 0px; */
+}
