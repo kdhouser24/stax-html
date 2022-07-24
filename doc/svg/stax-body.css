@@ -1,0 +1,32 @@
+body {
+    background: lightgray;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    background: #edf0f2;
+    color: #404040;
+    font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+    font-weight: normal;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+*:hover {
+    color: white;
+}
+
+
+table {
+    border-collapse: collapse;
+    line-height: normal;
+    font-weight: normal;
+    font-size: medium;
+    font-style: normal;
+    text-indent: initial;
+}
+
+

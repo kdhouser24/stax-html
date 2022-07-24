@@ -1,0 +1,370 @@
+div.stax-tree,
+div.stax-path,
+div.stax-exec {
+    display: inline-block;
+    /* width:100%; */
+    width:fit-content;
+    /* height:100%; */
+    height:fit-content;
+    padding: 5px;
+    margin-bottom: 4px;
+    color: black;
+}
+
+div.stax-tree {
+    background: gray;
+}
+
+div.stax-tree:hover {
+    background: black;
+    color: white;
+}
+
+div.stax-path {
+    background: cornflowerblue;
+}
+
+div.stax-path:hover {
+    background: deepskyblue;
+    color: white;
+}
+
+div.stax-exec {
+    background: mediumaquamarine;
+}
+
+div.stax-exec:hover {
+    background: seagreen;
+    color: white;
+}
+
+div.stax-exec[has-errors] {
+    background: pink;
+}
+
+div.stax-exec[has-errors]:hover {
+    background: indianred;
+}
+
+div.stax-tree figcaption,
+div.stax-path figcaption,
+div.stax-exec figcaption{
+    /* vertical-align: center; */
+    /* horizontal-align: center; */
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+    padding: 4px;
+}
+
+div.stax-tree figcaption {
+    background: #ccc;
+}
+
+div.stax-tree:hover figcaption {
+    background: dimgray;
+}
+
+div.stax-path figcaption {
+    background: deepskyblue;
+}
+
+div.stax-path:hover figcaption {
+    background: royalblue;
+}
+
+div.stax-exec figcaption {
+    background: mediumseagreen;
+}
+
+div.stax-exec:hover figcaption {
+    background: darkgreen;
+}	       
+
+div.stax-exec[has-errors] figcaption {
+    background: indianred;
+}
+
+div.stax-exec[has-errors]:hover figcaption {
+    background: firebrick;
+}	       
+
+div.stax-tree figure,
+div.stax-path figure,
+div.stax-exec figure {
+    background: #ccc;
+}
+
+
+div.stax-tree:hover svg>g.graph>polygon,
+div.stax-path:hover svg>g.graph>polygon,
+div.stax-exec:hover svg>g.graph>polygon {
+    fill: lightyellow;
+}
+
+
+div.stax-tree svg>g.graph>g.node>polygon,
+div.stax-path svg>g.graph>g.node>polygon,
+div.stax-exec svg>g.graph>g.node>polygon {
+    fill: lightgray;
+}
+
+div.stax-tree figure>svg>g.graph>g.node>text,
+div.stax-path figure>svg>g.graph>g.node>text,
+div.stax-exec figure>svg>g.graph>g.node>text {
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+    font-size: 13;
+}
+
+div.stax-tree svg>g.graph>g.node>polygon[data-stax-err-type~="error=parse-illegal-operation"],
+div.stax-path svg>g.graph>g.node>polygon[data-stax-err-type~="error=parse-illegal-operation"] {
+    fill: orangered;
+}
+
+div.stax-tree svg>g.graph>g.node>polygon[data-stax-err-type^="error=parse-invoke"],
+div.stax-path svg>g.graph>g.node>polygon[data-stax-err-type^="error=parse-invoke"] {
+    fill: orange;
+}
+
+div.stax-path svg>g.graph>g.node>polygon[data-stax-err-type~="error=static-var-not-defined"] {
+    fill: orchid;
+}
+
+div.stax-path svg>g.graph>g.node>polygon[data-stax-err-type~="error=static-insufficient-stack"] {
+    fill: magenta;
+}
+
+div.stax-exec svg>g.graph>g.node>polygon[data-stax-err-type^="error=runtime"] {
+    fill: mediumpurple;
+}
+
+div.stax-exec figure>svg>g.graph>g.node>polygon[data-stax-path~="good"] {
+    fill: palegreen;
+}
+
+div.stax-path figure>svg>g.graph>g.node>polygon[data-stax-path~="good"] {
+    fill: deepskyblue;
+}
+
+div.stax-path figure>svg>g.graph>g.node>polygon[data-stax-path~="good"],
+div.stax-path figure>svg>g.graph>g.node>ellipse[data-stax-path~="good"],
+div.stax-path figure>svg>g.graph>g.edge>path[data-stax-path~="good"] {
+    stroke: deepskyblue;
+}
+
+div.stax-path figure>svg>g.graph>g.node>ellipse[data-stax-path~="good"] {
+    fill: deepskyblue;
+}
+
+div.stax-path figure>svg>g.graph>g.node>ellipse[data-stax-path~="bad"] {
+    fill: deeppink;
+}
+
+div.stax-exec figure>svg>g.graph>g.node>ellipse[data-stax-path~="good"] {
+    fill: mediumspringgreen;
+}
+
+div.stax-exec figure>svg>g.graph>g.node>ellipse[data-stax-path~="bad"] {
+    fill: deeppink;
+}
+
+div.stax-path figure>svg>g.graph>g.node>polygon[data-stax-path="bad"],
+div.stax-path figure>svg>g.graph>g.node>ellipse[data-stax-path="bad"],
+div.stax-path figure>svg>g.graph>g.edge>path[data-stax-path="bad"] {
+    stroke: deeppink;
+}
+
+div.stax-exec figure>svg>g.graph>g.node>polygon[data-stax-path~="good"],
+div.stax-exec figure>svg>g.graph>g.node>ellipse[data-stax-path~="good"],
+div.stax-exec figure>svg>g.graph>g.edge>path[data-stax-path~="good"] {
+    stroke: mediumspringgreen;
+}
+
+div.stax-exec figure>svg>g.graph>g.node>polygon[data-stax-path="bad"],
+div.stax-exec figure>svg>g.graph>g.node>ellipse[data-stax-path="bad"],
+div.stax-exec figure>svg>g.graph>g.edge>path[data-stax-path="bad"] {
+    stroke: deeppink;
+}
+
+
+div.lside, div.rside {
+    color: inherit;
+    background: inherit;
+    width: fit-content;
+    font-weight: bold;
+}
+
+div.rside {
+    float: right;
+}
+
+div.lside {
+
+    justify-content: right;
+    align-items: top;
+    padding-right: 3px; */
+    font-weight: bold;
+    float: left;
+}
+
+
+div.lside label {
+    font-family: 'Oxygen', sans-serif;
+    color: inherit;
+    background: inherit;
+}
+
+
+div.stax-exec-variables,
+div.stax-exec-stack,
+div.stax-exec-output,
+div.stax-exec-errors {
+    color: inherit;
+    background: inherit;
+    border: inherit;
+    float: left;
+    padding: 10px;
+}
+
+
+div.stax-exec-output div.empty,
+div.stax-exec-stack div.empty {
+    align-items: top;
+    font-size: x-large;
+    font-weight: 900;
+}
+
+
+div.stax-exec-variables table {
+    color: inherit;
+    /* border: 1px solid; */
+    border-collapse: collapse;
+}
+
+div.stax-exec-variables table tr {
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    padding: 5px;
+}
+
+div.stax-exec-variables table th,
+div.stax-exec-variables table td {
+    color: inherit;
+    background-color: inherit;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid;
+    padding: 5px;
+}
+
+div.stax-exec-variables table td.no-show {
+    border: none !important;
+}
+
+div.stax-exec div.stax-exec-variables table th {
+    background: mediumseagreen;
+}
+
+div.stax-exec:hover div.stax-exec-variables table th {
+    background: darkgreen;
+}	       
+
+
+div.stax-exec[has-errors] div.stax-exec-variables table th {
+    background: indianred;
+}
+
+div.stax-exec[has-errors]:hover div.stax-exec-variables table th {
+    background: firebrick;
+}	       
+
+
+
+div.stax-exec-stack table {
+    color: inherit;
+    background: inherit;
+    border: 1px solid black;
+    border-collapse: collapse;
+    /* border: 0px; */
+}
+
+div.stax-exec-stack table tr {
+    color: inherit;
+    background: inherit;
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+div.stax-exec-stack table td {
+    color: inherit;
+    background: inherit;
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+
+div.stax-exec-stack table td:empty {
+    background-color: black;
+}
+
+
+div.stax-exec-output table {
+    color: inherit;
+    background: inherit;
+    border-color: inherit;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+div.stax-exec-output table tr {
+    color: inherit;
+    background: inherit;
+    border: inherit;
+}
+
+div.stax-exec-output table td {
+    color: inherit;
+    background: inherit;
+    border: inherit;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
+div.stax-exec-errors table {
+    color: inherit;
+    background: inherit;
+    border-color: inherit;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+div.stax-exec-errors td {
+    color: inherit;
+    background-color: inherit;
+    padding: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+div.stax-exec-errors table tr {
+    color: inherit;
+    background-color: inherit;
+    border: 1px solid !important;
+}
+
+div.stax-exec-errors table td {
+    color: inherit;
+    background-color: inherit;
+    border: 1px solid !important; 
+}
