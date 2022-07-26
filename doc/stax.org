@@ -21,30 +21,31 @@
 * Introduction
 ** About This Document
 
-  This document covers ~kdh/stax~ version "0.1.0", which is an implementation of the requirements in
-      #+ATTR_HTML: :target _blank
-  [[file:doc/rpl-take-home-project1-clj.pdf][rpl-take-home-project1-clj.pdf]]
+This document covers ~kdh/stax~ version "0.1.0", which is an implementation of the requirements in
+#+ATTR_HTML: :target _blank
+[[file:doc/rpl-take-home-project1-clj.pdf][rpl-take-home-project1-clj.pdf]]
 
-  I wrote this as an org-mode document in emacs and exported it to HTML using [[https://github.com/fniessen/org-html-themes][org-html-themes]] (theme ReadTheOrg).  If you use org-mode, I highly recommend ReadTheOrg and another package [[https://github.com/fniessen/emacs-leuven-theme][emacs-leuven-theme]] by the same author.
+I wrote this as an org-mode document in emacs and exported it to HTML using [[https://github.com/fniessen/org-html-themes][org-html-themes]] (theme ReadTheOrg).  If you use org-mode, I highly recommend ReadTheOrg and another package [[https://github.com/fniessen/emacs-leuven-theme][emacs-leuven-theme]] by the same author.
 
-  
-  
-  org-mode allows in-document evaluation using source blocks like
+org-mode allows in-document evaluation using source blocks like
 
-  #+begin_example
-  #+begin_src clojure :ns user :results value pp :exports both
-  (clojure-version)
-  #+end_src
-  #+end_example
-  which, when executed and exported, look like this:
-  #+begin_src clojure :ns user :results value pp :exports both
-  (clojure-version)
-  #+end_src
+#+begin_example
+#+begin_src clojure :ns user :results value pp :exports both
+(clojure-version)
+#+end_src
+#+end_example
 
-  #+RESULTS:
-  : "1.11.1"
+which, when executed and exported, look like this:
 
-  For brevity, especially when a progression of steps is to be conveyed, I show clojure source like so:
+#+begin_src clojure :ns user :results value pp :exports both
+(clojure-version)
+#+end_src
+
+#+RESULTS:
+: "1.11.1"
+
+For brevity, I show clojure source like so:
+
   #+begin_src clojure :ns user :results value pp :exports code
   (defstackfn f
     [!a !b !c] ; example uses input: 1 2 4. Stack starts empty.
@@ -61,7 +62,7 @@
 
   Here, the output is shown as comments following ~;;+>~ and return values are within ~(=> )~ forms (~=>~ is an alias of the ~comment~ macro I use to contain and highlight the structured values returned by an evaluation).  You can see more of this in my dev tree which is where I play with code as I develop. But you will not find the ~=>~ in my src tree (more on my src / dev separation in the following section).  If an Error occurs, or an Exception is thrown, I indicate that in code as a ~;;!>~ comment - though you won't see that often -- I usually prefer to catch exceptions and return their message and data.
 
-  Often, when I use the abbreviated format I do so within a ~clj~ source block that is not meant to be evaluated within org-mode. I have configured ~clj~ for org-mode just enough to display clojure code formatting, show docstrings in the minibuffer, and give me access to cider and clj-kondo, etc).  If you are an emacs org-mode user and want to use the org source of this doc, replace-regexp "^#\+begin​_src \<\(clj\|edn\)\>" "^#\+begin​_src clojure".  Or, run the code in another buffer with ~org-edit-src-code~ ~[C-c ']~ instead of ~org-babel-execute-src-block~ ~[C-c C-c]~.  All of the benchmark code blocks were run in another buffer, due to timeout issues in org-mode.
+  Often, when I use the abbreviated format I do so within a ~clj~ source block that is not meant to be evaluated within org-mode. I have configured ~clj~ for org-mode just enough to display clojure code formatting, show docstrings in the minibuffer, and give me access to cider and clj-kondo, etc).  If you are an emacs org-mode user and want to use the org source of this doc, M-x replace-regexp ~^#\+begin​_src \<\(clj\|edn\)\>~ with ~#\+begin​_src clojure~.
 
 ** About ~[kdh/stax "0.1.0"]~
 *** Src File Tree
@@ -96,19 +97,19 @@
     │   ├── bubba.clj
     │   ├── dev-old.clj
     │   ├── dev.clj
+    │   ├── examples-20220629112159Z.clj
     │   ├── kdh
     │   │   ├── dev_utils.clj
     │   │   └── stax
     │   │       ├── core-dev.clj
     │   │       ├── errs-dev.clj
     │   │       ├── exam-dev.clj
-    │   │       ├── examples-20220629112159Z.clj
     │   │       ├── node-dev.clj
+    │   │       ├── nodify*dev.clj
     │   │       ├── nodify-dev.clj
     │   │       ├── svg-dev.clj
     │   │       └── util-dev.clj
     │   ├── nodes.clj
-    │   ├── resources
     │   ├── user.clj
     │   └── vizit.clj
     └── resources
@@ -121,8 +122,8 @@
 
  Any dev file can require any src tree file, but src tree files never require dev tree files!  When I develop something good in the dev files, I copy it over into a src tree file and require it back into the -dev.clj file cousin (ns-unmap'ing it if needed).
 
- <<dev*.clj>>
- Any ~dev*.clj~ is a graveyard for old/alternate versions of functions in the ~src~ tree at the same level.  It's name has a ~*~ to indicate its where to find ~*~ functions (and any functions only they use), and to prevent accidental inclusion in build (require won't work on it due to name mangling, instead you must use ~load-file~).
+ <<file*dev.clj>>
+ Any ~file*dev.clj~ is a graveyard for old/alternate versions of functions in ~file.clj~ of the ~src~ tree at the same level (e.g. ~dev/nodify-ops*~, which is an alternative implementation of ~kdh.stax/nodify/nodify-ops~, is found in "dev/kdh/stax/nodify*dev.clj" ).  It's name has a ~*~ to indicate its where to find ~*~ functions (and any functions only they use), and to prevent accidental inclusion in build (require won't work on it due to name mangling, instead you must use ~load-file~).
 
 *** Doc File Tree
     #+begin_src shell :dir .. :results output pp :exports results :wrap example
@@ -133,27 +134,23 @@
     #+begin_example
     doc
     ├── #stax.org#
-    ├── intro.md
     ├── rpl-take-home-project1-clj.pdf
-    ├── simple-tree.svg
     ├── stax.html
     ├── stax.org
-    ├── svg
-    │   ├── kdh-bad-example-dbg.html
-    │   ├── kdh-bad-example-runtime-dbg.html
-    │   ├── kdh-better-example-dbg.html
-    │   ├── kdh-half-bad-example-dbg.html
-    │   ├── kdh-runtime-error-example-dbg.html
-    │   ├── kdh-some-bad-paths-example-fix1st-no-static.html
-    │   ├── kdh-some-bad-paths-example-no-static.html
-    │   ├── kdh-some-bad-paths-example.html
-    │   ├── kdh-worse-example-dbg.html
-    │   ├── mystyle.css
-    │   └── rpl-example-dbg.html
-    ├── tangle1.svg
-    ├── tangle2.svg
-    ├── tangle3.svg
-    └── unbalanced-tree.svg
+    └── svg
+	├── all-runtime-flag-test.html
+	├── kdh-bad-example-dbg.html
+	├── kdh-bad-example-runtime-dbg.html
+	├── kdh-better-example-dbg.html
+	├── kdh-half-bad-example-dbg.html
+	├── kdh-runtime-error-example-dbg.html
+	├── kdh-some-bad-paths-example-fix1st-no-static.html
+	├── kdh-some-bad-paths-example-no-static.html
+	├── kdh-some-bad-paths-example.html
+	├── kdh-worse-example-dbg.html
+	├── rpl-example-dbg.html
+	├── stax-body.css
+	└── stax.css
     #+end_example
    
 *** Test File Tree
@@ -825,41 +822,42 @@ My implementation only accepts pos-int arity, as I understand invoke> to invoke 
     Further, I return the stack and not its top because that would destroy important information (the rest of the stack).  As a general principle, I do not believe in descarding valid data -- the final state of the stack is useful in debugging.  And if the user wishes to only have the top, they can always peek it.  If I only return the top, however, the user cannot access (or even be aware of) the remaining discarded stack.
 * Using =defstackfn=
 ** =<name>=: the named function defined by =defstackfn=
-  As required (see [[Requirements]]), ~(defstackfn <name> <declarations> <operations>...)~
-  defines a function of name ~<name>~ that takes a vector of !v like ~<declarations>~ and any number of ~<operations>~.
+As required (see [[Requirements]]), ~(defstackfn <name> <declarations> <operations>...)~
+defines a function of name ~<name>~ that takes a vector of !v like ~<declarations>~ and any number of ~<operations>~.
 
-  #+begin_src clojure :ns user
-  (defstackfn f
-    [!a !b !c]
-    !a
-    !b
-    (invoke> + 2)
-    !v1+
-    !c
-    !c
+#+caption: Defining a function for the RPL Example using defstackfn
+#+begin_src clojure :ns user
+(defstackfn f
+  [!a !b !c]
+  !a
+  !b
+  (invoke> + 2)
+  !v1+
+  !c
+  !c
+  <pop>
+  2
+  (invoke> * 2)
+  !v2+
+  (invoke> = 2)
+  (if>
+    !v1
+    !v2
+    (invoke> - 2)
+   else>
+    "false!!"
+    (invoke> println 1)
     <pop>
-    2
+    !v1
+    !v2
     (invoke> * 2)
-    !v2+
-    (invoke> = 2)
-    (if>
-      !v1
-      !v2
-      (invoke> - 2)
-     else>
-      "false!!"
-      (invoke> println 1)
-      <pop>
-      !v1
-      !v2
-      (invoke> * 2)
-      )
     )
+  )
 
-  (=> #'user/f )
-  #+end_src
+(=> #'user/f )
+#+end_src
 
-  Calling the newly created function with the 3 args in the example gives the expected output and return value.
+  Calling the newly created function with the 3 values in the example gives the expected output and return value.
 
   #+caption: RPL Example as a function call to the ~defstackfn~ defined ~f~
   #+begin_src clojure :ns user
@@ -870,11 +868,11 @@ My implementation only accepts pos-int arity, as I understand invoke> to invoke 
   (=> [24] )
   #+end_src
 
-This is implemented in the ~defstackfn~ macro expansion as a call to ~kdh.stax.core/stackfn~ whose first argument is the node-data that <name> closes over, and whose remaining arguments are the values you give to the ~defstackfn~ defined function.
+This is implemented in the ~defstackfn~ macro expansion as a call to ~kdh.stax.core/stackfn~ whose first argument is the node-data that <name> closes over, and whose remaining arguments are the sequence of values you would give to the ~defstackfn~ defined function.  
 
 ~stackfn~ can be called using ~kdh.stax.nodify/build-node-data~ to achieve the same results as the named function:
 
-#+caption: RPL Example as a function call to ~kdh.stax.core/stackfn~
+#+caption: RPL Example as a function call to ~kdh.stax.core/stackfn~ using ~kdh.stax.core/build-node-data~
 #+begin_src clojure
 (stackfn (build-node-data '[!a !b !c]
                            ex/ops-rpl-example)
@@ -888,25 +886,23 @@ This is implemented in the ~defstackfn~ macro expansion as a call to ~kdh.stax.c
 ** =<name>-dbg=: the debug function defined by =defstackfn=
   In addition, ~kdh.stax.core/defstackfn~ also defines a function named ~<name>-dbg~ (in the example, ~f-dbg~), which when called with no arguments, returns the node-data as a map. This is the same node data that ~f~ closes over, hence the name ~f-dbg~.
 
-  Like the named function ~<name>~ (in the example, ~f~), ~<name>-dbg~ can take arguments of the the same number as the ~declarations~ given to ~defstackfn~.  Called with arguments, ~<name>-dbg~ returns the node-data with an extra key ~:results~. ~results~ is a vector, because ~<name>-dbg~ can take arguments in any number that is a multiple of ~declarations~, returning each result in the order of the runs arguments for results (allowing the user to simulate multiple calls to ~name~ function with different values).
+  Like the named function ~<name>~ (in the example, ~f~), ~<name>-dbg~ can take arguments of the the same number as the ~declarations~ given to ~defstackfn~.  Called with arguments, ~<name>-dbg~ returns the node-data with an extra key ~:results~. ~results~ is a vector, because ~<name>-dbg~ can take arguments in any number that is a multiple of ~declarations~, returning each result in calling order, allowing the user to simulate multiple calls to ~name~ function with different values.
 
   Here is the structure of ~:results~
 
-  + ~:results~ :: a vector of result maps
+  + ~:results~ :: is a vector of result maps
     - a result map is the last op node executed in one of the runs, with the following additional keys:
       + ~:errors~ :: if present a vector of runtime errors for the last node in the result.
       + ~:output~ :: a string of the output ("false!!" in the RPL example)
       + ~:trace~ :: a vector of nodes passed through from start of the execution (a start-node) to this node
       + ~:stack~ :: the final value of the stack (~[24]~ in the RPL example)
-	+ ~:stack~ is not present if ~:errors~ is present, as ~stack~ is the value after executing the result node
+	+ ~:stack~ is not present if ~:errors~ is present, as ~stack~ is the value /after/ executing the result node
 	  + to find the last good state of ~stack~ if the result has ~:errors~, peek the pop of ~:trace~
-      + ~:turns~ :: a vector of strings describing the branches passed (e.g. ["start" "then" "else"] through until the result node
-      + ~:var-init-map~ :: the map of the declarations given to the execution that ends in the result node
-      + ~:var-map~ :: the map of the current variable bindings after the execution of the result node
+      + ~:turns~ :: is a vector of strings describing the branches passed through (e.g. ["start" "then" "else"])
+      + ~:var-init-map~ :: is the map of the declarations given to the execution that ends in the result node
+      + ~:var-map~ :: the map of the current variable bindings /after/ the execution of the result node
 	+ ~:var-map~ is not present if ~:errors~ is present
 	  + peek the pop of ~:trace~ for the last good value of ~:var-map~
-
-
 
   #+caption: RPL Example as a function call to the ~defstackfn~ defined ~f-dbg~
   #+begin_src clojure
@@ -938,7 +934,7 @@ This is implemented in the ~defstackfn~ macro expansion as a call to ~kdh.stax.c
 	:output "", :stack [0]}] )
   #+end_src
 
-  Like with the relationship between the ~defstackfn~ defined function ~f~ and its call to ~stackfn~ with the node-data closure, ~<name>-dbg~ also calls its own helper function, ~stackfn-dbg~.  And we can use that to debug without touching ~defstackfn~.
+  As with the relationship between the ~defstackfn~ defined function ~f~ and its call to ~stackfn~ with the node-data closure, ~<name>-dbg~ also calls its own helper function, ~stackfn-dbg~.  And we can use that to debug without touching ~defstackfn~.
 
 #+caption: RPL Example as a function call to ~kdh.stax.core/stackfn-dbg~
 #+begin_src clojure
@@ -960,67 +956,65 @@ This is implemented in the ~defstackfn~ macro expansion as a call to ~kdh.stax.c
       :output "", :stack [0]}] )
 #+end_src
 
-------
 Now that we've played with the results of ~defstackfn~ and its helper functions, lets explore the node-data
 
 * Nodes
 
-   nodes are maps, describing an operation and its properties
- #+caption: Operations, Nodes, and Their Descriptions
-  | Operation         | Node ~:op-type~ | Description                                                                                                                                                           |
-  |-------------------+-----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | !v                | ::op=push-var   | op to push the value of a stack variable onto the stack                                                                                                               |
-  | const             | ::op=push-sef   | op to push the value of a self evaluating form onto the stack (number, string, character, keyword, boolean, nil)                                                      |
-  | <pop>             | ::op=pop        | op to pop the top of the stack                                                                                                                                        |
-  | !v+               | ::op=def-var    | op to define a (possibly new) stack variable and assign it the top of the stack without changing the stack                                                            |
-  | (invoke> f n)     | ::op=invoke     | op to invoke a function (f) on a number (n) of stack values. Those n values are removed from the stack and the return value of f pushed onto the stack                |
-  | (if>... else>...) | ::op=if         | op to branch conditionally into :then or :else based on the thruthiness of the top of the stack.  The top of the stack is pop'd. :then and :else are vectors of nodes |
-  | any other form    | ::op=illegal    | not a legal op                                                                                                                                                        |
+   Nodes are maps describing an operation and its properties
+#+caption: Operations, Nodes, and Their Descriptions
+| Operation         | Node ~:op-type~ | Description                                                                                                                                                                |
+|-------------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| !v                | ::op=push-var   | op node to push the value of a stack variable onto the stack                                                                                                               |
+| const             | ::op=push-sef   | op node to push the value of a self evaluating form onto the stack (number, string, character, keyword, boolean, nil)                                                      |
+| <pop>             | ::op=pop        | op node to pop the top of the stack                                                                                                                                        |
+| !v+               | ::op=def-var    | op node to define a (possibly new) stack variable and assign it the top of the stack without changing the stack                                                            |
+| (invoke> f n)     | ::op=invoke     | op node to invoke a function (f) on a number (n) of stack values. Those n values are removed from the stack and the return value of f pushed onto the stack                |
+| (if>... else>...) | ::op=if         | op node to branch conditionally into :then or :else based on the thruthiness of the top of the stack.  The top of the stack is pop'd. :then and :else are vectors of nodes |
+| any other form    | ::op=illegal    | not a legal op node                                                                                                                                                        |
 
-   #+caption: Operations, Nodes, and Their Predicates
-  | Operation         | Op Predicate     | Node ~:op-type~ | Node Predicate |
-  |-------------------+------------------+-----------------+----------------|
-  | !v                | !symbol?         | ::op=push-var   | push-var-node? |
-  | const             | self-evaluating? | ::op=push-sef   | push-sef-node? |
-  | <pop>             | <pop>?           | ::op=pop        | pop-node?      |
-  | !v+               | !symbol+?        | ::op=def-var    | def-var-node?  |
-  | (invoke> f n)     | invoke>?         | ::op=invoke     | invoke-node?   |
-  | (if>... else>...) | if>?             | ::op=if         | if-node?       |
-  | any other form    |                  | ::op=illegal    | illegal-node?  |
+#+caption: Operations, Nodes, and Their Predicates
+| Operation         | Op Predicate     | Node ~:op-type~ | Node Predicate |
+|-------------------+------------------+-----------------+----------------|
+| !v                | !symbol?         | ::op=push-var   | push-var-node? |
+| const             | self-evaluating? | ::op=push-sef   | push-sef-node? |
+| <pop>             | <pop>?           | ::op=pop        | pop-node?      |
+| !v+               | !symbol+?        | ::op=def-var    | def-var-node?  |
+| (invoke> f n)     | invoke>?         | ::op=invoke     | invoke-node?   |
+| (if>... else>...) | if>?             | ::op=if         | if-node?       |
+| any other form    |                  | ::op=illegal    | illegal-node?  |
 
 Each legal op node requires 0 or more stack values (its ~:needs~), and changes the size of the stack by some integer number (its ~:delta~)
 
-   #+caption: Node and Their Effect on the Stack
-  | Node ~:op-type~ | :needs | :delta |
-  |-----------------+--------+--------|
-  | ::op=push-var   |      0 |     +1 |
-  | ::op=push-sef   |      0 |     +1 |
-  | ::op=pop        |      1 |     -1 |
-  | ::op=def-var    |      1 |      0 |
-  | ::op=invoke     |      n | -(n-1) |
-  | ::op=if         |      1 |     -1 |
-  | ::op=illegal    |     NA |     NA |
+#+caption: Node and Their Effect on the Stack
+| Node ~:op-type~ | :needs |  :delta |
+|-----------------+--------+---------|
+| ::op=push-var   |      0 |      +1 |
+| ::op=push-sef   |      0 |      +1 |
+| ::op=pop        |      1 |      -1 |
+| ::op=def-var    |      1 |       0 |
+| ::op=invoke     |      n | (- 1 n) |
+| ::op=if         |      1 |      -1 |
+| ::op=illegal    |     NA |      NA |
 
+Each op node has some of the keys.
 
-   Each op node has some of the keys.
-
-   #+caption: Node Keys
-  | KEY           | VALUE           | OPTIONALITY        | DESCRIPTION                                                         |
-  |---------------+-----------------+--------------------+---------------------------------------------------------------------|
-  | ~:op~         | expr            | All nodes          | the operation as a quoted value                                     |
-  | ~:op-type~    | key             | All nodes          | See operation table                                                 |
-  | ~:needs~      | int >= 0        | All legal          | how many stack values the operation requires                        |
-  | ~:delta~      | int             | All legal          | the change to the stack size after execution of the node            |
-  | ~:op-index~   | vector          | All nodes          | vector of pos-int to the operation in the original sequence         |
-  | ~:node-index~ | vector          | All nodes          | vector of pos-int to the operation in the resulting node-tree       |
-  | ~:fun~        | fn?             | invoke>            | function value of invoke> operation                                 |
-  | ~:arity~      | pos-int?        | invoke>            | number of stack items the invoke> :fun will consume (same as needs) |
-  | ~:then~       | vector of nodes | if>                | a node subtree to follow if the top of the stack is truthy          |
-  | ~:else~       | vector of nodes | if>                | a node subtree to follow if the top of the stack is falsey          |
-  | ~:var-ref~    | !v              | def-var push-var   | !v form symbol for stack variable                                   |
-  | ~:var-def~    | !v+             | def-var            | !v+ form for stack variable (::op=def-var only)                     |
-  | ~:branch~     | keyword         | start if-pop termn | Represents path start, turn , and end                               |
-  | ~:errors~     | vector of maps  | Any                | (See [[*Errors][Errors]])                                                        |
+#+caption: Node Keys
+| KEY           | VALUE           | OPTIONALITY        | DESCRIPTION                                                         |
+|---------------+-----------------+--------------------+---------------------------------------------------------------------|
+| ~:op~         | expr            | All nodes          | the operation as a quoted value                                     |
+| ~:op-type~    | key             | All nodes          | See operation table                                                 |
+| ~:needs~      | int >= 0        | All legal          | how many stack values the operation requires                        |
+| ~:delta~      | int             | All legal          | the change to the stack size after execution of the node            |
+| ~:op-index~   | vector          | All nodes          | vector of pos-int to the operation in the original sequence         |
+| ~:node-index~ | vector          | All nodes          | vector of pos-int to the operation in the resulting node-tree       |
+| ~:fun~        | fn?             | invoke>            | function value of invoke> operation                                 |
+| ~:arity~      | pos-int?        | invoke>            | number of stack items the invoke> :fun will consume (same as needs) |
+| ~:then~       | vector of nodes | if>                | a node subtree to follow if the top of the stack is truthy          |
+| ~:else~       | vector of nodes | if>                | a node subtree to follow if the top of the stack is falsey          |
+| ~:var-ref~    | !v              | def-var push-var   | !v form symbol for stack variable                                   |
+| ~:var-def~    | !v+             | def-var            | !v+ form for stack variable (::op=def-var only)                     |
+| ~:branch~     | keyword         | start if-pop termn | Represents path start, turn , and end                               |
+| ~:errors~     | vector of maps  | Any                | (See [[*Errors][Errors]])                                                        |
 
 
 Internally, nodes are created by ~kdh.stax.nodify/nodify-ops~, which returns a node-tree.
@@ -1055,7 +1049,7 @@ Node templates (the default properities of a node of a ~:node-type~) are maps in
   + ~:errors-for-print~ ::
     + a vector of errors found through parsing (of ~:node-tree~) and static analysis (of ~:paths~) with keys ~:node-index~ and values of a vector of a nodes :~errors~.
 
-  -----
+-----
 * Building Node Data
 ** ~build-node-data~
 *** ops ➤ node-tree (~kdh.stax.nodify/nodify-ops~)
@@ -1084,24 +1078,25 @@ The following is a rough approximation of the whiteboard analysis I did to come 
     Let's start with a simple tree.
 
     #+begin_src clojure :ns user :results output pp :exports results :eval :wrap export html
-    (->> (tangle.core/graph->dot [{:id "v1" :shape :point}    ; nodes
-				  {:id "v2" :shape :point}
-				  {:id "v3" :shape :point}
-				  {:id "v4" :shape :point}]
-				 [["v1" "v2" {:label "p1"}]   ; edges
-				  ["v2" "v3" {:label "p2"}]
-				  ["v2" "v4" {:label "p3"}]]
-				 {:graph {:label "simple"
-					  :rankdir :LR
-					  :fontname :Roboto}          ; options
-				  :node {:shape :box}
-				  :node->id (fn [n] (if (keyword? n) (name n) (:id n)))   ; conversion functions
-				  :node->descriptor (fn [n] (when-not (keyword? n) n))})
-	 tangle.core/dot->svg
-	 xml/parse-str
-	 (fix-svg-graph-transform-scale "1.5 1.5")
-	 xml/emit-str
-	 print)
+       (->> (tangle.core/graph->dot [{:id "v1" :shape :point}    ; nodes
+				     {:id "v2" :shape :point}
+				     {:id "v3" :shape :point}
+				     {:id "v4" :shape :point}]
+				    [["v1" "v2" {:label "p1"}]   ; edges
+				     ["v2" "v3" {:label "p2"}]
+				     ["v2" "v4" {:label "p3"}]]
+				    {:graph {:label "simple"
+					     :rankdir :LR
+					     :fontname :Roboto}          ; options
+				     :node {:shape :box}
+				     :node->id (fn [n] (if (keyword? n) (name n) (:id n)))   ; conversion functions
+				     :node->descriptor (fn [n] (when-not (keyword? n) n))})
+	    tangle.core/dot->svg
+	    xml/parse-str
+	    (fix-svg-graph-transform-scale "2.0 2.0")
+	    fix-svg-viewbox
+	    xml/emit-str
+	    print)
     #+end_src
 
 
@@ -1140,7 +1135,8 @@ The following is a rough approximation of the whiteboard analysis I did to come 
 				  :node->descriptor (fn [n] (when-not (keyword? n) n))})
 	 tangle.core/dot->svg
 	 xml/parse-str
-	 (fix-svg-graph-transform-scale "1.5 1.5")
+	 (fix-svg-graph-transform-scale "2.0 2.0")
+	 fix-svg-viewbox
 	 xml/emit-str
 	 print)
     #+end_src
@@ -1161,7 +1157,7 @@ First we must combine p3 with p4 and with p5
 
 (=> ([:p3 :p4] [:p3 :p5]) )
 #+end_src
-Next, we must put the results of the previous step (as a vector, not a list) into p2 (wrapped in a vector) so the we have a right side for the next step.
+Next, we must put the results of the previous step (as a vector, not a list) into p2 (also wrapped in a vector) so the we have a right side for the next step.
 #+begin_src clj -n
 (into [[:p2]] [[:p3 :p4] [:p3 :p5]])
 
@@ -1182,16 +1178,18 @@ Then we must combine p1 with this result.  Cleaning it all up, give us the three
     )
 #+end_src
 
+
+
 Some conclusions (from my notes)
 + A subpath (e.g. p1) is a sequence of op-nodes and the vertices are branch points with then and else (if-nodes)
 + Made easier by dividing a sequence of nodes into non-if subpaths and if subpaths (which eventually recurse to non-if subpaths)
   + non-if subpaths will reduce to ~[[p1]]~
   + if subpaths must call our node to paths function on their then and else subpaths and combine the results (with into - line 5 above)
-+ Since we are making choices in each path, we need to flatten the if into a chose-then and chose-else so when if recurses, it should push a special choice node called if-pop
-  + because it contains the pop of the stack implicit after the if's conditional step
-  + both if-pop nodes are given the :node-index and :op-index of their if-node to preserve refence to it
++ Since we are making choices in each path, we need to convert into a choice node which I call if-pop
+  + because it contains the pop of the stack implicit after the if's conditional test
+  + both if-pop nodes are given the :node-index and :op-index of the if-node they represent in order to preserve refence to it
   + each if-pop records its choice as :branch key with value :then or :else
-  + each if-pop is pushed into the front of their branch sequence of nodes
+  + each if-pop is pushed onto the front of their branch sequence of nodes
 *** Implementation
    Here is an overview of ~node-tree-to-node-paths~ and the functions it uses
    + ~node-tree-to-node-paths~ calls ~any-son-to-paths~ on the node-tree (son is short for sequence of nodes)
@@ -1205,7 +1203,7 @@ Some conclusions (from my notes)
      + ~add-ends-to-paths~ adds the same ~[start-node]~ to all paths (~kdh/stax/nodes/start-node-template~), then pushes a ~terminal-node~ onto the end of each path.
        + ~terminal-node~ is created by ~terminate-path~ which calls ~teminal-after~ on the last node in the given path
        + ~terminal-after~ returns a ~terminal-node-template~ with added keys based on the that last node
-	 + ~:node-index~ of the last node with :branch value added (iff the last was an if-pop) and ~nil~ added to (for any last node including if-pop).
+	 + ~:node-index~ of the last node with :branch value added (iff the last was an if-pop) and ~nil~ added (for any last node including if-pop).
 	 + ~:op-index~ for the last node with ~nil~ added
        
 * Errors
@@ -1214,7 +1212,7 @@ Some conclusions (from my notes)
   + ~:err-type~ :: A richly descriptive keyword (e.g. ~:kdh.stax.errs/error=parse-illegal-operation~)
   + ~:err-text~ :: A string describing the error (e.g. ~"<clear> is not an allowed op"~)
 
-  Errors are added to a node with ~:kdh.stax.errs/error+~ which adds an ~:errors~ key if necessary
+  Errors are added to a node with ~:kdh.stax.errs/error+~ which adds an ~:errors~ key if the node has none.
 
   #+begin_src clojure :ns user :results output :exports both
   (require '[kdh.stax.node :refer [start-node]]
@@ -1241,8 +1239,7 @@ Some conclusions (from my notes)
    There are three zones of stax errors, each representing a phase of error analysis
 *** Parse Errors
    Some operations are always erroneous.
-    + ~!v3+~ is a legal operation
-    + ~v3~ is not ever a legal operation, regardless of where it occurs in the tree.
+    + While ~!v3+~ is a legal operation, ~v3~ is not ever a legal operation, regardless of where it occurs in the tree.
    Such errors have the following facts:
     + They have ~:err-zone~ key with value ~:kdh.stax.errs/zone=tree~
     + They have ~:err-type~ key with value ~:kdh.stax.errs/error=parse-<something>~
@@ -1273,7 +1270,7 @@ Some conclusions (from my notes)
    On their own, ~:error=runtime-illegal-operation~ and ~:error=parse-illegal-operation~ tell you more than ~:error=illegal-operation~.
 
    And ~:error=runtime-<something>~ is easily targeted by tooling (e.g. grep emacs/occur) and css matching.
-   For example, here is a list of all of the errors found by grep'ing 'error=':
+   For example, here is a list of all of the errors found in the src tree by grep'ing ~error=~ and sorting around hyphens
 
    #+begin_src shell :results output list :exports both
    find ~/clj/rpl/stax/src/clj/kdh/stax/ -type f -name '*.clj' -print0 | xargs -0 grep error= | tr '\011\042/:()' ' ' | tr -s ' ' | tr ' ' '\012' | grep error= | sort | uniq | sort -t-
@@ -1303,79 +1300,129 @@ Some conclusions (from my notes)
     + ~:op=if~ (the ~if>~ operation's node)
     + ~:op=if-pop~ (the isolation of the ~if>~ node's pop-like conditional)
 
+*** ~:err-type~ vs ~:err-zone~
+Many erroneous conditions that are caught in either parsing or static analysis, also have runtime variants.  These can be seen by binding ~*stax-errors-prevent-exec*~ to ~false~ or ~nil~, allowing full runtime checking even in the presents of parse or static analysis.
+
+#+name: err-zone-table
+#+caption: Table of Node ~:err-type~ ~:err-zone~ interaction
+| op type | zone=tree@@html:<br>@@error=parse-… | zone=path@@html:<br>@@error=static-… | zone=exec@@html:<br>@@error=runtime-… |
+|---------+-------------------------------------+--------------------------------------+---------------------------------------|
+| !v      |                                     | var-not-defined                      | var-not-defined                       |
+| !v+     |                                     | insufficient-stack                   | insufficient-stack                    |
+| <pop>   |                                     | insufficient-stack                   | insufficient-stack                    |
+| if>     |                                     | insufficient-stack                   | insufficient-stack                    |
+| invoke> | invoke-wrong-number-args            |                                      | invoke-wrong-number-args              |
+| invoke> | invoke-fun-not-function             |                                      | invoke-fun-not-function               |
+| invoke> | invoke-arity-not-pos-int            |                                      | invoke-arity-not-pos-int              |
+| invoke> |                                     | insufficient-stack                   | insufficient-stack                    |
+| invoke> |                                     |                                      | invoke-failed                         |
+| invoke> |                                     |                                      | invoke-returned-complex-val           |
+| NA      | illegal-operation                   |                                      | illegal-operation                     |
 
 
-*** ~:err-type~ vs ~err-zone~
-    Many erroneous conditions that are caught in either parsing or static analysis, also have runtime variants.  This is to allow for full runtime checking even in the presents of parse or static analyis error by binding the ~*stax-errors-prevent-exec*~ to ~false~ or ~nil~.
-
-    #+name: err-zone-table
-    #+caption: Table of Node ~:err-type~ ~:err-zone~ interaction
-    | op type | zone=tree@@html:<br>@@error=parse-… | zone=path@@html:<br>@@error=static-… | zone=exec@@html:<br>@@error=runtime-… |
-    |---------+-------------------------------------+--------------------------------------+---------------------------------------|
-    | !v      |                                     | var-not-defined                      | var-not-defined                       |
-    | !v+     |                                     | insufficient-stack                   | insufficient-stack                    |
-    | <pop>   |                                     | insufficient-stack                   | insufficient-stack                    |
-    | if>     |                                     | insufficient-stack                   | insufficient-stack                    |
-    | invoke> | invoke-wrong-number-args            |                                      | invoke-wrong-number-args              |
-    | invoke> | invoke-fun-not-function             |                                      | invoke-fun-not-function               |
-    | invoke> | invoke-arity-not-pos-int            |                                      | invoke-arity-not-pos-int              |
-    | invoke> |                                     | insufficient-stack                   | insufficient-stack                    |
-    | invoke> |                                     |                                      | invoke-failed                         |
-    | invoke> |                                     |                                      | invoke-returned-complex-val           |
-    | NA      | illegal-operation                   |                                      | illegal-operation                     |
+See [[*Complete Visualization of Parse, Path, and Runtime Errors]]
 
 *** Debugging Errors
-    Some errors should never occur -- their occurence indicates a serious flaw in the logic of the ~exec-nodes~ and ~stack-op-exec~ funtions
-    + ~kdh.stax.errs/error=runtime-debug-stack-is-not-a-vector~
-    + ~kdh.stax.errs/error=runtime-debug-var-map-is-not-a-map~
+Finally, some errors should never occur -- their occurence indicates a serious flaw in the logic of the ~exec-nodes~ and ~stack-op-exec~ funtions
++ ~kdh.stax.errs/error=runtime-debug-stack-is-not-a-vector~
++ ~kdh.stax.errs/error=runtime-debug-var-map-is-not-a-map~
 
-** NodeFailure
-    The multimethod ~kdh.stax.node/stack-op-exec~ takes a node and dispatches on ~:op-type~.
-    To simplify error handling, it uses [[https://github.com/adambard/failjure][failjure]], a monadic library for errors.
-    In kdh.stax.errs, I define a ~NodeFailure~ record that implements the ~failjure.core/HasFailed~ protocol.
-    #+begin_src clojure
-    (defrecord NodeFailure [node err-msg]
-      f/HasFailed
-      (failed? [self] true)
-      (message [self] (:err-msg self)))
-    #+end_src
+* Execution
 
-    ~->NodeFailure~ creates a new NodeFailure with the node and an err-msg.
-
-    #+begin_src clojure
-    (->NodeFailure start-node-template "Analysis Failed")
-
-    (=> #kdh.stax.errs.NodeFailure
-	{:node {:op <<start>>,
-		:op-type :kdh.stax.node/op=start,
-		:needs 0,
-		:delta 0,
-		:op-index [],
-		:node-index [],
-		:branch :start,
-		:dot-opts {:shape :point}},
-	 :err-msg "Analysis Failed"} )
-    #+end_src
-
-The fail-node-if-<Failure Case> functions test and maybe fail conditions individually, returning a FailureNode containing one of the following errors:
+Execution starts with ~stackfn~ calling ~exec-tree-with-var-init-map~ (or ~stackfn-dbg~ calling ~exec-tree-with-var-init-maps~, which then calls ~exec-tree-with-var-init-map~ with each ~var-init-map~) with the ~node-tree~ and ~var-init-map~.
++ ~exec-tree-with-var-init-map~ calls ~exec-nodes~ on the node-tree injected with a start-node carrying our traversal values
+  + ~:stack~ initialized to ~[]~
+  + ~:var-map~ intitialized to ~var-init-map~
+  + ~:trace~ initialized to ~[]~
     
-#+begin_src shell :results output list :exports both
+  + ~exec-nodes~ clears parse / path errors from the first node and dispatched it to ~stack-op-exec~
+    + The ~stack-op-exec~ method for the appropriate ~:op-type~ executes the node and returns it with its traversal data maybe updated
+      + stack maybe added to (push-var, push-sef), maybe reduced (pop, if-pop), maybe both (invoke)
+      + var-map maybe added to (def-var) or altered (def-var shadowing)
+      + errors maybe added (if errors are added, the node is cleaned of keys ~:stack~ and ~:var-map~ so that when ~exec-nodes~ adds the node to its trace, the node's post-exec traversal state is invalidated).
+  + ~exec-nodes~ then
+    + pushes the returned node onto ~trace'~ (minus that node's own trace -- trace is a sequence, not a tree)
+    + if the node has ~:errors~ or there are no more nodes to exec, ~exec-node~ returns the node (with ~:trace~ key of ~trace'~ value)
+    + otherwise it recurs on the remaining nodes (with the traversal data injected into the next node)
++ ~exec-tree-with-var-init-map~ returns a result which is the ~exec-nodes~ returned node with
+  + ~:var-init-map~ key of ~var-init-map~ value
+  + ~:trace~ key of possibly terminated (if no ~:errors~) ~trace~ 
+  + ~:turns~ key of value based on possibly terminated trace (to term if no ~:errors~)
+
+** Using Failjure to Simplifying Runtime Errors
+The function ~kdh.stax.nodify/exec-nodes~ traverses the node-tree with state
++ a var-map (initially set to the a map of declarations keys to execution values)
++ and a stack (initially set to an empty vector)
+For each node traversed, ~exec-nodes~ calls ~kdh.stax.nodify/stack-op-exec~, a multimethod that dispatches on ~:op-type~.
+
+Some of the operations are simple to check for errors and execute.  Pushing a constant, for example, only requires that the stack exists.
+
+Others are more complicated -- for example, ~invoke~ can return any of the following errors which must be tested in order:
++ ~error=runtime-invoke-wrong-number-args~    
++ ~error=runtime-invoke-fun-not-function~     
++ ~error=runtime-invoke-arity-not-pos-int~    
++ ~error=runtime-insufficient-stack~          
++ ~error=runtime-invoke-failed~               
++ ~error=runtime-invoke-returned-complex-val~
+
+To make this simpler to write and reason about, I use [[https://github.com/adambard/failjure][failjure]], a monadic library for errors.  It has a threading macro ~ok->~ that allows for chains of functions that return either a value or a failure and it short circuits the chain if a failure occurs (like ~some->~ does when one of its forms returns ~nil~).  So instead of writing complex nested conditionals, I can pass a node through a chain of functions that each test for an error or two, and return the node (with changes made to it), or an error -- a ~NodeFailure~ record that implements the ~failjure.core/HasFailed~ protocol.
+
+#+begin_src clojure
+(defrecord NodeFailure [node err-msg]
+  f/HasFailed
+  (failed? [self] true)
+  (message [self] (:err-msg self)))
+#+end_src
+
+~->NodeFailure~ creates a new NodeFailure with a node and an err-msg. I don't really care about the error message, because I add the error (containing the same err-mesg as :err-text) to the node with ~kdh.stax.errors/error+~.
+
+the stack-op-exec is now very simple:
+
+#+begin_src clj
+(defmethod stack-op-exec ::node/op=invoke
+  [node]
+  (f/if-let-failed? [node-or-fail (errs/fail-node-do-invoke node)]
+                    (clean-failed-node node-or-fail)))
+#+end_src
+
+It leaves the details to ~kdh.stax.errors/fail-node-do-invoke~, which is also simple:
+
+#+begin_src clj
+(defn fail-node-do-invoke
+  "DOC ME"
+  [node]
+  (f/ok-> node
+          fail-node-if-stack-not-vector
+          fail-node-if-invoke-wrong-number-args
+          fail-node-if-invoke-fn-error
+          fail-node-if-invoke-arity-error
+          fail-node-if-invoke-apply-error
+          fail-node-if-invoke-val-error))
+#+end_src
+
+Each of those fail-node-if- functions either add to the node (or its stack or var-map, which is carried by the node) or fails with a NodeFailue containing the node with its errors.
+
+The ~fail-node-if-<failure-case>~ functions test and maybe fail conditions individually, returning a FailureNode containing one of the following errors:
+    
+#+begin_src shell :results output list :exports results :wrap org
 find ~/clj/rpl/stax/src/ -type f -name '*.clj' -print0 | xargs -0 grep fail-node-if | tr ')]' ' ' | tr -s ' ' | tr ' '  '\012' | grep fail-node-if | sort | uniq
 #+end_src
 
 #+RESULTS:
-: - fail-node-if-invoke-apply-error
-: - fail-node-if-invoke-arity-error
-: - fail-node-if-invoke-fn-error
-: - fail-node-if-invoke-val-error
-: - fail-node-if-invoke-wrong-number-args
-: - fail-node-if-stack-empty
-: - fail-node-if-stack-not-vector
-: - fail-node-if-var-map-not-map
-: - fail-node-if-var-ref-not-defined
+#+begin_org
+- fail-node-if-invoke-apply-error
+- fail-node-if-invoke-arity-error
+- fail-node-if-invoke-fn-error
+- fail-node-if-invoke-val-error
+- fail-node-if-invoke-wrong-number-args
+- fail-node-if-stack-empty
+- fail-node-if-stack-not-vector
+- fail-node-if-var-map-not-map
+- fail-node-if-var-ref-not-defined
+#+end_org
 
 
-
+#+caption: Errors returned by ~fail-node-if-<failure-case>~
 | fail-node-if-<Failure-Case> | Error Returned in the FailureNode                                                                         |
 |-----------------------------+-----------------------------------------------------------------------------------------------------------|
 | invoke-apply-error          | :kdh.stax.errors/error=runtime-invoke-failed                                                              |
@@ -1389,20 +1436,30 @@ find ~/clj/rpl/stax/src/ -type f -name '*.clj' -print0 | xargs -0 grep fail-node
 | var-ref-not-defined         | :kdh.stax.errors/error=runtime-var-not-defined                                                            |
 |-----------------------------+-----------------------------------------------------------------------------------------------------------|
 
-The fail-node-do functions test and maybe fail on the multiple fail-node-if conditions:
+Now all stack-op-exec methods can follow the same form
 
-#+begin_src shell :results output list :exports both :wrap example
+#+begin_src clj
+(defmethod stack-op-exec ::node/op=pop
+  [node]
+  (f/if-let-failed? [node-or-fail (errs/fail-node-do-<something> node)]
+                    (clean-failed-node node-or-fail)))
+#+end_src
+where fail-node-do-<something> is one of:
+
+#+begin_src shell :results output list :exports results :wrap org
 find ../src/clj/kdh/stax/errs.clj -type f -name '*.clj' -print0 | xargs -0 grep fail-node-do | grep defn | tr -s ' ' | tr ' '  '\012' | grep fail-node-do | sort | uniq
 #+end_src
 
 #+RESULTS:
-#+begin_example
+#+begin_org
 - fail-node-do-def-var
 - fail-node-do-invoke
 - fail-node-do-pop
 - fail-node-do-push-sef
 - fail-node-do-push-var
-#+end_example
+#+end_org
+
+which fail on the following conditions:
 
 + fail-node-do-def-var
   + fail-node-if-stack-not-vector
@@ -1425,14 +1482,6 @@ find ../src/clj/kdh/stax/errs.clj -type f -name '*.clj' -print0 | xargs -0 grep 
   + fail-node-if-var-ref-not-defined
   + fail-node-if-stack-not-vector
 
-The ~kdh.stax.nodify/stack-op-exec~ methods call the fail-node-do functions and (on failure) return the ~NodeFailure~'s node cleaned of by without keys ~:stack~ ~:var-map~ and ~:stack-size~ so that ~exec-nodes~ can return the failed node with its errors and trace.
-
-#+begin_src clj
-(defmethod stack-op-exec ::node/op=pop
-  [node]
-  (f/if-let-failed? [node-or-fail (errs/fail-node-do-pop node)]
-                    (clean-failed-node node-or-fail)))
-#+end_src
 
 * Dynamic Variables
 
@@ -1442,7 +1491,7 @@ The ~kdh.stax.nodify/stack-op-exec~ methods call the fail-node-do functions and 
 + ~*stax-throw-on-error*~ ::
   + default is ~false~
   + if true, throw on error; if false, return error as a keyword and print error report
-+ ~*stax-defstackfn-fails-on-errors*~ ::
++ ~*stax-errors-prevent-exec*~ ::
   + default is ~true~
   + if false, continue to the execution phase even though there are parse errors and/or static analysis errors
   + used for testing runtime equivalents of parse/static errors (see [[err-zone-table][Error Zone Table]] and [[FLAGS][FLAGS Visualization]])
@@ -1456,8 +1505,8 @@ The ~kdh.stax.nodify/stack-op-exec~ methods call the fail-node-do functions and 
   + default
   + graph, node, and edge properties for dot generation
 
-#+caption: bb file bb/grepn-link.clj
-#+begin_src clojure :tangle grepn-link.clj :shebang "#!/usr/bin/env bb" :exports code
+# bb file bb/grepn-link.clj
+#+begin_src clojure :results silent :tangle grepn-link.clj :shebang "#!/usr/bin/env bb" :exports none
 (->> *input*
      (map #(str/split % #"\s+"))
      (map (fn [[file num var]]
@@ -1465,33 +1514,29 @@ The ~kdh.stax.nodify/stack-op-exec~ methods call the fail-node-do functions and 
      (run! println))
 #+end_src
 
-
-#+begin_src shell :results output list :exports none :wrap org
-find src/clj/kdh/stax/ -type f -name '*.clj' -print0 | xargs -0 grep -n "\^:dynamic" | cut -d: -f1-2,4 | tr ':' ' ' | cut -d' ' -f1,2,4 \
-| bb -i -f bb/grepn-link.clj
-#+end_src
-
-#+begin_src shell :results output table :exports both :wrap org
-echo "source-file pg dynamic-var"
- find src/clj/kdh/stax/ -type f -name '*.clj' -print0 | xargs -0 grep -n "\^:dynamic" | cut -d: -f1-2,4 | tr ':' ' ' | cut -d' ' -f1,2,4 
+# build a table of external line number reference links
+#+begin_src shell :results output table :exports none :wrap org
+echo "SOURCE-FILE LINE DYNAMIC-VAR"
+find ../src/clj/kdh/stax/ -type f -name '*.clj' -print0 | xargs -0 grep -n "\^:dynamic" | cut -d: -f1-2,4 | tr ':' ' ' | cut -d' ' -f1,2,4 
 #+end_src
 
 #+RESULTS:
 #+begin_org
-| source-file               | pg | dynamic-var                        |
-| src/clj/kdh/stax/errs.clj | 13 | *stax-require-simple-stack-values* |
-| src/clj/kdh/stax/errs.clj | 17 | *stax-defstackfn-fails-on-errors*  |
-| src/clj/kdh/stax/errs.clj | 21 | *stax-throw-on-error*              |
-| src/clj/kdh/stax/errs.clj | 25 | *stax-perform-path-analysis*       |
-| src/clj/kdh/stax/errs.clj | 31 | *stax-errors-prevent-exec*         |
-| src/clj/kdh/stax/svg.clj  | 17 | *stax-op-short-invoke>*            |
-| src/clj/kdh/stax/svg.clj  | 20 | *default-dot-options*              |
+| SOURCE-FILE                  | LINE | DYNAMIC-VAR                        |
+| ../src/clj/kdh/stax/errs.clj |   13 | *stax-require-simple-stack-values* |
+| ../src/clj/kdh/stax/errs.clj |   17 | *stax-defstackfn-fails-on-errors*  |
+| ../src/clj/kdh/stax/errs.clj |   21 | *stax-throw-on-error*              |
+| ../src/clj/kdh/stax/errs.clj |   25 | *stax-perform-path-analysis*       |
+| ../src/clj/kdh/stax/errs.clj |   31 | *stax-errors-prevent-exec*         |
+| ../src/clj/kdh/stax/svg.clj  |   17 | *stax-op-short-invoke>*            |
+| ../src/clj/kdh/stax/svg.clj  |   22 | *default-dot-options*              |
 #+end_org
 
 * Visualization
 The node-data map returned by ~kdh.stax.nodify/build-node-data~ is large, and dificult to debug.
 #+ATTR_HTML: :target _blank
-[[https://github.com/djblue/portal][Portal]] helped in diving into the data somewhat, but ever since I started working on this project, I wanted to display a graph of the op nodes in the ~:node-tree~ key of the node-data and I also wanted to visually represent overlays of ~:paths~ and ~:results~ data onto the node-tree. I've found that nothing beats a good visualization of data for the end user and the developer.
+[[https://github.com/djblue/portal][Portal]] helped in diving into the data somewhat, but ever since I started working on this project, I wanted to display a graph of the op nodes in the ~:node-tree~ key of the node-data and overlayed with ~:paths~ and ~:results~ data. I've found in the past that nothing beats a good visualization of data for the end user and the developer.  And this is no exception.  I found more issues using visualization than I could in code.  The following walks through how I wrote the visualization and contains inline examples svg (which are dynamically generated on export to html from org-mode clojure blocks).
+
 ** Using Tangle to Generate dot
 #+ATTR_HTML: :target _blank
 I looked into a few graphing libraries, but most seemed overly complex for the problem at hand: draw a simple tree of nodes and decorate them using the node-data.  I previously used graphviz to draw diagrams manually in dot format using emacs org-mode and babel dot code blocks. So I went back to look for clojure libraries that handle graphviz dot, and found a few, but settled on [[https://github.com/Macroz/tangle][tangle]].
@@ -1534,7 +1579,7 @@ OK, that looks like dot syntax.  Now lets convert it to SVG:
     print)
 #+end_src
 
-Now a slightly more sophisticated tree like I want ~if>~ to become:
+Now a slightly more sophisticated tree like I want ~if>~ to be visualized:
 
 #+begin_src clojure :ns user :results output pp :eval :exports both :wrap export html
 (->> (tangle.core/graph->dot [{:id "a" :label "if&gt;" :shape :diamond}    ; nodes
@@ -1599,7 +1644,7 @@ In code, I use ~tangle.core/dot->svg~ and ~clojure.data.xml/parse-str~ to get th
 
 ~kdh.stax.svg/add-svg-data~ converts node-data ~:paths~ into dot node ids (strings of ~:node-index~, which are unique) and edges (vector pairs of dot node ids) sometimes with labels (start, then, else) from node ~:branch~ values.  SVG is an xml vocabulary, which ~clojure.data.xml/parse-string~ turns into edn that can be manipulated with specter.  I like this multi-step process:  edn->dot then dot->svg then svg->edn because the intermediate dot and svg allow me to quickly play with dot and svg in org-mode.
 
-** Visualition using ~kdh.stax.svg~
+** Visualization using ~kdh.stax.svg~
 <<RPL-EXAMPLE-SVG>>
 *** Visualizing the RPL Example
 
@@ -1936,7 +1981,8 @@ Here is the code to show the first run as a path / exec pair (the code blocks fo
  + Hover over the Purple node for its *EXEC ERRORS*. Also shown as *ERRORS* in the result area
  + Nodes with Runtime Errors are colored by CSS in [[file:doc/svg/stax.css][svg/stax.css]].
 
-*** A Complete Visualization of Parse, Path, and Runtime Errors
+
+*** Complete Visualization of Parse, Path, and Runtime Errors
 
 The set of all Runtime Errors and their equivalent Parse and Path Errors, can be seen in the visualization file
 
@@ -2036,7 +2082,7 @@ The runs are numbered backwards below to show their correspondence to the number
 A couple notes on the SVG visualization used in this project.
 
 1. Issues of Accesibility
-   + These are not address in ~[kdhouser24/stax "0.1.0"]~ as the vizualization is dev only.  But in a proper front-end:
+   + These are not address in ~[kdhouser24/stax "0.1.0"]~ as the visualization is dev only.  But in a proper front-end:
      + Shapes would be used in addition to color so that users with CVD (Color Vision Deficiency) could also have meaningful error indicators.
      + The use of the <title> element as an info box would be replaced with accessibility compliant popups with ARIA tagging.  Information in the <title> element can only be accessed by hovering with a mouse, and it is therefore incompatible with mobile devices, and assistive technology like screen magnifiers or screen readers.
 
@@ -2056,43 +2102,6 @@ A couple notes on the SVG visualization used in this project.
 	   + potential collision with invoke on svg path tree are prevented by the behavior of ~kdh.stax.nodify/count-card-in-path~, which invalidates the count (stops counting) at the first node with errors
      + zone exec clears errors on each node it executes (~kdh.stax.nodify/exec-nodes~ calls ~kdh.stax.nodify/exec-nodes~ on ~(dissoc node :errors)~)
    + These guarantee that colors will not clash!
------
-
-** Debugging Stax Execution in SVG
-
-The node-data created by ~kdh.stax.nodify/build-node-data~ can be passed into ~kdh.stax.core/stackfn-dbg~ to add the execution values. ~kdh.stax.svg/node-data-to-html-file~ calls the decorator functions in ~kdh.stax.svg~ to complete the visualization and outputs an html file.
-
-#+begin_src clojure :ns user :exports code
-(str
- (node-data-to-html-file (io/file "doc" "svg" "rpl-example-tree-path-exec.html")
-                         (-> (build-node-data '[!a !b !c] ex/ops-rpl-example)
-                             (stackfn-dbg 1 2 4
-                                           3 3 3))))
-#+end_src
-
-#+RESULTS:
-: file:/mnt/e/Sync/clojure/rpl/stax/svg/rpl-example-tree-path-exec.html
-
-[[file:svg/rpl-example-tree-path-exec.html]]
-
-*** A Walkthrough of Good Data Visualization
-Click on the link below to open the visualization that exercises the paths in the assignment example in another tab
-#+ATTR_HTML: :target _blank
-[[file:svg/rpl-example-tree-path-exec.html][rpl-example-tree-path-exec.html]]
-
-  + Green :: Shows the ~:results~ overlay of the ~:node-tree~
-    + This is the execution section
-    + If you hover over nodes, you should see the popup no longer has "size=n"
-    + Instead, you see "var-map={<!var> <val>}" which is the state of the variables after the node executes
-    + Also in the popup is the "stack=[<values>]" which is the state of the stack after the node executes
-    + Note that the path (the edges and the perimeter of the polygons) is colored green from start node to terminal node
-      + That indicates no runtime errors in that path
-    + Note that the nodes in the path are filled with blue
-      + That indicates there are no nodes with runtime errors
-    + Each result also has a section below it with
-      + Variables Table (Init and Last state)
-      + the final Stack value(s)
-      + and the Output text box (if present)
 
 -----
 
@@ -2244,12 +2253,12 @@ Click on the link below to open the visualization that exercises the paths in th
    | class clojure.lang.Compiler$CompilerException |
 
    We can take advantage of the following facts to simplify sequential-compare1:
-   1. binding form [item & more-items] when bound to the last item
-      (i.e. no more-items) makes more-item nil like next, not '() like rest
-   2. nil < item, if item is not nil, so the shorter path that is identical
-      to the longer, up until its end, sorts <
+   1. binding form ~[item & more-items]~ when bound to the last item
+      (i.e. no more-items) makes ~more-items~ ~nil~ like ~next~, not ~'()~ like ~rest~
+   2. ~nil~ < item, if item is not ~nil~, so the shorter path that is identical
+      to the longer, up until its end, sorts ~<~
    3. in the loop, there will never be two paths that are equal in size
-      and equal in each item, because they would be equal in the first if and return 0
+      and equal in each item, because they would be equal in the first ~if~ and return 0
 
   
    #+begin_src clj :exports code
@@ -2266,7 +2275,7 @@ Click on the link below to open the visualization that exercises the paths in th
    #+end_src
 
    Now we can compare the three alternatives (seq-to-deep, sequential-compare1, sequential-compare2)
-   for equality and execution speed in best (already sorted) and worst cases (reverse of sort)
+   for equality and execution speed in best case (already sorted) and worst case (reverse of sort)
 
    #+begin_src clj :exports code
    (let [ops ex/ops-kdh-bad-example
@@ -2464,18 +2473,18 @@ I reasoned that a VOVOSON could be converted into a VOVON at the last step with 
    ;; ________________________________________________________________________________
 #+end_src
 
-But I didn't do that then. The VOVOSON implementation was simpler to write as a call to ~any-son-to-vovoson~ eventually recurses into ~non-if-son-to-vovoson~, which all return ~[[son]]~ where.  Once I implemented the vovoson way, I went back and wrote a VOVON version (the functions of which I renamed with ~paths~ and ~subpaths~ to move away from implementation-naming and toward functional-naming).
+But I didn't do that then. The VOVOSON implementation was simpler to write as a call to ~any-son-to-vovoson~ eventually recurses into ~non-if-son-to-vovoson~, which all return ~[[son]]~ which is a VOVOSON.  Once I fully implemented the vovoson way, I went back and wrote a VOVON version (the functions of which I renamed with ~paths~ and ~subpaths~ to move away from implementation-naming and toward functional-naming).
 
-   | VOVOSON implementation   | VOVON implementation     |   | FINAL implementation is VOVON (renamed) |
-   |--------------------------+--------------------------+---+-----------------------------------------|
-   | node-tree-to-node-paths* | node-tree-to-node-paths  |   | node-tree-to-node-paths                 |
-   | any-son-to-vovoson       | any-son-to-vovon         |   | any-son-to-paths                        |
-   | non-if-son-to-vovoson    | non-if-son-to-vovon      |   | non-if-son-to-subpaths                  |
-   | if-son-to-vovoson        | if-son-to-vovon          |   | if-son-to-subpaths                      |
-   | vovoson>vovoson          | vovon>vovon              |   | combine-paths                           |
-   | vovoson-to-vovon         | add-ends-to-vovon        |   | add-ends-to-paths    (its only job now) |
+   | VOVOSON implementation   | VOVON implementation    | FINAL implementation is VOVON (renamed) |
+   |--------------------------+-------------------------+-----------------------------------------|
+   | node-tree-to-node-paths* | node-tree-to-node-paths | node-tree-to-node-paths                 |
+   | any-son-to-vovoson       | any-son-to-vovon        | any-son-to-paths                        |
+   | non-if-son-to-vovoson    | non-if-son-to-vovon     | non-if-son-to-subpaths                  |
+   | if-son-to-vovoson        | if-son-to-vovon         | if-son-to-subpaths                      |
+   | vovoson>vovoson          | vovon>vovon             | combine-paths                           |
+   | vovoson-to-vovon         | add-ends-to-vovon       | add-ends-to-paths    (its only job now) |
 
-   The quick bench results below show that the VOVON implementation outperforms the VOVOSON in all but one run, by a small margin to significant margin with the following from examples.clj:
+   The quick bench results below show that the VOVON implementation outperforms the VOVOSON in all but one run (in the simplest ex/ops-rpl-example, it's a toss up), by a significant margin with the following from examples.clj:
    + ex/ops-rpl-example
    + ex/ops-kdh-half-bad-example
    + ex/ops-kdh-bad-example
@@ -2483,56 +2492,58 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
 
    That's why we have metrics, to challenge our assumptions.
 
-   The VOVOSON implementation is now in dev/clj/kdh/stax/[[dev*.clj][dev*.clj]]
+   The VOVOSON implementation is now in dev/clj/kdh/stax/nodify[[file*dev.clj][*dev.clj]]
    
    #+begin_src clj
-   (load-file "dev/clj/kdh/stax/dev*.clj")
+   (load-file "dev/clj/kdh/stax/nodify*dev.clj")
 
    (let [ops ex/ops-rpl-example
-	 #_ex/ops-kdh-bad-example
-	 paths (node-tree-to-node-paths (nodify-ops ops))
-	 paths* (dev/node-tree-to-node-paths* (nodify-ops ops))
+	 node-tree (nodify-ops ops)
+	 paths (node-tree-to-node-paths node-tree)
+	 paths* (dev/node-tree-to-node-paths* node-tree)
 	 they-are-equal (= paths paths*)]
      (if they-are-equal
        (do
-	 (qb (node-tree-to-node-paths (nodify-ops ops)))
-	 (qb (dev/node-tree-to-node-paths* (nodify-ops ops)))
+	 (qb (node-tree-to-node-paths node-tree))
+	 (qb (dev/node-tree-to-node-paths* node-tree))
 	 they-are-equal)
        (take 2 (clojure.data/diff (simplify-nodes-in-paths paths)
 				  (simplify-nodes-in-paths paths*)))))
 
+   (=> true )
    ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))                  VOVOSON is FASTER!!!
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 11994 in 6 samples of 1999 calls.
-   ;;              Execution time mean : 52.939464 µs
-   ;;     Execution time std-deviation : 5.233579 µs
-   ;;    Execution time lower quantile : 48.903212 µs ( 2.5%)
-   ;;    Execution time upper quantile : 60.172453 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 31770 in 6 samples of 5295 calls.
+   ;;              Execution time mean : 19.349162 µs
+   ;;     Execution time std-deviation : 551.336958 ns
+   ;;    Execution time lower quantile : 18.923562 µs ( 2.5%)
+   ;;    Execution time upper quantile : 19.986863 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
    ;; ________________________________________________________________________________
 
 
    ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
+   ;; (dev/node-tree-to-node-paths* node-tree)            VOVOSON is slightly slower!!
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 10548 in 6 samples of 1758 calls.
-   ;;              Execution time mean : 61.492943 µs
-   ;;     Execution time std-deviation : 9.227459 µs
-   ;;    Execution time lower quantile : 53.235188 µs ( 2.5%)
-   ;;    Execution time upper quantile : 73.071885 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 30252 in 6 samples of 5042 calls.
+   ;;              Execution time mean : 20.306389 µs
+   ;;     Execution time std-deviation : 560.130629 ns
+   ;;    Execution time lower quantile : 19.683561 µs ( 2.5%)
+   ;;    Execution time upper quantile : 21.097368 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
    ;; ________________________________________________________________________________
 
+
    ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))                  VOVOSON is SLOWER!!!
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 11742 in 6 samples of 1957 calls.
-   ;;              Execution time mean : 52.076986 µs
-   ;;     Execution time std-deviation : 1.256195 µs
-   ;;    Execution time lower quantile : 50.644053 µs ( 2.5%)
-   ;;    Execution time upper quantile : 53.821090 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 29760 in 6 samples of 4960 calls.
+   ;;              Execution time mean : 20.534586 µs
+   ;;     Execution time std-deviation : 537.682387 ns
+   ;;    Execution time lower quantile : 20.003141 µs ( 2.5%)
+   ;;    Execution time upper quantile : 21.386490 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
 
    ;; Found 1 outliers in 6 samples (16.6667 %)
    ;; 	low-severe	 1 (16.6667 %)
@@ -2541,14 +2552,14 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
 
 
    ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
+   ;; (dev/node-tree-to-node-paths* node-tree)            VOVOSON is slightly faster!!
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 11730 in 6 samples of 1955 calls.
-   ;;              Execution time mean : 51.399052 µs
-   ;;     Execution time std-deviation : 1.600483 µs
-   ;;    Execution time lower quantile : 49.822317 µs ( 2.5%)
-   ;;    Execution time upper quantile : 53.917362 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 30204 in 6 samples of 5034 calls.
+   ;;              Execution time mean : 19.999326 µs
+   ;;     Execution time std-deviation : 423.647758 ns
+   ;;    Execution time lower quantile : 19.573458 µs ( 2.5%)
+   ;;    Execution time upper quantile : 20.687888 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
 
    ;; Found 1 outliers in 6 samples (16.6667 %)
    ;; 	low-severe	 1 (16.6667 %)
@@ -2557,114 +2568,105 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
 
 
    (let [ops ex/ops-kdh-bad-example
-	 #_ex/ops-kdh-bad-example
-	 paths (node-tree-to-node-paths (nodify-ops ops))
-	 paths* (dev/dev/node-tree-to-node-paths* (nodify-ops ops))
+	 node-tree (nodify-ops ops)
+	 paths (node-tree-to-node-paths node-tree)
+	 paths* (dev/node-tree-to-node-paths* node-tree)
 	 they-are-equal (= paths paths*)]
      (if they-are-equal
        (do
-	 (qb (node-tree-to-node-paths (nodify-ops ops)))
-	 (qb (dev/node-tree-to-node-paths* (nodify-ops ops)))
+	 (qb (node-tree-to-node-paths node-tree))
+	 (qb (dev/node-tree-to-node-paths* node-tree))
 	 they-are-equal)
        (take 2 (clojure.data/diff (simplify-nodes-in-paths paths)
 				  (simplify-nodes-in-paths paths*)))))
 
+   (=> true )
    ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))                   VOVOSON is SLOWER!!
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 4818 in 6 samples of 803 calls.
-   ;;              Execution time mean : 125.995770 µs
-   ;;     Execution time std-deviation : 2.878074 µs
-   ;;    Execution time lower quantile : 123.245002 µs ( 2.5%)
-   ;;    Execution time upper quantile : 129.931117 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 10200 in 6 samples of 1700 calls.
+   ;;              Execution time mean : 60.424721 µs
+   ;;     Execution time std-deviation : 1.439941 µs
+   ;;    Execution time lower quantile : 59.236936 µs ( 2.5%)
+   ;;    Execution time upper quantile : 62.296098 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
    ;; ________________________________________________________________________________
 
 
    ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 5088 in 6 samples of 848 calls.
-   ;;              Execution time mean : 125.705919 µs
-   ;;     Execution time std-deviation : 25.970576 µs
-   ;;    Execution time lower quantile : 112.892239 µs ( 2.5%)
-   ;;    Execution time upper quantile : 170.671529 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 8448 in 6 samples of 1408 calls.
+   ;;              Execution time mean : 75.608386 µs
+   ;;     Execution time std-deviation : 4.393505 µs
+   ;;    Execution time lower quantile : 70.243259 µs ( 2.5%)
+   ;;    Execution time upper quantile : 81.459913 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
 
-   ;; Found 2 outliers in 6 samples (33.3333 %)
+   ;; ================================================================================
+   ;; (node-tree-to-node-paths node-tree)
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 10212 in 6 samples of 1702 calls.
+   ;;              Execution time mean : 59.896665 µs
+   ;;     Execution time std-deviation : 1.839929 µs
+   ;;    Execution time lower quantile : 57.942817 µs ( 2.5%)
+   ;;    Execution time upper quantile : 61.912140 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
+
+
+   ;; ================================================================================
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 7722 in 6 samples of 1287 calls.
+   ;;              Execution time mean : 72.558158 µs
+   ;;     Execution time std-deviation : 2.993074 µs
+   ;;    Execution time lower quantile : 69.502512 µs ( 2.5%)
+   ;;    Execution time upper quantile : 77.401609 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+
+   ;; Found 1 outliers in 6 samples (16.6667 %)
    ;; 	low-severe	 1 (16.6667 %)
-   ;; 	low-mild	 1 (16.6667 %)
-   ;;  Variance from outliers : 48.4747 % Variance is moderately inflated by outliers
-   ;; ________________________________________________________________________________
-
-   ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))                  VOVOSON is SLOWER!!!
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 4344 in 6 samples of 724 calls.
-   ;;              Execution time mean : 145.704265 µs
-   ;;     Execution time std-deviation : 7.948911 µs
-   ;;    Execution time lower quantile : 137.976756 µs ( 2.5%)
-   ;;    Execution time upper quantile : 154.857574 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
-   ;; ________________________________________________________________________________
-
-
-   ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 5184 in 6 samples of 864 calls.
-   ;;              Execution time mean : 116.125775 µs
-   ;;     Execution time std-deviation : 1.998712 µs
-   ;;    Execution time lower quantile : 113.623924 µs ( 2.5%)
-   ;;    Execution time upper quantile : 118.459630 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;;  Variance from outliers : 13.8889 % Variance is moderately inflated by outliers
    ;; ________________________________________________________________________________
 
 
    (let [ops ex/ops-kdh-half-bad-example
-	 paths (node-tree-to-node-paths (nodify-ops ops))
-	 paths* (dev/node-tree-to-node-paths* (nodify-ops ops))
+	 node-tree (nodify-ops ops)
+	 paths (node-tree-to-node-paths node-tree)
+	 paths* (dev/node-tree-to-node-paths* node-tree)
 	 they-are-equal (= paths paths*)]
      (if they-are-equal
        (do
-	 (qb (node-tree-to-node-paths (nodify-ops ops)))
-	 (qb (dev/node-tree-to-node-paths* (nodify-ops ops)))
+	 (qb (node-tree-to-node-paths node-tree))
+	 (qb (dev/node-tree-to-node-paths* node-tree))
 	 they-are-equal)
        (take 2 (clojure.data/diff (simplify-nodes-in-paths paths)
 				  (simplify-nodes-in-paths paths*)))))
 
+   (=> true )
    ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))              VOVOSON is far SLOWER!!!
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 4950 in 6 samples of 825 calls.
-   ;;              Execution time mean : 129.822180 µs
-   ;;     Execution time std-deviation : 7.353558 µs
-   ;;    Execution time lower quantile : 122.656039 µs ( 2.5%)
-   ;;    Execution time upper quantile : 139.126160 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 9036 in 6 samples of 1506 calls.
+   ;;              Execution time mean : 67.448824 µs
+   ;;     Execution time std-deviation : 724.285048 ns
+   ;;    Execution time lower quantile : 66.807899 µs ( 2.5%)
+   ;;    Execution time upper quantile : 68.305990 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
    ;; ________________________________________________________________________________
 
 
    ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 5766 in 6 samples of 961 calls.
-   ;;              Execution time mean : 105.035919 µs
-   ;;     Execution time std-deviation : 2.523399 µs
-   ;;    Execution time lower quantile : 101.720154 µs ( 2.5%)
-   ;;    Execution time upper quantile : 108.183083 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
-   ;; ________________________________________________________________________________
-
-   ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))              VOVOSON is far SLOWER!!!
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 4956 in 6 samples of 826 calls.
-   ;;              Execution time mean : 122.635661 µs
-   ;;     Execution time std-deviation : 5.214787 µs
-   ;;    Execution time lower quantile : 119.174120 µs ( 2.5%)
-   ;;    Execution time upper quantile : 131.382685 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 6756 in 6 samples of 1126 calls.
+   ;;              Execution time mean : 86.714118 µs
+   ;;     Execution time std-deviation : 1.181194 µs
+   ;;    Execution time lower quantile : 84.513171 µs ( 2.5%)
+   ;;    Execution time upper quantile : 87.549860 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
 
    ;; Found 1 outliers in 6 samples (16.6667 %)
    ;; 	low-severe	 1 (16.6667 %)
@@ -2673,76 +2675,92 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
 
 
    ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 5988 in 6 samples of 998 calls.
-   ;;              Execution time mean : 102.786848 µs
-   ;;     Execution time std-deviation : 1.669593 µs
-   ;;    Execution time lower quantile : 101.239703 µs ( 2.5%)
-   ;;    Execution time upper quantile : 104.720766 µs (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 9162 in 6 samples of 1527 calls.
+   ;;              Execution time mean : 67.177364 µs
+   ;;     Execution time std-deviation : 1.778275 µs
+   ;;    Execution time lower quantile : 65.163851 µs ( 2.5%)
+   ;;    Execution time upper quantile : 69.562378 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
+
+
+   ;; ================================================================================
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 6798 in 6 samples of 1133 calls.
+   ;;              Execution time mean : 88.725947 µs
+   ;;     Execution time std-deviation : 1.339406 µs
+   ;;    Execution time lower quantile : 86.911884 µs ( 2.5%)
+   ;;    Execution time upper quantile : 90.300984 µs (97.5%)
+   ;;                    Overhead used : 9.298934 ns
    ;; ________________________________________________________________________________
 
 
    (let [ops ex/ops-kdh-worse-example
-	 paths (node-tree-to-node-paths (nodify-ops ops))
-	 paths* (dev/node-tree-to-node-paths* (nodify-ops ops))
+	 node-tree (nodify-ops ops)
+	 paths (node-tree-to-node-paths node-tree)
+	 paths* (dev/node-tree-to-node-paths* node-tree)
 	 they-are-equal (= paths paths*)]
      (if they-are-equal
        (do
-	 (qb (node-tree-to-node-paths (nodify-ops ops)))
-	 (qb (dev/node-tree-to-node-paths* (nodify-ops ops)))
+	 (qb (node-tree-to-node-paths node-tree))
+	 (qb (dev/node-tree-to-node-paths* node-tree))
 	 they-are-equal)
        (take 2 (clojure.data/diff (simplify-nodes-in-paths paths)
 				  (simplify-nodes-in-paths paths*)))))
+
+   (=> true )
    ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))              VOVOSON is far SLOWER!!!
+   ;; (node-tree-to-node-paths node-tree)
    ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 330 in 6 samples of 55 calls.
-   ;;              Execution time mean : 1.942342 ms
-   ;;     Execution time std-deviation : 157.013499 µs
-   ;;    Execution time lower quantile : 1.853794 ms ( 2.5%)
-   ;;    Execution time upper quantile : 2.211973 ms (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;; Evaluation count : 576 in 6 samples of 96 calls.
+   ;;              Execution time mean : 1.060576 ms
+   ;;     Execution time std-deviation : 30.665268 µs
+   ;;    Execution time lower quantile : 1.030523 ms ( 2.5%)
+   ;;    Execution time upper quantile : 1.094151 ms (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
+
+
+   ;; ================================================================================
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 354 in 6 samples of 59 calls.
+   ;;              Execution time mean : 1.662790 ms
+   ;;     Execution time std-deviation : 29.832165 µs
+   ;;    Execution time lower quantile : 1.630255 ms ( 2.5%)
+   ;;    Execution time upper quantile : 1.695323 ms (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
+
+
+   ;; ================================================================================
+   ;; (node-tree-to-node-paths node-tree)
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 582 in 6 samples of 97 calls.
+   ;;              Execution time mean : 1.057513 ms
+   ;;     Execution time std-deviation : 28.069987 µs
+   ;;    Execution time lower quantile : 1.029392 ms ( 2.5%)
+   ;;    Execution time upper quantile : 1.095824 ms (97.5%)
+   ;;                    Overhead used : 9.298934 ns
+   ;; ________________________________________________________________________________
+
+
+   ;; ================================================================================
+   ;; (dev/node-tree-to-node-paths* node-tree)       VOVOSON is significantly slower!!
+   ;; --------------------------------------------------------------------------------
+   ;; Evaluation count : 378 in 6 samples of 63 calls.
+   ;;              Execution time mean : 1.687327 ms
+   ;;     Execution time std-deviation : 49.784393 µs
+   ;;    Execution time lower quantile : 1.643618 ms ( 2.5%)
+   ;;    Execution time upper quantile : 1.772590 ms (97.5%)
+   ;;                    Overhead used : 9.298934 ns
 
    ;; Found 1 outliers in 6 samples (16.6667 %)
    ;; 	low-severe	 1 (16.6667 %)
-   ;;  Variance from outliers : 15.5597 % Variance is moderately inflated by outliers
-   ;; ________________________________________________________________________________
-
-
-   ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 450 in 6 samples of 75 calls.
-   ;;              Execution time mean : 1.346803 ms
-   ;;     Execution time std-deviation : 26.512690 µs
-   ;;    Execution time lower quantile : 1.305083 ms ( 2.5%)
-   ;;    Execution time upper quantile : 1.372172 ms (97.5%)
-   ;;                    Overhead used : 9.294590 ns
-   ;; ________________________________________________________________________________
-
-   ;; ================================================================================
-   ;; (node-tree-to-node-paths (nodify-ops ops))              VOVOSON is far SLOWER!!!
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 330 in 6 samples of 55 calls.
-   ;;              Execution time mean : 1.897200 ms
-   ;;     Execution time std-deviation : 100.531949 µs
-   ;;    Execution time lower quantile : 1.811493 ms ( 2.5%)
-   ;;    Execution time upper quantile : 2.046091 ms (97.5%)
-   ;;                    Overhead used : 9.294590 ns
-   ;; ________________________________________________________________________________
-
-
-   ;; ================================================================================
-   ;; (dev/node-tree-to-node-paths* (nodify-ops ops))
-   ;; --------------------------------------------------------------------------------
-   ;; Evaluation count : 444 in 6 samples of 74 calls.
-   ;;              Execution time mean : 1.343870 ms
-   ;;     Execution time std-deviation : 41.479275 µs
-   ;;    Execution time lower quantile : 1.299376 ms ( 2.5%)
-   ;;    Execution time upper quantile : 1.367377 ms (97.5%)
-   ;;                    Overhead used : 9.294590 ns
+   ;;  Variance from outliers : 13.8889 % Variance is moderately inflated by outliers
    ;; ________________________________________________________________________________
 
    #+end_src
@@ -2756,10 +2774,10 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
        + traverses the tree by tail recursing flat paths, and recursing on branches
 	 + returns :node-tree, :raw-paths (partial paths), and :paths (which it stitches together from partial paths)
 
-   I thought that because ~nodify-ops*~ builds the node-tree in the same traversal as it collects paths, that it might be faster than ~nodify-ops~ and ~node-tree-to-node-paths~ (basically two traversals), but criterion tells me it is not - at least not as currently implemented.  For that reason, it is and functions only it uses are relegated to dev/clj/kdh/stax/[[dev*.clj][dev*.clj]].
+   I thought that because ~nodify-ops*~ builds the node-tree in the same traversal as it collects paths, that it might be faster than ~nodify-ops~ and ~node-tree-to-node-paths~ (basically two traversals), but criterion tells me it is not - at least not as currently implemented.  For that reason, it (and functions only it uses) are relegated to dev/clj/kdh/stax/nodify[[file*dev.clj][*dev.clj]].
    
   #+begin_src clj :exports code
-  (load-file "dev/clj/kdh/stax/dev*.clj")
+  (load-file "dev/clj/kdh/stax/nodify*dev.clj")
 
   (let [ops ex/ops-kdh-bad-example
 	nodified (let [node-tree (nodify-ops ops)
