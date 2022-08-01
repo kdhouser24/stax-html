@@ -1,0 +1,865 @@
+#+TODO: TODO | DONE
+#+TITLE:     User Testing Requirements (clojure 1.9.0)
+#+AUTHOR:    Keith D Houser
+#+DESCRIPTION: kdh/stax requirements on Clojure 1.9.0
+#+KEYWORDS:  syntax, org, document
+#+LANGUAGE:  en
+#+OPTIONS:   H:5 num:nil toc:4 p:t e:nil
+#+STARTUP: entitiespretty
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+HTML_HEAD: <style> pre.src{background:black;color:white;} </style>
+#+HTML_HEAD: <style> div#text-table-of-contents code {color:black;background:lightgray;} </style>  
+#+PROPERTY: header-args :eval never-export
+
+* User Testing Requirements (clojure 1.9.0)
+** DONE Explicit Requirements
+CLOSED: [2022-07-29 Fri 16:10]
+   Explicit requirements are taken directly from the assignment. They are split into individual testable requirements, and designated *req-e-#:* where *e* means explicit, and *#* is a number.
+
+*** SETUP
+#+begin_src clj
+,*ns*
+(=> #namespace[user] )
+
+(clojure-version)
+(=> "1.9.0" )
+
+(use 'kdh.stax.core)
+(=> nil )
+
+;; patch for clojure 1.9.0
+(def ex-message kdh.stax.errs/ex-message)
+#+end_src
+   
+*** DONE <<req-e-01>> *req-e-01*: Variables are symbols prefixed with "!", e.g. !v
+CLOSED: [2022-07-29 Fri 15:49]
+~kdh.stax.nodify/nodify-op~ will create a node of type ~:kdh.stax.node/push-var~ iff the op passes the predicate ~kdh.stax.node/!symbol?~
+#+begin_src clj :exports code
+(defn !symbol?
+  "True if op matches symbol of the form !v where v is anything but ! or +"
+  [op]
+  (and (symbol? op)
+	   (boolean (re-find #"^![^!\+]+$" (name op)))))
+#+end_src
+    
+declarations argument to defstackfn is also checked to pass ~kdh.stax.node/!symbol?~ in its :pre condition.
+
+#+name: f-req-e-01
+#+begin_src clj :exports code
+(defstackfn f-req-e-01 [a b c] a b c)
+;;!>  FAIL in () (core.clj:85)
+;; expected: (every? !symbol? declarations)
+;;   actual: (not (every? #function[kdh.stax.node/!symbol?] [a b c]))
+#+end_src
+*** DONE <<req-e-02>> *req-e-02*: A stack function is defined with "defstackfn"
+CLOSED: [2022-07-29 Fri 15:50]
+
+Define a trivial stack function (with no declarations and only push numbers).
+
+#+name: f-req-e-02
+#+begin_src clj :exports code
+(defstackfn f-req-e-02 [] 1 2 3)
+(=> #'user/f-req-e-02 )
+
+(f-req-e-02)
+(=> [1 2 3] )
+#+end_src
+
+*** DONE <<req-e-03>> *req-e-03*: The first argument is the input declaration which also provides variable names to the arguments
+CLOSED: [2022-07-29 Fri 15:50]
+
+#+name: f-req-e-03
+#+begin_src clj :exports code
+(defstackfn f-req-e-03 [!a !b !c] !b !a !c)
+(=> #'user/f-req-e-03 )
+
+(f-req-e-03 :a :b :c)
+(=> [:b :a :c] )
+#+end_src
+
+*** DONE <<req-e-04>> *req-e-04*: The stack always starts empty
+CLOSED: [2022-07-29 Fri 15:54]
+
+Let's pop an empty stack to see what happens
+
+#+name: f-req-e-04
+#+begin_src clj :exports code
+(defstackfn f-req-e-04 [] <pop>)
+;;+>
+;; 1st Path Errors [>-start-term->]:
+;; 	`<pop>' at op[0] node[0]:
+;; 		 stack size=0, operation <pop> needs >=1
+(=> :kdh.stax.errs/defstackfn-produced-errors )
+#+end_src
+
+I don't like to throw errors during dev, it's disruptive.  Instead, I return meaningful keys (here ~:kdh.stax.errs/defstackfn-produced-errors~).
+
+However, I recognize that others like Exceptions, so I allow them with a dynamic binding...
+
+#+name: f-req-e-04-with-exception
+#+begin_src clj :exports code
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (defstackfn f-req-e-04 [] <pop>)
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["defstackfn produced errors"
+  {:error-data [["1st Path Errors [>-start-term->]: "
+		     [{:op-type :kdh.stax.node/op=pop,
+		       :needs 1,
+		       :delta -1,
+		       :op <pop>,
+		       :node-index [0],
+		       :op-index [0],
+		       :errors [{:err-zone :kdh.stax.errors/zone=path,
+				 :err-type :kdh.stax.errors/error=static-insufficient-stack,
+				 :err-text "stack size=0,
+operation <pop> needs >=1"}]}]]],
+   :error-text "\n1st Path Errors [>-start-term->]: \n\t`<pop>' at op[0] node[0]:\n\t\t stack size=0, operation <pop> needs >=1\n"}]
+)
+#+end_src
+
+Exceptions or not, I've proved the stack is initially empty!
+
+*** DONE <<req-e-05>> *req-e-05*: The implementation of a stackfn is a sequence of stack operations
+CLOSED: [2022-07-29 Fri 15:55]
+#+name: f-req-e-05
+#+begin_src clj
+(defstackfn f-req-e-05 [!a] !a 2 <pop> 3 (invoke> = 2)
+  (if> "!a == 3" else> "!a <> 3") (invoke> println 1))
+(=> #'user/f-req-e-05 )
+
+(f-req-e-05 1)
+;;+ !a <> 3
+(=> [nil] )
+
+(f-req-e-05 3)
+;;+ !a == 3
+(=> [nil] )
+#+end_src
+*** DONE <<req-e-06>> *req-e-06*: Using a constant as a stack operation pushes that value onto the stack
+CLOSED: [2022-07-29 Fri 15:55]
+
+In my implementation, I interpret /constant/ as a form that evaluates to itself.
+
+The Clojure reference page on evaluation]] says:
+
+#+begin_quote
+Strings, numbers, characters, true, false, nil and keywords evaluate to themselves.
+#+end_quote
+
+That quote is part of the documentation string for my function ~ksh.stax.node/self-evaluating?~:
+
+#+begin_src clj :exports code
+(clojure.repl/doc kdh.stax.node/self-evaluating?)
+;;+>
+;; -------------------------
+;; kdh.stax.node/self-evaluating?
+;; ([op])
+;;     True if op is a self evaluating form.
+;;   https://clojure.org/reference/evaluation says 'Strings, numbers, characters, true, false, nil and keywords evaluate to themselves.'
+#+end_src
+
+Let's push one of each onto the stack
+
+#+name: f-req-e-06
+#+begin_src clj :exports code
+(defstackfn f-req-e-06 [] "string" 42 \z true false nil :bubba)
+(=> #'user/f-req-e-06 )
+
+(f-req-e-06)
+(=> ["string" 42 \z true false nil :bubba] )
+#+end_src
+
+*** DONE <<req-e-07>> *req-e-07*: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+
+CLOSED: [2022-07-29 Fri 15:56]
+
+#+name: f-req-e-07
+#+begin_src clojure :ns user :results value pp :exports both
+(defstackfn f-req-e-07 [] "string" 42 !v1+ \z true false nil :bubba !v1)
+(=> #'user/f-req-e-07 )
+
+(f-req-e-07)
+(=> ["string" 42 \z true false nil :bubba 42] )
+#+end_src
+
+!v1+ assigned the top of the stack (42) to the variable !v1 as evidenced by the top of the returned stack after the final !v1 push.
+
+*** DONE <<req-e-08>> *req-e-08*: A function is invoked with "invoke>".
+CLOSED: [2022-07-29 Fri 15:56]
+
+#+name: f-req-e-08
+#+begin_src clj :exports code
+(defstackfn f-req-e-08 [] "string" 42 !v1+ \z true false nil :bubba !v1 (invoke> println 1))
+(=> #'user/f-req-e-08 )
+
+(f-req-e-08)
+;;+> 42
+(=> ["string" 42 \z true false nil :bubba nil] )
+#+end_src
+
+*** DONE <<req-e-09>> *req-e-09*: "invoke>" takes as input the operation
+CLOSED: [2022-07-29 Fri 15:56]
+
+The first argument to ~invoke>~ must be a function (in this example ~+~)
+
+#+name: f-req-e-09
+#+begin_src clj :exports code
+(defstackfn f-req-e-09 [!a !b] !a !b (invoke> + 2))
+(=> #'user/f-req-e-09 )
+
+(f-req-e-09 2 3)
+(=> [5] )
+
+(f-req-e-09 :foo "bar")
+;;+>
+;; RUNTIME ERRORS:
+;; 	`(invoke> + 2)' at op[2] node[2]:
+;; 		 `(apply #'clojure.core/+ ("bar" :foo))' failed during execution (class java.lang.String cannot be cast to class java.lang.Number (java.lang.String and java.lang.Number are in module java.base of loader 'bootstrap'))
+(=> :kdh.stax.errs/stackfn-produced-runtime-error )
+#+end_src
+
+The error is not on the function, but on its arguments. I include it to show that '+ became #'clojure.core/+
+
+*** DONE <<req-e-10>> *req-e-10*: "invoke>" takes as input the arity to use
+CLOSED: [2022-07-29 Fri 16:01]
+
+My implementation only accepts pos-int arity, as I understand invoke> to invoke a function on stack values.
+
+#+name: f-req-e-10
+#+begin_src clj :exports code
+(defstackfn f-req-e-10 [!a !b] !a !b (invoke> + 2))
+(=> #'user/f-req-e-10 )
+
+(f-req-e-10 2 3)
+(=> [5] )
+
+(defstackfn f-req-e-10* [!a !b] !a !b (invoke> + 0))
+;;+>
+;; Global Operation Tree Errors: 
+;; 	`(invoke> + 0)' at op[2] node[2]:
+;; 		 0 is not a valid arity (must be pos-int)!
+;;
+;; 1st Path Errors [>-start-term->]: 
+;; 	`(invoke> + 0)' at op[2] node[2]:
+;; 		 0 is not a valid arity (must be pos-int)!
+(=> :kdh.stax.errs/defstackfn-produced-errors )
+#+end_src
+
+Or, if you prefer Exceptions...
+
+#+name: f-req-e-10-with-exception
+#+begin_src clj :exports code
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (defstackfn f-req-e-10* [!a !b] !a !b (invoke> + 0))
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["defstackfn produced errors"
+  {:error-data [["Global Operation Tree Errors: "
+		     [{:op-type :kdh.stax.node/op=invoke,
+		       :op (invoke> + 0),
+		       :fun +,
+		       :arity 0,
+		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
+				 :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
+				 :err-text "0 is not a valid arity (must be pos-int)!"}],
+		       :node-index [2],
+		       :op-index [2]}]]
+		    ["1st Path Errors [>-start-term->]: "
+		     [{:op-type :kdh.stax.node/op=invoke,
+		       :op (invoke> + 0),
+		       :fun +,
+		       :arity 0,
+		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
+				 :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
+				 :err-text "0 is not a valid arity (must be pos-int)!"}],
+		       :node-index [2],
+		       :op-index [2]}]]],
+   :error-text "\nGlobal Operation Tree Errors: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n\n1st Path Errors [>-start-term->]: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n"}]
+)
+#+end_src
+
+*** DONE <<req-e-11>> *req-e-11*: <pop> is a special operation which removes the top value of the stack
+CLOSED: [2022-07-29 Fri 16:01]
+
+#+name: f-req-e-11
+#+begin_src clj :exports code
+(defstackfn f-req-e-11 [] 1 2 <pop> 3 )
+(=> #'user/f-req-e-11 )
+
+(f-req-e-11)
+(=> [1 3] )
+#+end_src
+
+2 got <pop>'d
+
+*** DONE <<req-e-12>> *req-e-12*: if> tests if the top value of the stack is truthy to determine which branch to follow.
+CLOSED: [2022-07-29 Fri 16:02]
+
+#+name: f-req-e-12
+#+begin_src clj :exports code
+(defstackfn f-req-e-12 [!a] !a (invoke> even? 1) (if> "even" else> "odd"))
+(=> #'user/f-req-e-12 )
+
+(f-req-e-12 3)
+(=> ["odd"] )
+
+(f-req-e-12 4)
+(=> ["even"] )
+#+end_src
+
+*** DONE <<req-e-13>> *req-e-13*: The branches of if are separated with "else>"
+CLOSED: [2022-07-29 Fri 16:07]
+
+#+name: f-req-e-13
+#+begin_src clj :exports code
+(defstackfn f-req-e-13 [!a] !a (invoke> even? 1) (if> "even" else> "odd"))
+(=> #'user/f-req-e-13 )
+
+(f-req-e-13 3)
+(=> ["odd"] )
+
+(f-req-e-13 4)
+(=> ["even"] )
+#+end_src
+
+Note, my implementation works with a missing ~else>~.
+
+#+name: f-req-e-13*
+#+begin_src clj :exports code
+(defstackfn f-req-e-13* [!a] !a (invoke> even? 1) (if> "even"))
+(=> #'user/f-req-e-13* )
+
+(f-req-e-13* 3)
+(=> [] )
+
+(f-req-e-13* 4)
+(=> ["even"] )
+#+end_src
+
+It works with an empty else>.
+
+#+name: f-req-e-13**
+#+begin_src clj :exports code
+(defstackfn f-req-e-13** [!a] !a (invoke> even? 1) (if> "even" else>))
+(=> #'user/f-req-e-13** )
+
+(f-req-e-13** 3)
+(=> [] )
+
+(f-req-e-13** 4)
+(=> ["even"] )
+#+end_src
+
+It works with an empty then (the ops between the ~if>~ and ~else>~).
+
+#+name: f-req-e-13***
+#+begin_src clojure :ns user :results value pp :exports both
+(defstackfn f-req-e-13*** [!a] !a (invoke> even? 1) (if> else> "odd"))
+(=> #'user/f-req-e-13*** )
+
+(f-req-e-13*** 3)
+(=> ["odd"] )
+
+(f-req-e-13*** 4)
+(=> [] )
+#+end_src
+
+It even works with an empty then and missing else>.
+
+#+name: f-req-e-13****
+#+begin_src clj :exports code
+(defstackfn f-req-e-13**** [!a] !a (invoke> even? 1) (if>))
+(=> #'user/f-req-e-13**** )
+
+(f-req-e-13**** 3)
+(=> [] )
+
+(f-req-e-13**** 4)
+(=> [] )
+    #+end_src
+*** DONE <<req-e-14>> *req-e-14*: defstackfn should be a macro
+CLOSED: [2022-07-29 Fri 16:08]
+
+#+name: f-req-e-14
+#+begin_src clj :exports code
+(meta #'defstackfn)
+(=>
+ {:arglists ([stackfn-sym declarations & operations]),
+  :doc "Defines a stack function that takes declaration as its args,
+and performs to operations given",
+  :line 80,
+  :column 1,
+  :file "kdh/stax/core.clj",
+  :name defstackfn,
+  :ns #namespace[kdh.stax.core],
+  :macro true}
+)
+#+end_src
+
+*** DONE <<req-e-15>> *req-e-15*: defstackfn should produce a function invokable like any other function.
+CLOSED: [2022-07-29 Fri 16:08]
+
+#+name: f-req-e-15
+#+begin_src clj :exports code
+(defstackfn f-req-e-15 [!a !b !c] !c !b !a)
+(=> #'user/f-req-e-15 )
+
+(f-req-e-15 1 2 3)
+
+(=> [3 2 1] )
+
+(->> [1 2 3 :a :b :c]
+	 (partition 3)
+	 (map (partial apply f-req-e-15)))
+
+(=> ([3 2 1] [:c :b :a]) )
+#+end_src
+
+*** DONE <<req-e-16>> *req-e-16*: defstackfn should provide an informative error if there's an invalid stack operation
+CLOSED: [2022-07-29 Fri 16:09]
+
+#+name: f-req-e-16
+#+begin_src clj :exports code
+(defstackfn f-req-e-16 [] true (if> "even" else> else> "odd"))
+(=> :kdh.stax.errs/defstackfn-produced-errors )
+;;+>
+;; Global Operation Tree Errors: 
+;; 	`else>' at op[1 3] node[1 :else 0]:
+;; 		 else> is not an allowed op
+;;
+;; 2nd Path Errors [>-start-else-term->]: 
+;; 	`else>' at op[1 3] node[1 :else 0]:
+;; 		 else> is not an allowed op
+#+end_src
+
+Or, if you prefer Exceptions...
+
+#+name: f-req-e-16-with-exception
+#+begin_src clj :exports code
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (defstackfn f-req-e-16 [] true (if> "even" else> else> "odd"))
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["defstackfn produced errors"
+  {:error-data [["Global Operation Tree Errors: "
+		     [{:op-type :kdh.stax.node/op=illegal,
+		       :op else>,
+		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
+				 :err-type :kdh.stax.errors/error=parse-illegal-operation,
+				 :err-text "else> is not an allowed op"}],
+		       :node-index [1 :else 0],
+		       :op-index [1 3]}]]
+		    ["2nd Path Errors [>-start-else-term->]: "
+		     [{:op-type :kdh.stax.node/op=illegal,
+		       :op else>,
+		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
+				 :err-type :kdh.stax.errors/error=parse-illegal-operation,
+				 :err-text "else> is not an allowed op"}],
+		       :node-index [1 :else 0],
+		       :op-index [1 3]}]]],
+   :error-text "\nGlobal Operation Tree Errors: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n\n2nd Path Errors [>-start-else-term->]: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n"}]
+)
+#+end_src
+
+*** DONE <<req-e-17>> *req-e-17*: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.
+CLOSED: [2022-07-29 Fri 16:09]
+
+#+name: f-req-e-17
+#+begin_src clj :exports code
+(defstackfn f-req-e-17 [] true !a)
+(=> :kdh.stax.errs/defstackfn-produced-errors )
+;;+>
+;; 1st Path Errors [>-start-term->]:
+;; 	`!a' at op[1] node[1]:
+;; 		 !a is a reference before definition
+#+end_src
+
+Or, if you prefer Exceptions...
+
+#+name: f-req-e-17-with-exception
+#+begin_src clj :exports code
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (defstackfn f-req-e-17 [] true !a)
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["defstackfn produced errors"
+  {:error-data [["1st Path Errors [>-start-term->]: "
+		     [{:errors [{:err-zone :kdh.stax.errors/zone=path,
+				 :err-type :kdh.stax.errors/error=static-var-not-defined,
+				 :err-text "!a is a reference before definition"}],
+		       :needs 0,
+		       :stack-size 2,
+		       :op !a,
+		       :node-index [1],
+		       :delta 1,
+		       :op-index [1],
+		       :op-type :kdh.stax.node/op=push-var,
+		       :var-ref !a}]]],
+   :error-text "\n1st Path Errors [>-start-term->]: \n\t`!a' at op[1] node[1]:\n\t\t !a is a reference before definition\n"}]
+)
+    #+end_src
+*** DONE <<req-e-18>> *req-e-18*: It should be possible to shadow vars (naming a new local the name of an existing variable).
+CLOSED: [2022-07-29 Fri 16:10]
+
+#+name: f-req-e-18
+#+begin_src clj :exports code
+(defstackfn f-req-e-18 [!a !b] !a true !b !a+ 3 !b+ "help" !a !b)
+(=> #'user/f-req-e-18 )
+
+(f-req-e-18 :red :blue)
+(=> [:red true :blue 3 "help" :blue 3] )
+#+end_src
+
+*** DONE <<req-e-19>> *req-e-19*: The example below contains all functionality you need to implement.
+CLOSED: [2022-07-29 Fri 16:10]
+This is not a testable requirement, but I will rely on it for justification of implicit requirements
+** DONE Implicit requirements (*req-i-#*)
+CLOSED: [2022-07-29 Fri 16:14]
+Implicit requirements are those not expressed in the explicit requirements, but implied by them or by simple logical extension.
+*** DONE <<req-i-01>> *req-i-01*: ~defstackfn~ can take an empty declarations argument
+CLOSED: [2022-07-29 Fri 16:10]
+#+name: f-req-i-01
+#+begin_src clj :exports code
+(defstackfn f-req-i-01 [] 1 2 (invoke> + 2))
+(=> #'user/f-req-i-01 )
+
+(f-req-i-01)
+(=> [3] )
+#+end_src
+*** DONE <<req-i-02>> *req-i-02*: ~if>~ consumes the top of the stack
+CLOSED: [2022-07-29 Fri 16:10]
+According to the explicit requirements,
+  #+begin_quote
+  if> tests if the top value of the stack is truthy to determine which branch to follow. The branches are separated with "else>"
+  #+end_quote
+However, the example shows the stack as empty on line 14:
+#+begin_src clj -n13 :exports code
+(invoke> = 2) ; false
+(if> ; stack empty
+#+end_src
+if ~if>~ simply tested the top of the stack without popping, the push of the constant value ~"false!!"~ (line 19) would result in a stack of ~[false "false!!"]~ not ~["false!!"]~ as indicated:
+#+begin_src clj -n18 :exports code
+else>
+ "false!!" ; "false!!"
+#+end_src
+Therefore, I deduce an implicit requirement that ~if>~ first tests the top value and then pops it from the stack
+*** DONE <<req-i-03>> *req-i-03*: ~!v​+~ (define variable and assign it top of stack) does not consume the top of the stack
+CLOSED: [2022-07-29 Fri 16:11]
+Otherwise the following section of the example would not be correct
++ push of value in stack variable ~!c~ would result in a stack of ~[4]~ if ~!v1+~ consumed to top, but the example shows:
+  #+begin_src clj -n5 :exports code
+  (invoke> + 2) ; 3
+  !v1+ ; 3
+  !c ; 3 4
+  #+end_src
+  ~!v2+~ would leave the stack at ~[3]~ if assignment consumed the top.  This would cause ~(invoke> = 2)~ to fail, as the stack would have would  only one value, but the example shows:
+  #+begin_src clj -n11 :exports code
+  (invoke> * 2) ; 3 8
+  !v2+ ; 3 8
+  (invoke> = 2) ; false
+  #+end_src
+*** DONE <<req-i-04>> *req-i-04*: ~(invoke> fun n)~ applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)
+CLOSED: [2022-07-29 Fri 16:12]
+This is not explicitly stated in the assignment.  And it is not evident in the example, where all invoked functions are either associative functions (~+~, ~*~, and ~=~) with arity=2, or are only given n=1 (e.g. ~println~).  But I find this an implicit requirement of stack logic.  If an invoked function of one argument takes its argument from the top of the stack, then a function of two should take its first from the top, pop the stack, then take its next from the new top.  Internally, this is accomplished with the ~apply~ of the reverse (through ~rseq~) of the ~subvec~ of the last ~n~ items in the stack.
+#+name: f-req-i-04
+#+begin_src clj :exports code
+(defstackfn f-req-i-04 [] 1 2 3 4 (invoke> println 4))
+(=> #'user/f-req-i-04 )
+
+(f-req-i-04)
+;;+> 4 3 2 1
+#+end_src
+*** DONE <<req-i-05>> *req-i-05*: ~(invoke> fun n)~ for the sake of consistency, the return value of invoke should be /constant/ (i.e. self-evaluating)
+CLOSED: [2022-07-29 Fri 16:12]
+#+name: f-req-i-05
+#+begin_src clj
+(defstackfn f-req-i-05 [!a !b !c] !a !b !c (invoke> vector 3))
+(=> #'user/f-req-i-05 )
+
+
+(f-req-i-05 1 2 3)
+;;+>
+;; RUNTIME ERRORS:
+;; 	`(invoke> vector 3)' at op[3] node[3]:
+;; 		 `(apply #'clojure.core/vector (3 2 1))' => `[3 2 1]' with *stax-require-simple-stack-values* = true
+(=> :kdh.stax.errs/stackfn-produced-runtime-error )
+
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (f-req-i-05 1 2 3)
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["Runtime Errors" {:error-text "\nRUNTIME ERRORS:\n\t`(invoke> vector 3)' at op[3] node[3]:\n\t\t `(apply #'clojure.core/vector (3 2 1))' => `[3 2 1]' with *stax-require-simple-stack-values* = true\n",
+			:error-data [["RUNTIME ERRORS:"
+				      [{:errors [{:err-zone :kdh.stax.errs/zone=exec,
+						  :err-type :kdh.stax.errs/error=runtime-invoke-returned-complex-val,
+						  :err-text "`(apply #'clojure.core/vector (3 2 1))' => `[3 2 1]' with *stax-require-simple-stack-values* = true"}],
+					:invoke-val [3 2 1],
+					:needs 3,
+					:fun vector,
+					:turns ["start"],
+					:invoke-args (3 2 1),
+					:trace [{:needs 0,
+						 :dot-opts {:shape :point},
+						 :op <<start>>,
+						 :node-index [],
+						 :delta 0,
+						 :stack [],
+						 :op-index [],
+						 :branch :start,
+						 :var-map {!a 1,
+							   !b 2,
+							   !c 3},
+						 :op-type :kdh.stax.node/op=start}
+						{:needs 0,
+						 :op !a,
+						 :node-index [0],
+						 :delta 1,
+						 :stack [1],
+						 :op-index [0],
+						 :var-map {!a 1,
+							   !b 2,
+							   !c 3},
+						 :op-type :kdh.stax.node/op=push-var,
+						 :var-ref !a}
+						{:needs 0,
+						 :op !b,
+						 :node-index [1],
+						 :delta 1,
+						 :stack [1 2],
+						 :op-index [1],
+						 :var-map {!a 1,
+							   !b 2,
+							   !c 3},
+						 :op-type :kdh.stax.node/op=push-var,
+						 :var-ref !b}
+						{:needs 0,
+						 :op !c,
+						 :node-index [2],
+						 :delta 1,
+						 :stack [1 2 3],
+						 :op-index [2],
+						 :var-map {!a 1,
+							   !b 2,
+							   !c 3},
+						 :op-type :kdh.stax.node/op=push-var,
+						 :var-ref !c}
+						{:errors [{:err-zone :kdh.stax.errs/zone=exec,
+							   :err-type :kdh.stax.errs/error=runtime-invoke-returned-complex-val,
+							   :err-text "`(apply #'clojure.core/vector (3 2 1))' => `[3 2 1]' with *stax-require-simple-stack-values* = true"}],
+						 :invoke-val [3 2 1],
+						 :needs 3,
+						 :fun vector,
+						 :invoke-args (3 2 1),
+						 :invoke-apply (apply #'clojure.core/vector (3 2 1)),
+						 :op (invoke> vector 3),
+						 :invoke-fn #'clojure.core/vector,
+						 :node-index [3],
+						 :delta -2,
+						 :arity 3,
+						 :op-index [3],
+						 :op-type :kdh.stax.node/op=invoke}],
+					:invoke-apply (apply #'clojure.core/vector (3 2 1)),
+					:op (invoke> vector 3),
+					:invoke-fn #'clojure.core/vector,
+					:var-init-map {!a 1,
+						       !b 2,
+						       !c 3},
+					:node-index [3],
+					:delta -2,
+					:arity 3,
+					:op-index [3],
+					:op-type :kdh.stax.node/op=invoke}]]]}]
+)
+#+end_src
+*** DONE <<req-i-06>> *req-i-06*: For the sake of consistency, values passed to the defstackfn defined function should be /constant/ (i.e. self-evaluating)
+CLOSED: [2022-07-29 Fri 16:13]
+#+name: f-req-i-06
+#+begin_src clj
+(defstackfn f-req-i-05 [!a !b !c] !a !b !c (invoke> println 3))
+(=> #'user/f-req-i-05 )
+
+
+(f-req-i-05 1 [:a :b :c] 3)
+;;+> Complex args are forbidden: arg#1:[:a :b :c]
+(=> :kdh.stax.errs/stackfn-complex-args-forbidden )
+
+(binding [kdh.stax.errs/*stax-throw-on-error* true]
+  (try (f-req-i-05 1 [:a :b :b] 3)
+	   (catch Exception e [(ex-message e)
+			       (ex-data e)])))
+(=>
+ ["Complex args are forbidden: arg#1:[:a :b :b]"
+  {:complex-args ([1 [:a :b :b]])}]
+  )
+#+end_src    
+*** DONE <<req-i-07>> *req-i-07*: ~kdh.stax.core/defstackfn~ creates a named function that returns the remaining stack as a vector
+CLOSED: [2022-07-29 Fri 16:14]
+    Internally, I represent the stack as a vector whose rightmost value is its top.  This choice is idiomatic because ~clojure.core/pop~ of a vector returns a vector like it's argument, but without the last item. I note that none of the stack state comments in the given example show any enclosing structure.  And they all treat the right-most as the top.  Of course, there is nothing preventing the choice of a list or queue, as pop works on those. It is just my reasoned and experience choice to use a vector.
+    
+    Further, I return the stack and not its top because that would destroy important information (the rest of the stack).  As a general principle, I do not believe in descarding valid data -- the final state of the stack is useful in debugging.  And if the user wishes to only have the top, they can always peek it.  If I only return the top, however, the user cannot access (or even be aware of) the remaining discarded stack.
+* Environment
+** Java Properties
+#+name: java-properties
+#+begin_src clojure :ns stax-user.core :results value table :exports results
+(->> (System/getProperties)
+     seq
+     (partition 2)
+     (into {})
+     (#(dissoc % "java.class.path"))
+     (map-vals #(str/replace % "_" "​_"))
+     (sort-by #(-> % first (str/split #"\.")) sequential-compare))
+#+end_src
+
+#+RESULTS: java-properties
+| apple.awt.UIElement           | true                                                                                                                            |
+| awt.toolkit                   | sun.awt.X11.XToolkit                                                                                                            |
+| clojure.compile.path          | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes                                                                      |
+| clojure.debug                 | false                                                                                                                           |
+| file.encoding                 | UTF-8                                                                                                                           |
+| file.separator                | /                                                                                                                               |
+| java.awt.graphicsenv          | sun.awt.X11GraphicsEnvironment                                                                                                  |
+| java.awt.printerjob           | sun.print.PSPrinterJob                                                                                                          |
+| java.home                     | /usr/lib/jvm/java-11-openjdk-amd64                                                                                              |
+| java.io.tmpdir                | /tmp                                                                                                                            |
+| java.library.path             | /usr/java/packages/lib:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib |
+| java.runtime.name             | OpenJDK Runtime Environment                                                                                                     |
+| java.runtime.version          | 11.0.15+10-Ubuntu-0ubuntu0.20.04.1                                                                                              |
+| java.specification.name       | Java Platform API Specification                                                                                                 |
+| java.specification.vendor     | Oracle Corporation                                                                                                              |
+| java.specification.version    | 11                                                                                                                              |
+| java.vendor                   | Private Build                                                                                                                   |
+| java.vendor.url               | Unknown                                                                                                                         |
+| java.vendor.url.bug           | Unknown                                                                                                                         |
+| java.version                  | 11.0.15                                                                                                                         |
+| java.version.date             | 2022-04-19                                                                                                                      |
+| java.vm.compressedOopsMode    | Zero based                                                                                                                      |
+| java.vm.info                  | mixed mode, sharing                                                                                                             |
+| java.vm.name                  | OpenJDK 64-Bit Server VM                                                                                                        |
+| java.vm.specification.name    | Java Virtual Machine Specification                                                                                              |
+| java.vm.specification.vendor  | Oracle Corporation                                                                                                              |
+| java.vm.specification.version | 11                                                                                                                              |
+| java.vm.vendor                | Private Build                                                                                                                   |
+| java.vm.version               | 11.0.15+10-Ubuntu-0ubuntu0.20.04.1                                                                                              |
+| jdk.debug                     | release                                                                                                                         |
+| line.separator                | \n                                                                                                                              |
+| os.arch                       | amd64                                                                                                                           |
+| os.name                       | Linux                                                                                                                           |
+| os.version                    | 5.10.102.1-microsoft-standard-WSL2                                                                                              |
+| path.separator                | :                                                                                                                               |
+| stax-user.version             | 0.1.0-SNAPSHOT                                                                                                                  |
+| sun.arch.data.model           | 64                                                                                                                              |
+| sun.boot.library.path         | /usr/lib/jvm/java-11-openjdk-amd64/lib                                                                                          |
+| sun.cpu.endian                | little                                                                                                                          |
+| sun.cpu.isalist               |                                                                                                                                 |
+| sun.io.unicode.encoding       | UnicodeLittle                                                                                                                   |
+| sun.java.command              | clojure.main -i /tmp/form-init12004853467191983387.clj                                                                          |
+| sun.java.launcher             | SUN​_STANDARD                                                                                                                    |
+| sun.jnu.encoding              | UTF-8                                                                                                                           |
+| sun.management.compiler       | HotSpot 64-Bit Tiered Compilers                                                                                                 |
+| sun.os.patch.level            | unknown                                                                                                                         |
+| user.dir                      | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0                                                                                     |
+| user.home                     | /home/keith                                                                                                                     |
+| user.language                 | en                                                                                                                              |
+| user.name                     | keith                                                                                                                           |
+| user.timezone                 | America/New​_York                                                                                                                |
+
+** Java Class Path
+#+name: java-class-path
+#+begin_src clojure :ns stax-user.core :results value table :exports results
+(let [java-class-path
+      (-> (->> (System/getProperties) seq (partition 2) (into {}))
+	  (get "java.class.path")
+	  (str/split #":"))]
+  (mapv vector java-class-path))
+  #+end_src
+
+  #+RESULTS: java-class-path
+  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/test                                                                                   |
+  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/src                                                                                    |
+  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/dev-resources                                                                          |
+  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/resources                                                                              |
+  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes                                                                         |
+  | /home/keith/.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar                                                                  |
+  | /home/keith/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar                                    |
+  | /home/keith/.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar                                |
+  | /home/keith/.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar                            |
+  | /home/keith/.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar                                                         |
+  | /home/keith/.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar                                                           |
+  | /home/keith/.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar                                         |
+  | /home/keith/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar                                                            |
+  | /home/keith/.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar                                                |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar |
+  | /home/keith/.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar                                                           |
+  | /home/keith/.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar                                             |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar                       |
+  | /home/keith/.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar                                                                 |
+  | /home/keith/.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar                                                           |
+  | /home/keith/.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar                                                              |
+  | /home/keith/.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar                    |
+  | /home/keith/.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar                                                        |
+  | /home/keith/.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar                        |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar                                           |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar                            |
+  | /home/keith/.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar                                                                        |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar                                            |
+  | /home/keith/.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar                                                          |
+  | /home/keith/.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar                                                 |
+  | /home/keith/.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar                                                          |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar                         |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar           |
+  | /home/keith/.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar                                                     |
+  | /home/keith/.m2/repository/kdh/stax/0.1.0/stax-0.1.0.jar                                                                           |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar   |
+  | /home/keith/.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar                                                                    |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar |
+  | /home/keith/.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar                                             |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar                         |
+  | /home/keith/.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar                                                                      |
+  | /home/keith/.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar                                                          |
+  | /home/keith/.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar                                             |
+  | /home/keith/.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar                                                                    |
+  | /home/keith/.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar                                                  |
+  | /home/keith/.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar                                                        |
+  | /home/keith/.m2/repository/org/clojure/clojure/1.9.0/clojure-1.9.0.jar                                                             |
+  | /home/keith/.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar                                                                   |
+  | /home/keith/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar                                      |
+  | /home/keith/.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar                                                                    |
+  | /home/keith/.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar                                                                       |
+  | /home/keith/.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar                                                           |
+  | /home/keith/.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar                                                            |
+  | /home/keith/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar                                                          |
+  | /home/keith/.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar                                                            |
+  | /home/keith/.m2/repository/org/clojure/core.specs.alpha/0.1.24/core.specs.alpha-0.1.24.jar                                         |
+  | /home/keith/.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar                                                                       |
+  | /home/keith/.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar                                          |
+  | /home/keith/.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar                                             |
+  | /home/keith/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar                                                 |
+  | /home/keith/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar                                              |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar                              |
+  | /home/keith/.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar                                                              |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar   |
+  | /home/keith/.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar                                                   |
+  | /home/keith/.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar                                                              |
+  | /home/keith/.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar                                                               |
+  | /home/keith/.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar                                                         |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar                             |
+  | /home/keith/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar                                             |
+  | /home/keith/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar                                                   |
+  | /home/keith/.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar                                                         |
+  | /home/keith/.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar                                                    |
+  | /home/keith/.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar                                               |
+  | /home/keith/.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar                                                     |
+  | /home/keith/.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar                                            |
+  | /home/keith/.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar                                               |
+  | /home/keith/.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar                                                              |
+  | /home/keith/.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar                                                                    |
+  | /home/keith/.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar                                                           |
+  | /home/keith/.m2/repository/org/clojure/spec.alpha/0.1.143/spec.alpha-0.1.143.jar                                                   |
+  | /home/keith/.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar                                          |
+  | /home/keith/.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar                                            |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar                       |

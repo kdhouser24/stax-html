@@ -1,0 +1,81 @@
+;; -*- coding: utf-8-unix -*-
+;; Automatically written history of CIDER REPL session
+;; Edit at your own risk
+
+("(binding [kdh.stax.errs/*stax-errors-prevent-exec* true]
+            (f 1 2 3))" "(binding [kdh.stax.errs/*stax-defstackfn-fails-on-errors* false
+                    kdh.stax.errs/*stax-perform-path-analysis* true]
+            (defstackfn f [!a !b !c] !c1 a !b1))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* true]
+            (f 1 2 3))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* false]
+            (f 1 2 3))" "(binding [kdh.stax.errs/*stax-defstackfn-fails-on-errors* false
+                    kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c1 a !b1))" "(binding [kdh.stax.errs/*stax-defstackfn-fails-on-errors* false
+                    kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c a !b1))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* false]
+            (f 1 2 3))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (f 1 2 3))" "(binding [kdh.stax.errs/*stax-defstackfn-fails-on-errors* false]
+            (defstackfn f [!a !b !c] !c a !b1))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (f 1 2 3))" "(f 1 2 3)" "(binding [kdh.stax.errs/*stax-defstackfn-fails-on-errors* false]
+            (defstackfn f [!a !b !c] !c a !b))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c a !b))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(defstackfn '[!a !b c] !c !a1 !d)" "(defstackfn '[!a !b c] !c !a1 !d))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* false]
+            (->> (stackfn-dbg
+                  (kdh.stax.nodify/build-node-data '[!a !b c] '(!c !a1 !d))
+                  1 2 4
+                  3 3 3)
+                 :results
+                 (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack :errors]))))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* false]
+            (->> (stackfn-dbg
+                  (kdh.stax.nodify/build-node-data '[!a !b !c] '(!c !a1 !d))
+                  1 2 4
+                  3 3 3)
+                 :results
+                 (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack :errors]))))" "(binding [kdh.stax.errs/*stax-errors-prevent-exec* false]
+            (->> (stackfn-dbg
+                  (kdh.stax.nodify/build-node-data '[!a !b !c] '(!c !a1 !d))
+                  1 2 4
+                  3 3 3)
+                 :results
+                 (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack]))))" "(->> (stackfn-dbg
+                (kdh.stax.nodify/build-node-data '[!a !b !c] '(!c !a1 !d))
+                1 2 4
+                3 3 3)
+               :results
+               (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack])))" "(->> (stackfn-dbg
+                (kdh.stax.nodify/build-node-data '[!a !b !c] ex/ops-rpl-example)
+                1 2 4
+                3 3 3)
+               :results
+               (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack])))" "(->> (stackfn-dbg
+                (build-node-data '[!a !b !c] ex/ops-rpl-example)
+                1 2 4
+                3 3 3)
+               :results
+               (mapv #(select-keys % [:var-init-map :var-map :turns :output :stack])))" "(f 1 2 3)" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(f 3 3 3)" "(f 1 2 4)" "(defstackfn f [!a !b !c]
+            !a !b (invoke> + 2) !v1+ !c !c <pop> 2 (invoke> * 2) !v2+ (invoke> = 2)
+            (if> !v1 !v2 (invoke> - 2) else> \"false!!\" (invoke> println 1) <pop> !v1 !v2 (invoke> * 2)))" "(binding [kdh.stax.errs/*stax-throw-on-error* false]
+            (f [1 2 3] 4 5))" "(binding [kdh.stax.errs/*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(macroexpand '            (defstackfn f [!a !b !c] !c !a1 !b))" "(clojure.repl/source kdh.stax.core/defstackfn)" "(new-stax-user)" "(clojure.repl/source kdh.stax.core/defstackfn)" "(clojure.repl/source defstackfn)" "(new-stax-user)" "(clojure.repl/source defstackfn)" "(doc kdh.stax.core/defstackfn)" "(doc defstackfn)" "(clojure.repl/source defstackfn)" "(macroexpand '            (defstackfn f [!a !b !c] !c !a1 !b))" "(binding [kdh.stax.errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(binding [*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(new-stax-user)" "(binding [errs/*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(require '[kdh.stax.errs :as errs])" "(binding [*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(meta #'*stax-perform-path-analysis*)" "(meta #'kdh.stax.errs/*stax-perform-path-analysis*)" "(meta 'kdh.stax.errs/*stax-perform-path-analysis*)" "(meta '*stax-perform-path-analysis*)" "(meta kdh.stax.errs/*stax-perform-path-analysis*)" "(meta kdh.stax.errors/*stax-perform-path-analysis*)" "(meta *stax-perform-path-analysis*)" "#'*stax-perform-path-analysis*" "(binding [*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c !a1 !b))" "(binding [*stax-perform-path-analysis* false]
+            (defstackfn f [!a !b !c] !c a !b))" "(binding [*stax-perform-path-analysis* true]
+            (defstackfn f [!a !b !c] !c a !b))" "(defstackfn f [!a !b !c] !c a !b)" "(f 1 4 5)" "(f [1 2 3] 4 5)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(defstackfn f [!a !b !c] !c !a !b)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(new-stax-user)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(f [1 2 3] 4 5)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(defstackfn f [!a !b !c] !c !a !b)" "(new-stax-user)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(f [1 2 3] 4 5)" "(f 1 2 3)" "(defstackfn f [!a !b !c] !c !a !b)" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "#'*stax-throw-on-error*" "(source stackfn)" "(require '[clojure.repl :refer [doc source]])" "(new-stax-user)
+" "(source stackfn)" "(require '[clojure.repl :refer [doc source]])" "(source stackfn)" "#'*stax-throw-on-error*" "(binding [*stax-throw-on-error* true]
+            (f [1 2 3] 4 5))" "(f [1 2 3] 4 5)" "(f [1 2 3])" "(f 1 2 3)" "(defstackfn f [!a !b !c] !c !a !b)" "(binding [*stax-throw-on-error* true]
+            (defstackfn f [!a !b !c] !c a !b))" "(defstackfn f [!a !b !c] !c a !b)" "(new-stax-user)" "(->> `(ns ~(gensym)
+          (:require [kdh.stax.core :refer :all]
+                    [kdh.stax.exam :as ex]))
+       macroexpand)" "(new-stax-user)")
