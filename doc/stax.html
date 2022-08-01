@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-01 Mon 17:39 -->
+<!-- 2022-08-01 Mon 18:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>kdhouser24/kdh.stax</title>
@@ -54,214 +54,213 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc5c8195">Introduction</a>
+<li><a href="#org98ecad1">Introduction</a>
 <ul>
-<li><a href="#orgbed04f4">About This Document</a></li>
-<li><a href="#org27d113a">About <code>[kdh/stax "0.1.0"]</code></a>
+<li><a href="#orge7873af">About This Document</a></li>
+<li><a href="#org280cf94">About <code>[kdh/stax "0.1.0"]</code></a>
 <ul>
-<li><a href="#org2030ca4">Src File Tree</a></li>
-<li><a href="#orgf20206b">Dev File Tree</a></li>
-<li><a href="#orgee73d4f">Doc File Tree</a></li>
-<li><a href="#org3e915ec">Test File Tree</a></li>
+<li><a href="#orgf2c649a">Src File Tree</a></li>
+<li><a href="#org4901393">Dev File Tree</a></li>
+<li><a href="#orgac69627">Doc File Tree</a></li>
+<li><a href="#orge63b3ef">Test File Tree</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3633e98">Assignment</a>
+<li><a href="#org26dc19f">Assignment</a>
 <ul>
-<li><a href="#org404ccc1">Reformatted Assignment</a>
+<li><a href="#org64a9ce6">Reformatted Assignment</a>
 <ul>
-<li><a href="#org7c0a0e0">Page 1</a>
+<li><a href="#org28b5e8c">Page 1</a>
 <ul>
-<li><a href="#org54937fc">Explanation of functionality:</a></li>
-<li><a href="#org91ade3c">Notes about your implementation:</a></li>
+<li><a href="#org639d580">Explanation of functionality:</a></li>
+<li><a href="#org43784b5">Notes about your implementation:</a></li>
 </ul>
 </li>
-<li><a href="#org41065ae">Page 2</a>
+<li><a href="#orgf4d6eea">Page 2</a>
 <ul>
-<li><a href="#orgdfbd1f7">Code Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org8848dde">Requirements</a>
-<ul>
-<li><a href="#orgdc499c5">Explicit Requirements</a>
-<ul>
-<li><a href="#orgb2a43db"><span class="done DONE">DONE</span> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</a></li>
-<li><a href="#org8f5bca0"><span class="done DONE">DONE</span> <b>req-e-02</b>: A stack function is defined with "defstackfn"</a></li>
-<li><a href="#orgf30e425"><span class="done DONE">DONE</span> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</a></li>
-<li><a href="#org0b6b75a"><span class="done DONE">DONE</span> <b>req-e-04</b>: The stack always starts empty</a></li>
-<li><a href="#org417cb38"><span class="done DONE">DONE</span> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</a></li>
-<li><a href="#org63e5369"><span class="done DONE">DONE</span> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</a></li>
-<li><a href="#orgf81a0a4"><span class="done DONE">DONE</span> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</a></li>
-<li><a href="#orgeed4797"><span class="done DONE">DONE</span> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</a></li>
-<li><a href="#orgdc8d4d8"><span class="done DONE">DONE</span> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</a></li>
-<li><a href="#orgfbc34ef"><span class="done DONE">DONE</span> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</a></li>
-<li><a href="#org6086b38"><span class="done DONE">DONE</span> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</a></li>
-<li><a href="#org3c49ecd"><span class="done DONE">DONE</span> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</a></li>
-<li><a href="#org79ca136"><span class="done DONE">DONE</span> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</a></li>
-<li><a href="#org76a179b"><span class="done DONE">DONE</span> <b>req-e-14</b>: defstackfn should be a macro&#x2026;.</a></li>
-<li><a href="#org92d11e0"><span class="done DONE">DONE</span> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</a></li>
-<li><a href="#org5cc1db6"><span class="done DONE">DONE</span> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</a></li>
-<li><a href="#org64a51ba"><span class="done DONE">DONE</span> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</a></li>
-<li><a href="#org3da3699"><span class="done DONE">DONE</span> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</a></li>
-<li><a href="#org24959bb"><span class="done DONE">DONE</span> <b>req-e-19</b>: The example below contains all functionality you need to implement.</a></li>
-</ul>
-</li>
-<li><a href="#org56ad1ae">Implicit requirements (<b>req-i-#</b>)</a>
-<ul>
-<li><a href="#orgf5d4f1c"><span class="done DONE">DONE</span> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</a></li>
-<li><a href="#org8cfe22b"><span class="done DONE">DONE</span> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</a></li>
-<li><a href="#org3cdffee"><span class="done DONE">DONE</span> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</a></li>
-<li><a href="#orgcf5296b"><span class="done DONE">DONE</span> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</a></li>
-<li><a href="#orgb7ff5ed"><span class="done DONE">DONE</span> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</a></li>
-<li><a href="#orgd00a865"><span class="done DONE">DONE</span> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</a></li>
-<li><a href="#orgda6bdc5"><span class="done DONE">DONE</span> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org407f437">Using <code>defstackfn</code></a>
-<ul>
-<li><a href="#orgd19a4ca"><code>&lt;name&gt;</code>: the named function defined by <code>defstackfn</code></a></li>
-<li><a href="#org9b6b9f2"><code>&lt;name&gt;-dbg</code>: the debug function defined by <code>defstackfn</code></a></li>
-</ul>
-</li>
-<li><a href="#org1490365">Nodes</a></li>
-<li><a href="#org96ff6e5">Node Data</a></li>
-<li><a href="#org7ade8ae">Building Node Data</a>
-<ul>
-<li><a href="#org3a93b3f"><code>build-node-data</code></a>
-<ul>
-<li><a href="#orgeb55aa9">ops ➤ node-tree (<code>kdh.stax.nodify/nodify-ops</code>)</a></li>
-<li><a href="#org166b9e9">(flatten-node-tree node-tree) =&gt; nodes</a></li>
-<li><a href="#orgf5d641d">(node-tree-to-node-paths declarations node-tree) =&gt; paths a vovon where each path is a von</a></li>
-<li><a href="#orgd236b44">node-tree ➤ paths (<code>kdh.stax.nodify/node-tree-to-node-paths</code>)</a>
-<ul>
-<li><a href="#org93ab54a">Whiteboarding</a></li>
-</ul>
-</li>
-<li><a href="#orgab1b826">maybe-analyze-paths</a>
-<ul>
-<li><a href="#orgb54e8aa"><code>check-refs-in-path</code></a></li>
-<li><a href="#org98f0be6"><code>count-card-in-path</code></a></li>
-</ul>
-</li>
-<li><a href="#org445ec85">Implementation</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgc83434e">Errors</a>
-<ul>
-<li><a href="#orgce7a0ac">Error Zones</a>
-<ul>
-<li><a href="#org8a3134c">Parse Errors</a></li>
-<li><a href="#org8b14656">Static Path Analysis Errors</a></li>
-<li><a href="#orgf4e4e86">Runtime Errors</a></li>
-</ul>
-</li>
-<li><a href="#orgd4ea945">Error Types</a>
-<ul>
-<li><a href="#org1827e2a"><code>:err-type</code> vs <code>:err-zone</code></a></li>
-<li><a href="#org57024d6">Debugging Errors</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgba216c0">Execution</a>
-<ul>
-<li><a href="#org1066e2d">Using Failjure to Simplifying Runtime Errors</a></li>
-</ul>
-</li>
-<li><a href="#org699a7d5">Dynamic Variables</a></li>
-<li><a href="#org7bda520">Visualization</a>
-<ul>
-<li><a href="#orgc9b1855">Using Tangle to Generate dot</a></li>
-<li><a href="#org8d11e15">Turning Stax Node Data into dot and SVG</a></li>
-<li><a href="#org208fe8a">Visualization using <code>kdh.stax.svg</code></a>
-<ul>
-<li><a href="#org4409e9b">Visualizing the RPL Example</a>
-<ul>
-<li><a href="#org88f32ab">Visualizing the RPL Example as a Parse Tree</a></li>
-<li><a href="#org0c3d07a">Visualizing the RPL Example as Paths</a></li>
-<li><a href="#orgfc612d5">RPL Example: Runtime</a></li>
-</ul>
-</li>
-<li><a href="#orgefc2c69">FLAGS: A Good Example of Bad Nodes</a>
-<ul>
-<li><a href="#org9769c9c">FLAGS: Parse Errors</a></li>
-<li><a href="#org177e661">FLAGS: Run #1 &#x2013; Happy Path</a></li>
-<li><a href="#org53502ba">FLAGS: Run #2 &#x2013; Failed Invoke &#x2013; Runtime Error</a></li>
-<li><a href="#org3b36d60">FLAGS: Run #3 &#x2013; Insufficient Stack &#x2013; Runtime Error vs Path Error</a></li>
-<li><a href="#orgf34933e">FLAGS: Run #4 &#x2013; Undefined !Var &#x2013; Runtime Error vs Path Error</a></li>
-<li><a href="#org0958377">FLAGS: Run #5 &#x2013; Malformed Invoke &#x2013; Runtime Error vs Parse Error</a></li>
-<li><a href="#org2b5e028">FLAGS: Run #6 &#x2013; Illegal Operation &#x2013; Runtime Error vs Parse Error</a></li>
-</ul>
-</li>
-<li><a href="#org34ad60c">Complete Visualization of Parse, Path, and Runtime Errors</a></li>
-</ul>
-</li>
-<li><a href="#org662ddbb">Is assigning errors colors wise?</a></li>
-</ul>
-</li>
-<li><a href="#org65b6834">Optimization Case Studies</a>
-<ul>
-<li><a href="#org9c74c60">Sorting Paths</a></li>
-<li><a href="#org994ca84">VOVOSON vs VOVON</a></li>
-<li><a href="#orga88a2a4"><code>nodify-ops</code> vs <code>nodify-ops*</code></a></li>
-<li><a href="#org9a0df5a">KeyFnMap for Decorating SVG Nodes with Op Node Errors</a>
-<ul>
-<li><a href="#org3a14ced">First Version</a></li>
-<li><a href="#orgc5387e4">Second Version</a></li>
-<li><a href="#org4a99e5d">Third and Final Version</a></li>
-<li><a href="#orgce5cef6">Comparison</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgf055bf5">Workflow</a>
-<ul>
-<li><a href="#orgaca41a5">Keeping up to date</a></li>
-<li><a href="#org8eeddb6">Creating the project</a></li>
-<li><a href="#orgce8fe59">Starting an nrepl</a></li>
-<li><a href="#org755f74d">SCM &#x2013; GIT</a></li>
-<li><a href="#org27c978f">Testing</a>
-<ul>
-<li><a href="#org23ee3af">Unit Test</a></li>
-<li><a href="#org26a25ba">Requirement Testing</a></li>
-<li><a href="#orge14ef59">Deployment Testing</a></li>
-<li><a href="#org8c2db8a">User Testing</a>
-<ul>
-<li><a href="#org46d09c9">First User Test (stax-user-clj-1-10-3)</a></li>
-<li><a href="#org35a975c">Second User Test</a></li>
+<li><a href="#org578112d">Code Example</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org0ac2602">Environment</a>
+<li><a href="#orge4a34ba">Requirements</a>
 <ul>
-<li><a href="#org9953ce3">Java Class Path</a></li>
-<li><a href="#orga9c17ce">Java Properties</a></li>
-<li><a href="#org5e9f43a">Java Class Path</a></li>
+<li><a href="#org035122e">Explicit Requirements</a>
+<ul>
+<li><a href="#org5cd7b30"><span class="done DONE">DONE</span> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</a></li>
+<li><a href="#org1161e83"><span class="done DONE">DONE</span> <b>req-e-02</b>: A stack function is defined with "defstackfn"</a></li>
+<li><a href="#org1f36840"><span class="done DONE">DONE</span> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</a></li>
+<li><a href="#orgd56ef5f"><span class="done DONE">DONE</span> <b>req-e-04</b>: The stack always starts empty</a></li>
+<li><a href="#org574920d"><span class="done DONE">DONE</span> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</a></li>
+<li><a href="#org8460713"><span class="done DONE">DONE</span> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</a></li>
+<li><a href="#org1527ad9"><span class="done DONE">DONE</span> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</a></li>
+<li><a href="#org124b0d2"><span class="done DONE">DONE</span> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</a></li>
+<li><a href="#orgbaf3d18"><span class="done DONE">DONE</span> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</a></li>
+<li><a href="#orgb177d1c"><span class="done DONE">DONE</span> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</a></li>
+<li><a href="#org93f087b"><span class="done DONE">DONE</span> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</a></li>
+<li><a href="#org0ce25d9"><span class="done DONE">DONE</span> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</a></li>
+<li><a href="#orgf0ea513"><span class="done DONE">DONE</span> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</a></li>
+<li><a href="#org9f7ff5b"><span class="done DONE">DONE</span> <b>req-e-14</b>: defstackfn should be a macro&#x2026;.</a></li>
+<li><a href="#org23f7d41"><span class="done DONE">DONE</span> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</a></li>
+<li><a href="#org43598b0"><span class="done DONE">DONE</span> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</a></li>
+<li><a href="#org034ac9b"><span class="done DONE">DONE</span> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</a></li>
+<li><a href="#org0954649"><span class="done DONE">DONE</span> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</a></li>
+<li><a href="#orga76d6e5"><span class="done DONE">DONE</span> <b>req-e-19</b>: The example below contains all functionality you need to implement.</a></li>
+</ul>
+</li>
+<li><a href="#orgf03515e">Implicit requirements (<b>req-i-#</b>)</a>
+<ul>
+<li><a href="#org5ce260e"><span class="done DONE">DONE</span> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</a></li>
+<li><a href="#org56e8ee4"><span class="done DONE">DONE</span> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</a></li>
+<li><a href="#orgacf60a3"><span class="done DONE">DONE</span> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</a></li>
+<li><a href="#orge1946b3"><span class="done DONE">DONE</span> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</a></li>
+<li><a href="#org55f2873"><span class="done DONE">DONE</span> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</a></li>
+<li><a href="#org221d5b7"><span class="done DONE">DONE</span> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</a></li>
+<li><a href="#org3227a1c"><span class="done DONE">DONE</span> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4f51b71">Using <code>defstackfn</code></a>
+<ul>
+<li><a href="#org210d620"><code>&lt;name&gt;</code>: the named function defined by <code>defstackfn</code></a></li>
+<li><a href="#org39ab525"><code>&lt;name&gt;-dbg</code>: the debug function defined by <code>defstackfn</code></a></li>
+</ul>
+</li>
+<li><a href="#org44efc55">Nodes</a></li>
+<li><a href="#orgfb07db5">Node Data</a></li>
+<li><a href="#org494d0c9">Building Node Data</a>
+<ul>
+<li><a href="#orgf1fb042"><code>build-node-data</code></a>
+<ul>
+<li><a href="#org4c9cecf">ops ➤ node-tree (<code>kdh.stax.nodify/nodify-ops</code>)</a></li>
+<li><a href="#org7b20732">(flatten-node-tree node-tree) =&gt; nodes</a></li>
+<li><a href="#org0fd705d">(node-tree-to-node-paths declarations node-tree) =&gt; paths a vovon where each path is a von</a></li>
+<li><a href="#org91be31e">node-tree ➤ paths (<code>kdh.stax.nodify/node-tree-to-node-paths</code>)</a>
+<ul>
+<li><a href="#orgea819f9">Whiteboarding</a></li>
+</ul>
+</li>
+<li><a href="#orge4bd7e2">maybe-analyze-paths</a>
+<ul>
+<li><a href="#org5d57190"><code>check-refs-in-path</code></a></li>
+<li><a href="#orgd3de163"><code>count-card-in-path</code></a></li>
+</ul>
+</li>
+<li><a href="#orgab406c9">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf2cf957">Errors</a>
+<ul>
+<li><a href="#orgdbd5148">Error Zones</a>
+<ul>
+<li><a href="#org70cc243">Parse Errors</a></li>
+<li><a href="#org76f1b3c">Static Path Analysis Errors</a></li>
+<li><a href="#org273f4f2">Runtime Errors</a></li>
+</ul>
+</li>
+<li><a href="#orgd50fe0a">Error Types</a>
+<ul>
+<li><a href="#orgd28275c"><code>:err-type</code> vs <code>:err-zone</code></a></li>
+<li><a href="#org142acfe">Debugging Errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgac8fa24">Execution</a>
+<ul>
+<li><a href="#org329a483">Using Failjure to Simplifying Runtime Errors</a></li>
+</ul>
+</li>
+<li><a href="#org9d8b4d8">Dynamic Variables</a></li>
+<li><a href="#orgcf2a3d4">Visualization</a>
+<ul>
+<li><a href="#orgc0b0a66">Using Tangle to Generate dot</a></li>
+<li><a href="#org1a5467d">Turning Stax Node Data into dot and SVG</a></li>
+<li><a href="#orga1deb09">Visualization using <code>kdh.stax.svg</code></a>
+<ul>
+<li><a href="#org80acf51">Visualizing the RPL Example</a>
+<ul>
+<li><a href="#org48119c6">Visualizing the RPL Example as a Parse Tree</a></li>
+<li><a href="#org0f26d42">Visualizing the RPL Example as Paths</a></li>
+<li><a href="#org0023071">RPL Example: Runtime</a></li>
+</ul>
+</li>
+<li><a href="#orgd6c9b52">FLAGS: A Good Example of Bad Nodes</a>
+<ul>
+<li><a href="#org9c4dbea">FLAGS: Parse Errors</a></li>
+<li><a href="#org1fd6f6c">FLAGS: Run #1 &#x2013; Happy Path</a></li>
+<li><a href="#org4b8a214">FLAGS: Run #2 &#x2013; Failed Invoke &#x2013; Runtime Error</a></li>
+<li><a href="#orgbddbca6">FLAGS: Run #3 &#x2013; Insufficient Stack &#x2013; Runtime Error vs Path Error</a></li>
+<li><a href="#orgc6ec1cc">FLAGS: Run #4 &#x2013; Undefined !Var &#x2013; Runtime Error vs Path Error</a></li>
+<li><a href="#org7c33c4f">FLAGS: Run #5 &#x2013; Malformed Invoke &#x2013; Runtime Error vs Parse Error</a></li>
+<li><a href="#orgc0c9d6b">FLAGS: Run #6 &#x2013; Illegal Operation &#x2013; Runtime Error vs Parse Error</a></li>
+</ul>
+</li>
+<li><a href="#orgba530c5">Complete Visualization of Parse, Path, and Runtime Errors</a></li>
+</ul>
+</li>
+<li><a href="#orgc0abc3f">Is assigning errors colors wise?</a></li>
+</ul>
+</li>
+<li><a href="#org7e27d25">Optimization Case Studies</a>
+<ul>
+<li><a href="#org329409e">Sorting Paths</a></li>
+<li><a href="#org8a9fa51">VOVOSON vs VOVON</a></li>
+<li><a href="#org71cd972"><code>nodify-ops</code> vs <code>nodify-ops*</code></a></li>
+<li><a href="#org4e02a3e">KeyFnMap for Decorating SVG Nodes with Op Node Errors</a>
+<ul>
+<li><a href="#org0b8c859">First Version</a></li>
+<li><a href="#org922255e">Second Version</a></li>
+<li><a href="#org0a149bd">Third and Final Version</a></li>
+<li><a href="#orgf4e1283">Comparison</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org205d338">Workflow</a>
+<ul>
+<li><a href="#org98b93c9">Keeping up to date</a></li>
+<li><a href="#org300a07b">Creating the project</a></li>
+<li><a href="#org10a2150">Starting an nrepl</a></li>
+<li><a href="#orgecfcc9f">SCM &#x2013; GIT</a></li>
+<li><a href="#orgdc8429a">Testing</a>
+<ul>
+<li><a href="#org5cc0980">Unit Test</a></li>
+<li><a href="#org1c5440e">Requirement Testing</a></li>
+<li><a href="#orgd96fada">Deployment Testing</a></li>
+<li><a href="#orga34a02b">User Testing</a>
+<ul>
+<li><a href="#orgaf71f5b">First User Test (stax-user-clj-1-10-3)</a></li>
+<li><a href="#org730f815">Second User Test (stax-user-clj-1-9-0)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org001d177">Java Environment</a>
+<ul>
+<li><a href="#orgf472d45">Java Properties</a></li>
+<li><a href="#org6490709">Java Class Path</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc5c8195" class="outline-2">
-<h2 id="orgc5c8195">Introduction</h2>
-<div class="outline-text-2" id="text-orgc5c8195">
+<div id="outline-container-org98ecad1" class="outline-2">
+<h2 id="org98ecad1">Introduction</h2>
+<div class="outline-text-2" id="text-org98ecad1">
 </div>
-<div id="outline-container-orgbed04f4" class="outline-3">
-<h3 id="orgbed04f4">About This Document</h3>
-<div class="outline-text-3" id="text-orgbed04f4">
+<div id="outline-container-orge7873af" class="outline-3">
+<h3 id="orge7873af">About This Document</h3>
+<div class="outline-text-3" id="text-orge7873af">
 <p>
 This document covers <code>kdh/stax</code> version "0.1.0", which is an implementation of the requirements in
 </p>
@@ -277,7 +276,7 @@ I wrote this as an org-mode document in emacs and exported it to HTML using <a h
 org-mode allows in-document evaluation using source blocks like
 </p>
 
-<pre class="example" id="org952d020">
+<pre class="example" id="org9baa960">
 #+begin_src clojure :ns user :results value pp :exports both
 (clojure-version)
 #+end_src
@@ -326,14 +325,14 @@ Often, when I use the abbreviated format I do so within a <code>clj</code> sourc
 </div>
 </div>
 
-<div id="outline-container-org27d113a" class="outline-3">
-<h3 id="org27d113a">About <code>[kdh/stax "0.1.0"]</code></h3>
-<div class="outline-text-3" id="text-org27d113a">
+<div id="outline-container-org280cf94" class="outline-3">
+<h3 id="org280cf94">About <code>[kdh/stax "0.1.0"]</code></h3>
+<div class="outline-text-3" id="text-org280cf94">
 </div>
-<div id="outline-container-org2030ca4" class="outline-4">
-<h4 id="org2030ca4">Src File Tree</h4>
-<div class="outline-text-4" id="text-org2030ca4">
-<pre class="example" id="org7b8354d">
+<div id="outline-container-orgf2c649a" class="outline-4">
+<h4 id="orgf2c649a">Src File Tree</h4>
+<div class="outline-text-4" id="text-orgf2c649a">
+<pre class="example" id="org91ec606">
 src
 └── clj
     └── kdh
@@ -349,10 +348,10 @@ src
 </div>
 </div>
 
-<div id="outline-container-orgf20206b" class="outline-4">
-<h4 id="orgf20206b">Dev File Tree</h4>
-<div class="outline-text-4" id="text-orgf20206b">
-<pre class="example" id="org031ffcd">
+<div id="outline-container-org4901393" class="outline-4">
+<h4 id="org4901393">Dev File Tree</h4>
+<div class="outline-text-4" id="text-org4901393">
+<pre class="example" id="org58a8e58">
 dev
 ├── clj
 │   ├── bubba.clj
@@ -393,16 +392,16 @@ Any dev file can require any src tree file, but src tree files never require dev
 </p>
 
 <p>
-<a id="orgda8565b"></a>
+<a id="org9539a6d"></a>
 Any <code>file*dev.clj</code> is a graveyard for old/alternate versions of functions in <code>file.clj</code> of the <code>src</code> tree at the same level (e.g. <code>dev/nodify-ops*</code>, which is an alternative implementation of <code>kdh.stax/nodify/nodify-ops</code>, is found in "dev/kdh/stax/nodify*dev.clj" ).  It's name has a <code>*</code> to indicate its where to find <code>*</code> functions (and any functions only they use), and to prevent accidental inclusion in build (require won't work on it due to name mangling, instead you must use <code>load-file</code>).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgee73d4f" class="outline-4">
-<h4 id="orgee73d4f">Doc File Tree</h4>
-<div class="outline-text-4" id="text-orgee73d4f">
-<pre class="example" id="org63c7cd4">
+<div id="outline-container-orgac69627" class="outline-4">
+<h4 id="orgac69627">Doc File Tree</h4>
+<div class="outline-text-4" id="text-orgac69627">
+<pre class="example" id="org092da3c">
 doc
 ├── #stax.org#
 ├── rpl-take-home-project1-clj.pdf
@@ -426,10 +425,10 @@ doc
 </div>
 </div>
 
-<div id="outline-container-org3e915ec" class="outline-4">
-<h4 id="org3e915ec">Test File Tree</h4>
-<div class="outline-text-4" id="text-org3e915ec">
-<pre class="example" id="orgd9b46af">
+<div id="outline-container-orge63b3ef" class="outline-4">
+<h4 id="orge63b3ef">Test File Tree</h4>
+<div class="outline-text-4" id="text-orge63b3ef">
+<pre class="example" id="org96baa25">
 test
 └── stack
     └── core_test.clj
@@ -439,27 +438,27 @@ test
 </div>
 </div>
 
-<div id="outline-container-org3633e98" class="outline-2">
-<h2 id="org3633e98">Assignment</h2>
-<div class="outline-text-2" id="text-org3633e98">
+<div id="outline-container-org26dc19f" class="outline-2">
+<h2 id="org26dc19f">Assignment</h2>
+<div class="outline-text-2" id="text-org26dc19f">
 <p target="_blank">
 (original: <a href="rpl-take-home-project1-clj.pdf" target="_blank">rpl-take-home-project1-clj.pdf</a>)
 </p>
 </div>
-<div id="outline-container-org404ccc1" class="outline-3">
-<h3 id="org404ccc1">Reformatted Assignment</h3>
-<div class="outline-text-3" id="text-org404ccc1">
+<div id="outline-container-org64a9ce6" class="outline-3">
+<h3 id="org64a9ce6">Reformatted Assignment</h3>
+<div class="outline-text-3" id="text-org64a9ce6">
 <p>
 The goal of this project is to implement a Clojure interpreter for a stack-based DSL. An example of the API is on the next page. We are looking for an example of the quality of work you would do at RPL.
 </p>
 </div>
-<div id="outline-container-org7c0a0e0" class="outline-4">
-<h4 id="org7c0a0e0">Page 1</h4>
-<div class="outline-text-4" id="text-org7c0a0e0">
+<div id="outline-container-org28b5e8c" class="outline-4">
+<h4 id="org28b5e8c">Page 1</h4>
+<div class="outline-text-4" id="text-org28b5e8c">
 </div>
-<div id="outline-container-org54937fc" class="outline-5">
-<h5 id="org54937fc">Explanation of functionality:</h5>
-<div class="outline-text-5" id="text-org54937fc">
+<div id="outline-container-org639d580" class="outline-5">
+<h5 id="org639d580">Explanation of functionality:</h5>
+<div class="outline-text-5" id="text-org639d580">
 <ul class="org-ul">
 <li>Variables are symbols prefixed with "!", e.g. !v</li>
 <li>A stack function is defined with "defstackfn".
@@ -479,9 +478,9 @@ The goal of this project is to implement a Clojure interpreter for a stack-based
 </ul>
 </div>
 </div>
-<div id="outline-container-org91ade3c" class="outline-5">
-<h5 id="org91ade3c">Notes about your implementation:</h5>
-<div class="outline-text-5" id="text-org91ade3c">
+<div id="outline-container-org43784b5" class="outline-5">
+<h5 id="org43784b5">Notes about your implementation:</h5>
+<div class="outline-text-5" id="text-org43784b5">
 <ul class="org-ul">
 <li>defstackfn should be a macro that produces a function invokable like any other  function.</li>
 <li>Should provide an informative error if there's an invalid stack operation or a variable is referenced that doesn't exist.</li>
@@ -492,13 +491,13 @@ The goal of this project is to implement a Clojure interpreter for a stack-based
 </div>
 </div>
 </div>
-<div id="outline-container-org41065ae" class="outline-4">
-<h4 id="org41065ae">Page 2</h4>
-<div class="outline-text-4" id="text-org41065ae">
+<div id="outline-container-orgf4d6eea" class="outline-4">
+<h4 id="orgf4d6eea">Page 2</h4>
+<div class="outline-text-4" id="text-orgf4d6eea">
 </div>
-<div id="outline-container-orgdfbd1f7" class="outline-5">
-<h5 id="orgdfbd1f7">Code Example</h5>
-<div class="outline-text-5" id="text-orgdfbd1f7">
+<div id="outline-container-org578112d" class="outline-5">
+<h5 id="org578112d">Code Example</h5>
+<div class="outline-text-5" id="text-org578112d">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 1: </span>Code example with stack values in comments:</label><pre class="src src-clojure">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f</span>
   [!a !b !c] <span style="color: #767283; font-style: italic;">; example uses input: 1 2 4. Stack starts empty.</span>
@@ -535,21 +534,21 @@ The goal of this project is to implement a Clojure interpreter for a stack-based
 </div>
 </div>
 </div>
-<div id="outline-container-org8848dde" class="outline-2">
-<h2 id="org8848dde">Requirements</h2>
-<div class="outline-text-2" id="text-org8848dde">
+<div id="outline-container-orge4a34ba" class="outline-2">
+<h2 id="orge4a34ba">Requirements</h2>
+<div class="outline-text-2" id="text-orge4a34ba">
 </div>
-<div id="outline-container-orgdc499c5" class="outline-3">
-<h3 id="orgdc499c5">Explicit Requirements</h3>
-<div class="outline-text-3" id="text-orgdc499c5">
+<div id="outline-container-org035122e" class="outline-3">
+<h3 id="org035122e">Explicit Requirements</h3>
+<div class="outline-text-3" id="text-org035122e">
 <p>
 Explicit requirements are taken directly from the assignment. They are split into individual testable requirements, and designated <b>req-e-#:</b> where <b>e</b> means explicit, and <b>#</b> is a number.
 </p>
 </div>
 
-<div id="outline-container-orgb2a43db" class="outline-4">
-<h4 id="orgb2a43db"><span class="done DONE">DONE</span> <a id="orgb9ec06a"></a> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</h4>
-<div class="outline-text-4" id="text-orgb2a43db">
+<div id="outline-container-org5cd7b30" class="outline-4">
+<h4 id="org5cd7b30"><span class="done DONE">DONE</span> <a id="org8a5ca88"></a> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</h4>
+<div class="outline-text-4" id="text-org5cd7b30">
 <p>
 <code>kdh.stax.nodify/nodify-op</code> will create a node of type <code>:kdh.stax.node/push-var</code> iff the op passes the predicate <code>kdh.stax.node/!symbol?</code>
 </p>
@@ -576,9 +575,9 @@ declarations argument to defstackfn is also checked to pass <code>kdh.stax.node/
 </div>
 </div>
 </div>
-<div id="outline-container-org8f5bca0" class="outline-4">
-<h4 id="org8f5bca0"><span class="done DONE">DONE</span> <a id="orgf1e6199"></a> <b>req-e-02</b>: A stack function is defined with "defstackfn"</h4>
-<div class="outline-text-4" id="text-org8f5bca0">
+<div id="outline-container-org1161e83" class="outline-4">
+<h4 id="org1161e83"><span class="done DONE">DONE</span> <a id="org518b5aa"></a> <b>req-e-02</b>: A stack function is defined with "defstackfn"</h4>
+<div class="outline-text-4" id="text-org1161e83">
 <p>
 Define a trivial stack function (with no declarations and only push numbers).
 </p>
@@ -601,9 +600,9 @@ Yields a function, which when called returns the stack.
 </div>
 </div>
 
-<div id="outline-container-orgf30e425" class="outline-4">
-<h4 id="orgf30e425"><span class="done DONE">DONE</span> <a id="orgaf6ae9d"></a> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</h4>
-<div class="outline-text-4" id="text-orgf30e425">
+<div id="outline-container-org1f36840" class="outline-4">
+<h4 id="org1f36840"><span class="done DONE">DONE</span> <a id="org6092ab3"></a> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</h4>
+<div class="outline-text-4" id="text-org1f36840">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-03</span> [!a !b !c] !b !a !c)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-03 )
@@ -615,9 +614,9 @@ Yields a function, which when called returns the stack.
 </div>
 </div>
 
-<div id="outline-container-org0b6b75a" class="outline-4">
-<h4 id="org0b6b75a"><span class="done DONE">DONE</span> <a id="org7540d79"></a> <b>req-e-04</b>: The stack always starts empty</h4>
-<div class="outline-text-4" id="text-org0b6b75a">
+<div id="outline-container-orgd56ef5f" class="outline-4">
+<h4 id="orgd56ef5f"><span class="done DONE">DONE</span> <a id="orge62c20d"></a> <b>req-e-04</b>: The stack always starts empty</h4>
+<div class="outline-text-4" id="text-orgd56ef5f">
 <p>
 Let's pop an empty stack to see what happens&#x2026;
 </p>
@@ -668,9 +667,9 @@ Exceptions or not, I've proved the stack is initially empty!
 </div>
 </div>
 
-<div id="outline-container-org417cb38" class="outline-4">
-<h4 id="org417cb38"><span class="done DONE">DONE</span> <a id="org0ffb9c8"></a> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</h4>
-<div class="outline-text-4" id="text-org417cb38">
+<div id="outline-container-org574920d" class="outline-4">
+<h4 id="org574920d"><span class="done DONE">DONE</span> <a id="org6216ed2"></a> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</h4>
+<div class="outline-text-4" id="text-org574920d">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-05</span> [!a] !a 2 &lt;pop&gt; 3 (invoke&gt; = 2) (if&gt; <span style="color: #ff7fff;">"!a == 3"</span> else&gt; <span style="color: #ff7fff;">"!a &lt;&gt; 3"</span>) (invoke&gt; println 1))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-05 )
@@ -686,9 +685,9 @@ Exceptions or not, I've proved the stack is initially empty!
 </div>
 </div>
 </div>
-<div id="outline-container-org63e5369" class="outline-4">
-<h4 id="org63e5369"><span class="done DONE">DONE</span> <a id="org5379bac"></a> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</h4>
-<div class="outline-text-4" id="text-org63e5369">
+<div id="outline-container-org8460713" class="outline-4">
+<h4 id="org8460713"><span class="done DONE">DONE</span> <a id="org77e79ee"></a> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</h4>
+<div class="outline-text-4" id="text-org8460713">
 <p>
 In my implementation, I interpret <i>constant</i> as a form that evaluates to itself.
 </p>
@@ -733,9 +732,9 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-orgf81a0a4" class="outline-4">
-<h4 id="orgf81a0a4"><span class="done DONE">DONE</span> <a id="org4b0019e"></a> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</h4>
-<div class="outline-text-4" id="text-orgf81a0a4">
+<div id="outline-container-org1527ad9" class="outline-4">
+<h4 id="org1527ad9"><span class="done DONE">DONE</span> <a id="orge23f39e"></a> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</h4>
+<div class="outline-text-4" id="text-org1527ad9">
 <div class="org-src-container">
 <pre class="src src-clojure">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-07</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-07 )
@@ -751,9 +750,9 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-orgeed4797" class="outline-4">
-<h4 id="orgeed4797"><span class="done DONE">DONE</span> <a id="org70a3177"></a> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</h4>
-<div class="outline-text-4" id="text-orgeed4797">
+<div id="outline-container-org124b0d2" class="outline-4">
+<h4 id="org124b0d2"><span class="done DONE">DONE</span> <a id="org69a7c09"></a> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</h4>
+<div class="outline-text-4" id="text-org124b0d2">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-08</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1 (invoke&gt; println 1))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-08 )
@@ -766,9 +765,9 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-orgdc8d4d8" class="outline-4">
-<h4 id="orgdc8d4d8"><span class="done DONE">DONE</span> <a id="org2f490f3"></a> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</h4>
-<div class="outline-text-4" id="text-orgdc8d4d8">
+<div id="outline-container-orgbaf3d18" class="outline-4">
+<h4 id="orgbaf3d18"><span class="done DONE">DONE</span> <a id="orgdcd4c35"></a> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</h4>
+<div class="outline-text-4" id="text-orgbaf3d18">
 <p>
 The first argument to <code>invoke&gt;</code> must be a function (in this example <code>+</code>)
 </p>
@@ -795,9 +794,9 @@ The error is not on the function, but on its arguments. I include it to show tha
 </div>
 </div>
 
-<div id="outline-container-orgfbc34ef" class="outline-4">
-<h4 id="orgfbc34ef"><span class="done DONE">DONE</span> <a id="org9b7c277"></a> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</h4>
-<div class="outline-text-4" id="text-orgfbc34ef">
+<div id="outline-container-orgb177d1c" class="outline-4">
+<h4 id="orgb177d1c"><span class="done DONE">DONE</span> <a id="orgdee246b"></a> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</h4>
+<div class="outline-text-4" id="text-orgb177d1c">
 <p>
 My implementation only accepts pos-int arity, as I understand invoke&gt; to invoke a function on stack values.
 </p>
@@ -844,9 +843,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org6086b38" class="outline-4">
-<h4 id="org6086b38"><span class="done DONE">DONE</span> <a id="org5282da4"></a> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</h4>
-<div class="outline-text-4" id="text-org6086b38">
+<div id="outline-container-org93f087b" class="outline-4">
+<h4 id="org93f087b"><span class="done DONE">DONE</span> <a id="org912dde0"></a> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</h4>
+<div class="outline-text-4" id="text-org93f087b">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-11</span> [] 1 2 &lt;pop&gt; 3 )
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-11 )
@@ -862,9 +861,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org3c49ecd" class="outline-4">
-<h4 id="org3c49ecd"><span class="done DONE">DONE</span> <a id="orgb6ea424"></a> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</h4>
-<div class="outline-text-4" id="text-org3c49ecd">
+<div id="outline-container-org0ce25d9" class="outline-4">
+<h4 id="org0ce25d9"><span class="done DONE">DONE</span> <a id="org082049d"></a> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</h4>
+<div class="outline-text-4" id="text-org0ce25d9">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-12</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-12 )
@@ -879,9 +878,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org79ca136" class="outline-4">
-<h4 id="org79ca136"><span class="done DONE">DONE</span> <a id="org939fca9"></a> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</h4>
-<div class="outline-text-4" id="text-org79ca136">
+<div id="outline-container-orgf0ea513" class="outline-4">
+<h4 id="orgf0ea513"><span class="done DONE">DONE</span> <a id="org4a59fe2"></a> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</h4>
+<div class="outline-text-4" id="text-orgf0ea513">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13 )
@@ -959,9 +958,9 @@ It even works with an empty then and missing else&gt;.
 </div>
 </div>
 </div>
-<div id="outline-container-org76a179b" class="outline-4">
-<h4 id="org76a179b"><span class="done DONE">DONE</span> <a id="org960a720"></a> <b>req-e-14</b>: defstackfn should be a macro&#x2026;.</h4>
-<div class="outline-text-4" id="text-org76a179b">
+<div id="outline-container-org9f7ff5b" class="outline-4">
+<h4 id="org9f7ff5b"><span class="done DONE">DONE</span> <a id="org8036d60"></a> <b>req-e-14</b>: defstackfn should be a macro&#x2026;.</h4>
+<div class="outline-text-4" id="text-org9f7ff5b">
 <div class="org-src-container">
 <pre class="src src-clj">(meta #'defstackfn)
 (=&gt;
@@ -980,9 +979,9 @@ It even works with an empty then and missing else&gt;.
 </div>
 </div>
 
-<div id="outline-container-org92d11e0" class="outline-4">
-<h4 id="org92d11e0"><span class="done DONE">DONE</span> <a id="org27ff0bd"></a> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</h4>
-<div class="outline-text-4" id="text-org92d11e0">
+<div id="outline-container-org23f7d41" class="outline-4">
+<h4 id="org23f7d41"><span class="done DONE">DONE</span> <a id="orgebb7a02"></a> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</h4>
+<div class="outline-text-4" id="text-org23f7d41">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-15</span> [!a !b !c] !c !b !a)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-15 )
@@ -1001,9 +1000,9 @@ It even works with an empty then and missing else&gt;.
 </div>
 </div>
 
-<div id="outline-container-org5cc1db6" class="outline-4">
-<h4 id="org5cc1db6"><span class="done DONE">DONE</span> <a id="orgae2b81f"></a> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</h4>
-<div class="outline-text-4" id="text-org5cc1db6">
+<div id="outline-container-org43598b0" class="outline-4">
+<h4 id="org43598b0"><span class="done DONE">DONE</span> <a id="org527605f"></a> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</h4>
+<div class="outline-text-4" id="text-org43598b0">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-16</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">defstackfn-produced-errors</span> )
@@ -1040,9 +1039,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org64a51ba" class="outline-4">
-<h4 id="org64a51ba"><span class="done DONE">DONE</span> <a id="orgb0870a6"></a> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</h4>
-<div class="outline-text-4" id="text-org64a51ba">
+<div id="outline-container-org034ac9b" class="outline-4">
+<h4 id="org034ac9b"><span class="done DONE">DONE</span> <a id="orga093421"></a> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</h4>
+<div class="outline-text-4" id="text-org034ac9b">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-17</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> !a)
 (=&gt; <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">defstackfn-produced-errors</span> )
@@ -1082,9 +1081,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 </div>
-<div id="outline-container-org3da3699" class="outline-4">
-<h4 id="org3da3699"><span class="done DONE">DONE</span> <a id="org4ce1f21"></a> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</h4>
-<div class="outline-text-4" id="text-org3da3699">
+<div id="outline-container-org0954649" class="outline-4">
+<h4 id="org0954649"><span class="done DONE">DONE</span> <a id="orgd5d0f11"></a> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</h4>
+<div class="outline-text-4" id="text-org0954649">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-18</span> [!a !b] !a <span style="color: #34c8d8; font-weight: bold;">true</span> !b !a+ 3 !b+ <span style="color: #ff7fff;">"help"</span> !a !b)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-18 )
@@ -1096,25 +1095,25 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org24959bb" class="outline-4">
-<h4 id="org24959bb"><span class="done DONE">DONE</span> <a id="org77d1a53"></a> <b>req-e-19</b>: The example below contains all functionality you need to implement.</h4>
-<div class="outline-text-4" id="text-org24959bb">
+<div id="outline-container-orga76d6e5" class="outline-4">
+<h4 id="orga76d6e5"><span class="done DONE">DONE</span> <a id="org96856b0"></a> <b>req-e-19</b>: The example below contains all functionality you need to implement.</h4>
+<div class="outline-text-4" id="text-orga76d6e5">
 <p>
 This is not a testable requirement, but I will rely on it for justification of implicit requirements
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org56ad1ae" class="outline-3">
-<h3 id="org56ad1ae">Implicit requirements (<b>req-i-#</b>)</h3>
-<div class="outline-text-3" id="text-org56ad1ae">
+<div id="outline-container-orgf03515e" class="outline-3">
+<h3 id="orgf03515e">Implicit requirements (<b>req-i-#</b>)</h3>
+<div class="outline-text-3" id="text-orgf03515e">
 <p>
 Implicit requirements are those not expressed in the explicit requirements, but implied by them or by simple logical extension.
 </p>
 </div>
-<div id="outline-container-orgf5d4f1c" class="outline-4">
-<h4 id="orgf5d4f1c"><span class="done DONE">DONE</span> <a id="org01fdaff"></a> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</h4>
-<div class="outline-text-4" id="text-orgf5d4f1c">
+<div id="outline-container-org5ce260e" class="outline-4">
+<h4 id="org5ce260e"><span class="done DONE">DONE</span> <a id="orge4cec14"></a> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</h4>
+<div class="outline-text-4" id="text-org5ce260e">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-01</span> [] 1 2 (invoke&gt; + 2))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-i-01 )
@@ -1125,9 +1124,9 @@ Implicit requirements are those not expressed in the explicit requirements, but 
 </div>
 </div>
 </div>
-<div id="outline-container-org8cfe22b" class="outline-4">
-<h4 id="org8cfe22b"><span class="done DONE">DONE</span> <a id="org86e5596"></a> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</h4>
-<div class="outline-text-4" id="text-org8cfe22b">
+<div id="outline-container-org56e8ee4" class="outline-4">
+<h4 id="org56e8ee4"><span class="done DONE">DONE</span> <a id="orgd1ee163"></a> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</h4>
+<div class="outline-text-4" id="text-org56e8ee4">
 <ul class="org-ul">
 <li><p>
 According to the explicit requirements,
@@ -1159,9 +1158,9 @@ Therefore, I deduce an implicit requirement that <code>if&gt;</code> first tests
 </p>
 </div>
 </div>
-<div id="outline-container-org3cdffee" class="outline-4">
-<h4 id="org3cdffee"><span class="done DONE">DONE</span> <a id="orgd941d32"></a> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</h4>
-<div class="outline-text-4" id="text-org3cdffee">
+<div id="outline-container-orgacf60a3" class="outline-4">
+<h4 id="orgacf60a3"><span class="done DONE">DONE</span> <a id="org69b0c08"></a> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</h4>
+<div class="outline-text-4" id="text-orgacf60a3">
 <p>
 Otherwise the following section of the example would not be correct
 </p>
@@ -1186,9 +1185,9 @@ Otherwise the following section of the example would not be correct
 <hr />
 </div>
 </div>
-<div id="outline-container-orgcf5296b" class="outline-4">
-<h4 id="orgcf5296b"><span class="done DONE">DONE</span> <a id="orgdf33aeb"></a> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</h4>
-<div class="outline-text-4" id="text-orgcf5296b">
+<div id="outline-container-orge1946b3" class="outline-4">
+<h4 id="orge1946b3"><span class="done DONE">DONE</span> <a id="orgf5be89d"></a> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</h4>
+<div class="outline-text-4" id="text-orge1946b3">
 <p>
 This is not explicitly stated in the assignment.  And it is not evident in the example, where all invoked functions are either associative functions (<code>+</code>, <code>*</code>, and <code>=</code>) with arity=2, or are only given n=1 (e.g. <code>println</code>).  But I find this an implicit requirement of stack logic.  If an invoked function of one argument takes its argument from the top of the stack, then a function of two should take its first from the top, pop the stack, then take its next from the new top.  Internally, this is accomplished with the <code>apply</code> of the reverse (through <code>rseq</code>) of the <code>subvec</code> of the last <code>n</code> items in the stack.
 </p>
@@ -1202,9 +1201,9 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-orgb7ff5ed" class="outline-4">
-<h4 id="orgb7ff5ed"><span class="done DONE">DONE</span> <a id="org21abb5c"></a> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</h4>
-<div class="outline-text-4" id="text-orgb7ff5ed">
+<div id="outline-container-org55f2873" class="outline-4">
+<h4 id="org55f2873"><span class="done DONE">DONE</span> <a id="orgb37cf26"></a> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</h4>
+<div class="outline-text-4" id="text-org55f2873">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; vector 3))
 
@@ -1308,9 +1307,9 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-orgd00a865" class="outline-4">
-<h4 id="orgd00a865"><span class="done DONE">DONE</span> <a id="orgbd2d6d6"></a> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</h4>
-<div class="outline-text-4" id="text-orgd00a865">
+<div id="outline-container-org221d5b7" class="outline-4">
+<h4 id="org221d5b7"><span class="done DONE">DONE</span> <a id="orga63bca8"></a> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</h4>
+<div class="outline-text-4" id="text-org221d5b7">
 <div class="org-src-container">
 <pre class="src src-clj">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; println 3))
 
@@ -1336,9 +1335,9 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-orgda6bdc5" class="outline-4">
-<h4 id="orgda6bdc5"><span class="done DONE">DONE</span> <a id="org0afbac4"></a> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</h4>
-<div class="outline-text-4" id="text-orgda6bdc5">
+<div id="outline-container-org3227a1c" class="outline-4">
+<h4 id="org3227a1c"><span class="done DONE">DONE</span> <a id="orge8a98ac"></a> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</h4>
+<div class="outline-text-4" id="text-org3227a1c">
 <p>
 Internally, I represent the stack as a vector whose rightmost value is its top.  This choice is idiomatic because <code>clojure.core/pop</code> of a vector returns a vector like it's argument, but without the last item. I note that none of the stack state comments in the given example show any enclosing structure.  And they all treat the right-most as the top.  Of course, there is nothing preventing the choice of a list or queue, as pop works on those. It is just my reasoned and experience choice to use a vector.
 </p>
@@ -1350,15 +1349,15 @@ Further, I return the stack and not its top because that would destroy important
 </div>
 </div>
 </div>
-<div id="outline-container-org407f437" class="outline-2">
-<h2 id="org407f437">Using <code>defstackfn</code></h2>
-<div class="outline-text-2" id="text-org407f437">
+<div id="outline-container-org4f51b71" class="outline-2">
+<h2 id="org4f51b71">Using <code>defstackfn</code></h2>
+<div class="outline-text-2" id="text-org4f51b71">
 </div>
-<div id="outline-container-orgd19a4ca" class="outline-3">
-<h3 id="orgd19a4ca"><code>&lt;name&gt;</code>: the named function defined by <code>defstackfn</code></h3>
-<div class="outline-text-3" id="text-orgd19a4ca">
+<div id="outline-container-org210d620" class="outline-3">
+<h3 id="org210d620"><code>&lt;name&gt;</code>: the named function defined by <code>defstackfn</code></h3>
+<div class="outline-text-3" id="text-org210d620">
 <p>
-As required (see <a href="#org8848dde">Requirements</a>), <code>(defstackfn &lt;name&gt; &lt;declarations&gt; &lt;operations&gt;...)</code>
+As required (see <a href="#orge4a34ba">Requirements</a>), <code>(defstackfn &lt;name&gt; &lt;declarations&gt; &lt;operations&gt;...)</code>
 defines a function of name <code>&lt;name&gt;</code> that takes a vector of !v like <code>&lt;declarations&gt;</code> and any number of <code>&lt;operations&gt;</code>.
 </p>
 
@@ -1428,9 +1427,9 @@ This is implemented in the <code>defstackfn</code> macro expansion as a call to 
 </div>
 </div>
 
-<div id="outline-container-org9b6b9f2" class="outline-3">
-<h3 id="org9b6b9f2"><code>&lt;name&gt;-dbg</code>: the debug function defined by <code>defstackfn</code></h3>
-<div class="outline-text-3" id="text-org9b6b9f2">
+<div id="outline-container-org39ab525" class="outline-3">
+<h3 id="org39ab525"><code>&lt;name&gt;-dbg</code>: the debug function defined by <code>defstackfn</code></h3>
+<div class="outline-text-3" id="text-org39ab525">
 <p>
 In addition, <code>kdh.stax.core/defstackfn</code> also defines a function named <code>&lt;name&gt;-dbg</code> (in the example, <code>f-dbg</code>), which when called with no arguments, returns the node-data as a map. This is the same node data that <code>f</code> closes over, hence the name <code>f-dbg</code>.
 </p>
@@ -1532,9 +1531,9 @@ Now that we've played with the results of <code>defstackfn</code> and its helper
 </div>
 </div>
 
-<div id="outline-container-org1490365" class="outline-2">
-<h2 id="org1490365">Nodes</h2>
-<div class="outline-text-2" id="text-org1490365">
+<div id="outline-container-org44efc55" class="outline-2">
+<h2 id="org44efc55">Nodes</h2>
+<div class="outline-text-2" id="text-org44efc55">
 <p>
 Nodes are maps describing an operation and its properties
 </p>
@@ -1858,7 +1857,7 @@ Each op node has some of the keys.
 <td class="org-left"><code>:errors</code></td>
 <td class="org-left">vector of maps</td>
 <td class="org-left">Any</td>
-<td class="org-left">(See <a href="#orgc83434e">Errors</a>)</td>
+<td class="org-left">(See <a href="#orgf2cf957">Errors</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -1872,9 +1871,9 @@ Node templates (the default properities of a node of a <code>:node-type</code>) 
 </div>
 </div>
 
-<div id="outline-container-org96ff6e5" class="outline-2">
-<h2 id="org96ff6e5">Node Data</h2>
-<div class="outline-text-2" id="text-org96ff6e5">
+<div id="outline-container-orgfb07db5" class="outline-2">
+<h2 id="orgfb07db5">Node Data</h2>
+<div class="outline-text-2" id="text-orgfb07db5">
 <p>
 The node data generated by <code>kdh.stax.nodify/build-node-data</code> is a map that contains the following keys:
 </p>
@@ -1882,19 +1881,19 @@ The node data generated by <code>kdh.stax.nodify/build-node-data</code> is a map
 <dt><code>:declarations</code></dt><dd>The declarations vector passed to <code>defstackfn</code></dd>
 <dt><code>:operations</code></dt><dd>The operations sequence passed to <code>defstackfn</code></dd>
 <dt><code>:node-tree</code></dt><dd><ul class="org-ul">
-<li>A vector of <a href="#org1490365">nodes</a> with <code>if&gt;</code> nodes containing <code>:then</code> and <code>:else</code> subtrees</li>
+<li>A vector of <a href="#org44efc55">nodes</a> with <code>if&gt;</code> nodes containing <code>:then</code> and <code>:else</code> subtrees</li>
 </ul></dd>
 <dt><code>:nodes</code></dt><dd><ul class="org-ul">
 <li>The node-tree flattened into a vector of nodes with <code>if&gt;</code> nodes converted to if-pop nodes (without a :branch - see <code>:paths</code> below) followed by both then and else nodes.</li>
 <li>Because this is derived from the node-tree, it contains all of the parse errors (illegal ops, and malformed invoke&gt;).</li>
-<li>It is used to inject tree errors into the <a href="#org7bda520">visualization</a></li>
+<li>It is used to inject tree errors into the <a href="#orgcf2a3d4">visualization</a></li>
 </ul></dd>
 <dt><code>:paths</code></dt><dd><ul class="org-ul">
 <li>All of the traversable paths through the node-tree as a vector of vectors of nodes
 (the outer vector is the paths, and an inner vector is a single path).</li>
 <li>Each path begins with a start node and ends with a terminal node.</li>
 <li><code>if&gt;</code> nodes in the tree become <code>if-pop</code> nodes in the path with a branch key <code>:branch</code> recording the branch taken (<code>:then</code> or <code>:else</code>)</li>
-<li>Paths are in then-over-else order, meaning the first path is all <code>:then</code> branches, the last is all <code>:else</code> branches. See <a href="#org9c74c60">Sorting Paths</a></li>
+<li>Paths are in then-over-else order, meaning the first path is all <code>:then</code> branches, the last is all <code>:else</code> branches. See <a href="#org329409e">Sorting Paths</a></li>
 </ul></dd>
 <dt><code>:turns</code></dt><dd><ul class="org-ul">
 <li>A vector of vectors of strings, turns is one-for-one matched to paths, such that each turn vector has the same index in turns as its path has in paths.
@@ -1915,17 +1914,17 @@ The node data generated by <code>kdh.stax.nodify/build-node-data</code> is a map
 <hr />
 </div>
 </div>
-<div id="outline-container-org7ade8ae" class="outline-2">
-<h2 id="org7ade8ae">Building Node Data</h2>
-<div class="outline-text-2" id="text-org7ade8ae">
+<div id="outline-container-org494d0c9" class="outline-2">
+<h2 id="org494d0c9">Building Node Data</h2>
+<div class="outline-text-2" id="text-org494d0c9">
 </div>
-<div id="outline-container-org3a93b3f" class="outline-3">
-<h3 id="org3a93b3f"><code>build-node-data</code></h3>
-<div class="outline-text-3" id="text-org3a93b3f">
+<div id="outline-container-orgf1fb042" class="outline-3">
+<h3 id="orgf1fb042"><code>build-node-data</code></h3>
+<div class="outline-text-3" id="text-orgf1fb042">
 </div>
-<div id="outline-container-orgeb55aa9" class="outline-4">
-<h4 id="orgeb55aa9">ops ➤ node-tree (<code>kdh.stax.nodify/nodify-ops</code>)</h4>
-<div class="outline-text-4" id="text-orgeb55aa9">
+<div id="outline-container-org4c9cecf" class="outline-4">
+<h4 id="org4c9cecf">ops ➤ node-tree (<code>kdh.stax.nodify/nodify-ops</code>)</h4>
+<div class="outline-text-4" id="text-org4c9cecf">
 <p>
 <code>nodify-ops</code> returns a node-tree (a vector of nodes where if-nodes have sub node-trees).
 </p>
@@ -1982,29 +1981,29 @@ In the two argument version, <code>nodify-ops</code> uses <code>map-indexed</cod
 </ul>
 </div>
 </div>
-<div id="outline-container-org166b9e9" class="outline-4">
-<h4 id="org166b9e9">(flatten-node-tree node-tree) =&gt; nodes</h4>
-<div class="outline-text-4" id="text-org166b9e9">
+<div id="outline-container-org7b20732" class="outline-4">
+<h4 id="org7b20732">(flatten-node-tree node-tree) =&gt; nodes</h4>
+<div class="outline-text-4" id="text-org7b20732">
 <p>
 nodes is a vector of nodes in the same order left to right as operations given to defstackfn with the if&gt; and else&gt; terms and parenthesis removed. nodes main use is for scanning for tree errors in node-tree (errors found by nodify-ops). The kdh.stax.svg/node-data-to-html uses it to decorate the tree visualization (the black diagram) with global errors (errors whose :err-zone value is :kdh.stax.errs/zone=tree).
 </p>
 </div>
 </div>
-<div id="outline-container-orgf5d641d" class="outline-4">
-<h4 id="orgf5d641d">(node-tree-to-node-paths declarations node-tree) =&gt; paths a vovon where each path is a von</h4>
-<div class="outline-text-4" id="text-orgf5d641d">
+<div id="outline-container-org0fd705d" class="outline-4">
+<h4 id="org0fd705d">(node-tree-to-node-paths declarations node-tree) =&gt; paths a vovon where each path is a von</h4>
+<div class="outline-text-4" id="text-org0fd705d">
 <p>
 For the static analysis checks, we want to analyze each path through the tree for consistency.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd236b44" class="outline-4">
-<h4 id="orgd236b44">node-tree ➤ paths (<code>kdh.stax.nodify/node-tree-to-node-paths</code>)</h4>
-<div class="outline-text-4" id="text-orgd236b44">
+<div id="outline-container-org91be31e" class="outline-4">
+<h4 id="org91be31e">node-tree ➤ paths (<code>kdh.stax.nodify/node-tree-to-node-paths</code>)</h4>
+<div class="outline-text-4" id="text-org91be31e">
 </div>
-<div id="outline-container-org93ab54a" class="outline-5">
-<h5 id="org93ab54a">Whiteboarding</h5>
-<div class="outline-text-5" id="text-org93ab54a">
+<div id="outline-container-orgea819f9" class="outline-5">
+<h5 id="orgea819f9">Whiteboarding</h5>
+<div class="outline-text-5" id="text-orgea819f9">
 <p>
 The following is a rough approximation of the whiteboard analysis I did to come up with the algorithm in <code>kdh.stax.nodify/node-tree-to-node-paths</code>.
 </p>
@@ -2013,7 +2012,7 @@ The following is a rough approximation of the whiteboard analysis I did to come 
 Let's start with a simple tree.
 </p>
 
-<?xml version="1.0" encoding="UTF-8"?><svg width="238" height="156" viewBox="0 0 238 156"><g id="graph0" class="graph" transform="scale(2.0 2.0) rotate(0) translate(4 73.8)"><title>simple</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-73.8 114.8,-73.8 114.8,4 -4,4"></polygon><text text-anchor="middle" x="55.4" y="-7.8" font-family="Roboto" font-size="14.00">simple</text><g id="v1" class="node"><title>v1</title><ellipse fill="black" stroke="black" cx="1.8" cy="-43.8" rx="1.8" ry="1.8"></ellipse></g><g id="v2" class="node"><title>v2</title><ellipse fill="black" stroke="black" cx="55.4" cy="-43.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge1" class="edge"><title>v1--v2</title><path fill="none" stroke="black" d="M3.7,-43.8C9.91,-43.8 46.5,-43.8 53.31,-43.8"></path><text text-anchor="middle" x="28.6" y="-47.6" font-family="Times,serif" font-size="14.00">p1</text></g><g id="v3" class="node"><title>v3</title><ellipse fill="black" stroke="black" cx="109" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge2" class="edge"><title>v2--v3</title><path fill="none" stroke="black" d="M57.3,-44.13C63.51,-46.42 100.1,-59.89 106.91,-62.4"></path><text text-anchor="middle" x="82.2" y="-58.6" font-family="Times,serif" font-size="14.00">p2</text></g><g id="v4" class="node"><title>v4</title><ellipse fill="black" stroke="black" cx="109" cy="-24.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge3" class="edge"><title>v2--v4</title><path fill="none" stroke="black" d="M57.35,-43.01C59.99,-40.87 67.75,-34.86 75.2,-31.8 87.27,-26.85 103.33,-25.2 107.16,-24.87"></path><text text-anchor="middle" x="82.2" y="-35.6" font-family="Times,serif" font-size="14.00">p3</text></g></g></svg>
+<?xml version="1.0" encoding="UTF-8"?><svg width="238" height="156" preserveAspectRatio="xMidYMid meet" zoomAndPan="magnify" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 238 156"><g id="graph0" class="graph" transform="scale(2.0 2.0) rotate(0) translate(4 73.8)"><title>simple</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-73.8 114.8,-73.8 114.8,4 -4,4"></polygon><text text-anchor="middle" x="55.4" y="-7.8" font-family="Roboto" font-size="14.00">simple</text><g id="v1" class="node"><title>v1</title><ellipse fill="black" stroke="black" cx="1.8" cy="-43.8" rx="1.8" ry="1.8"></ellipse></g><g id="v2" class="node"><title>v2</title><ellipse fill="black" stroke="black" cx="55.4" cy="-43.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge1" class="edge"><title>v1--v2</title><path fill="none" stroke="black" d="M3.7,-43.8C9.91,-43.8 46.5,-43.8 53.31,-43.8"></path><text text-anchor="middle" x="28.6" y="-47.6" font-family="Times,serif" font-size="14.00">p1</text></g><g id="v3" class="node"><title>v3</title><ellipse fill="black" stroke="black" cx="109" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge2" class="edge"><title>v2--v3</title><path fill="none" stroke="black" d="M57.3,-44.13C63.51,-46.42 100.1,-59.89 106.91,-62.4"></path><text text-anchor="middle" x="82.2" y="-58.6" font-family="Times,serif" font-size="14.00">p2</text></g><g id="v4" class="node"><title>v4</title><ellipse fill="black" stroke="black" cx="109" cy="-24.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge3" class="edge"><title>v2--v4</title><path fill="none" stroke="black" d="M57.35,-43.01C59.99,-40.87 67.75,-34.86 75.2,-31.8 87.27,-26.85 103.33,-25.2 107.16,-24.87"></path><text text-anchor="middle" x="82.2" y="-35.6" font-family="Times,serif" font-size="14.00">p3</text></g></g></svg>
 
 
 <ul class="org-ul">
@@ -2044,7 +2043,7 @@ If we divide the tree at the branch vertex, into left side and right side, we ca
 Let's try a more complex example:
 </p>
 
-<?xml version="1.0" encoding="UTF-8"?><svg width="547" height="192" viewBox="0 0 547 192"><g id="graph0" class="graph" transform="scale(2.0 2.0) rotate(0) translate(4 91.8)"><title>unbalanced</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-91.8 269.2,-91.8 269.2,4 -4,4"></polygon><text text-anchor="middle" x="132.6" y="-7.8" font-family="Times,serif" font-size="14.00">unbalanced</text><g id="v1" class="node"><title>v1</title><ellipse fill="black" stroke="black" cx="1.8" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="v2" class="node"><title>v2</title><polygon fill="none" stroke="black" points="107.6,-74.8 71.6,-74.8 71.6,-80.8 53.6,-62.8 71.6,-44.8 71.6,-50.8 107.6,-50.8 107.6,-74.8"></polygon><text text-anchor="middle" x="80.6" y="-59.1" font-family="Times,serif" font-size="14.00">2</text></g><g id="edge1" class="edge"><title>v1--v2</title><path fill="none" stroke="black" d="M3.66,-62.8C8.57,-62.8 33.49,-62.8 53.47,-62.8"></path><text text-anchor="middle" x="28.6" y="-66.6" font-family="Times,serif" font-size="14.00">p1</text></g><g id="v3" class="node"><title>v3</title><ellipse fill="black" stroke="black" cx="184.6" cy="-81.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge2" class="edge"><title>v2--v3</title><path fill="none" stroke="black" d="M107.6,-67.64C135.46,-72.83 176.54,-80.49 182.79,-81.65"></path><text text-anchor="middle" x="132.6" y="-76.6" font-family="Times,serif" font-size="14.00">p2</text></g><g id="v4" class="node"><title>v4</title><polygon fill="none" stroke="black" points="211.6,-55.8 175.6,-55.8 175.6,-61.8 157.6,-43.8 175.6,-25.8 175.6,-31.8 211.6,-31.8 211.6,-55.8"></polygon><text text-anchor="middle" x="184.6" y="-40.1" font-family="Times,serif" font-size="14.00">1</text></g><g id="edge3" class="edge"><title>v2--v4</title><path fill="none" stroke="black" d="M108.02,-55.7C113.79,-54.29 119.88,-52.91 125.6,-51.8 135.98,-49.79 147.5,-48.1 157.52,-46.79"></path><text text-anchor="middle" x="132.6" y="-55.6" font-family="Times,serif" font-size="14.00">p3</text></g><g id="v5" class="node"><title>v5</title><ellipse fill="black" stroke="black" cx="263.4" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge4" class="edge"><title>v4--v5</title><path fill="none" stroke="black" d="M211.6,-50.23C231.1,-55.06 255.37,-61.06 261.13,-62.49"></path><text text-anchor="middle" x="236.6" y="-60.6" font-family="Times,serif" font-size="14.00">p4</text></g><g id="v6" class="node"><title>v6</title><ellipse fill="black" stroke="black" cx="263.4" cy="-24.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge5" class="edge"><title>v4--v6</title><path fill="none" stroke="black" d="M211.6,-37.37C231.1,-32.54 255.37,-26.54 261.13,-25.11"></path><text text-anchor="middle" x="236.6" y="-36.6" font-family="Times,serif" font-size="14.00">p5</text></g></g></svg>
+<?xml version="1.0" encoding="UTF-8"?><svg width="547" height="192" preserveAspectRatio="xMidYMid meet" zoomAndPan="magnify" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 547 192"><g id="graph0" class="graph" transform="scale(2.0 2.0) rotate(0) translate(4 91.8)"><title>unbalanced</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-91.8 269.2,-91.8 269.2,4 -4,4"></polygon><text text-anchor="middle" x="132.6" y="-7.8" font-family="Times,serif" font-size="14.00">unbalanced</text><g id="v1" class="node"><title>v1</title><ellipse fill="black" stroke="black" cx="1.8" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="v2" class="node"><title>v2</title><polygon fill="none" stroke="black" points="107.6,-74.8 71.6,-74.8 71.6,-80.8 53.6,-62.8 71.6,-44.8 71.6,-50.8 107.6,-50.8 107.6,-74.8"></polygon><text text-anchor="middle" x="80.6" y="-59.1" font-family="Times,serif" font-size="14.00">2</text></g><g id="edge1" class="edge"><title>v1--v2</title><path fill="none" stroke="black" d="M3.66,-62.8C8.57,-62.8 33.49,-62.8 53.47,-62.8"></path><text text-anchor="middle" x="28.6" y="-66.6" font-family="Times,serif" font-size="14.00">p1</text></g><g id="v3" class="node"><title>v3</title><ellipse fill="black" stroke="black" cx="184.6" cy="-81.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge2" class="edge"><title>v2--v3</title><path fill="none" stroke="black" d="M107.6,-67.64C135.46,-72.83 176.54,-80.49 182.79,-81.65"></path><text text-anchor="middle" x="132.6" y="-76.6" font-family="Times,serif" font-size="14.00">p2</text></g><g id="v4" class="node"><title>v4</title><polygon fill="none" stroke="black" points="211.6,-55.8 175.6,-55.8 175.6,-61.8 157.6,-43.8 175.6,-25.8 175.6,-31.8 211.6,-31.8 211.6,-55.8"></polygon><text text-anchor="middle" x="184.6" y="-40.1" font-family="Times,serif" font-size="14.00">1</text></g><g id="edge3" class="edge"><title>v2--v4</title><path fill="none" stroke="black" d="M108.02,-55.7C113.79,-54.29 119.88,-52.91 125.6,-51.8 135.98,-49.79 147.5,-48.1 157.52,-46.79"></path><text text-anchor="middle" x="132.6" y="-55.6" font-family="Times,serif" font-size="14.00">p3</text></g><g id="v5" class="node"><title>v5</title><ellipse fill="black" stroke="black" cx="263.4" cy="-62.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge4" class="edge"><title>v4--v5</title><path fill="none" stroke="black" d="M211.6,-50.23C231.1,-55.06 255.37,-61.06 261.13,-62.49"></path><text text-anchor="middle" x="236.6" y="-60.6" font-family="Times,serif" font-size="14.00">p4</text></g><g id="v6" class="node"><title>v6</title><ellipse fill="black" stroke="black" cx="263.4" cy="-24.8" rx="1.8" ry="1.8"></ellipse></g><g id="edge5" class="edge"><title>v4--v6</title><path fill="none" stroke="black" d="M211.6,-37.37C231.1,-32.54 255.37,-26.54 261.13,-25.11"></path><text text-anchor="middle" x="236.6" y="-36.6" font-family="Times,serif" font-size="14.00">p5</text></g></g></svg>
 
 <ul class="org-ul">
 <li>In the diagram above, their are five labeled subpaths
@@ -2123,16 +2122,16 @@ Some conclusions (from my notes)
 </div>
 </div>
 </div>
-<div id="outline-container-orgab1b826" class="outline-4">
-<h4 id="orgab1b826">maybe-analyze-paths</h4>
-<div class="outline-text-4" id="text-orgab1b826">
+<div id="outline-container-orge4bd7e2" class="outline-4">
+<h4 id="orge4bd7e2">maybe-analyze-paths</h4>
+<div class="outline-text-4" id="text-orge4bd7e2">
 <p>
 If dynamic <code>kdh.stax.errs/*stax-perform-path-analysis*</code> is true, the paths are checked for path errors with the following
 </p>
 </div>
-<div id="outline-container-orgb54e8aa" class="outline-5">
-<h5 id="orgb54e8aa"><code>check-refs-in-path</code></h5>
-<div class="outline-text-5" id="text-orgb54e8aa">
+<div id="outline-container-org5d57190" class="outline-5">
+<h5 id="org5d57190"><code>check-refs-in-path</code></h5>
+<div class="outline-text-5" id="text-org5d57190">
 <p>
 Variables in a path cannot be referenced before being defined (except for the declarations supplied to defstackfn).
 </p>
@@ -2141,9 +2140,9 @@ Variables in a path cannot be referenced before being defined (except for the de
 </ul>
 </div>
 </div>
-<div id="outline-container-org98f0be6" class="outline-5">
-<h5 id="org98f0be6"><code>count-card-in-path</code></h5>
-<div class="outline-text-5" id="text-org98f0be6">
+<div id="outline-container-orgd3de163" class="outline-5">
+<h5 id="orgd3de163"><code>count-card-in-path</code></h5>
+<div class="outline-text-5" id="text-orgd3de163">
 <p>
 Stack size (cardinality) is checked by using a card counting algorithm of applying the <code>:delta</code> of each op node in a path to a stack size that starts at 0.
 </p>
@@ -2154,9 +2153,9 @@ Stack size (cardinality) is checked by using a card counting algorithm of applyi
 </div>
 </div>
 
-<div id="outline-container-org445ec85" class="outline-4">
-<h4 id="org445ec85">Implementation</h4>
-<div class="outline-text-4" id="text-org445ec85">
+<div id="outline-container-orgab406c9" class="outline-4">
+<h4 id="orgab406c9">Implementation</h4>
+<div class="outline-text-4" id="text-orgab406c9">
 <p>
 Here is an overview of <code>node-tree-to-node-paths</code> and the functions it uses
 </p>
@@ -2188,9 +2187,9 @@ and combines the results into a collection of subpaths</li>
 </div>
 </div>
 
-<div id="outline-container-orgc83434e" class="outline-2">
-<h2 id="orgc83434e">Errors</h2>
-<div class="outline-text-2" id="text-orgc83434e">
+<div id="outline-container-orgf2cf957" class="outline-2">
+<h2 id="orgf2cf957">Errors</h2>
+<div class="outline-text-2" id="text-orgf2cf957">
 <p>
 At its simplest, an error is a map of keys:
 </p>
@@ -2226,16 +2225,16 @@ Errors are added to a node with <code>:kdh.stax.errs/error+</code> which adds an
 </div>
 </div>
 
-<div id="outline-container-orgce7a0ac" class="outline-3">
-<h3 id="orgce7a0ac">Error Zones</h3>
-<div class="outline-text-3" id="text-orgce7a0ac">
+<div id="outline-container-orgdbd5148" class="outline-3">
+<h3 id="orgdbd5148">Error Zones</h3>
+<div class="outline-text-3" id="text-orgdbd5148">
 <p>
 There are three zones of stax errors, each representing a phase of error analysis
 </p>
 </div>
-<div id="outline-container-org8a3134c" class="outline-4">
-<h4 id="org8a3134c">Parse Errors</h4>
-<div class="outline-text-4" id="text-org8a3134c">
+<div id="outline-container-org70cc243" class="outline-4">
+<h4 id="org70cc243">Parse Errors</h4>
+<div class="outline-text-4" id="text-org70cc243">
 <p>
 Some operations are always erroneous.
 </p>
@@ -2254,9 +2253,9 @@ Such errors have the following facts:
 </div>
 </div>
 
-<div id="outline-container-org8b14656" class="outline-4">
-<h4 id="org8b14656">Static Path Analysis Errors</h4>
-<div class="outline-text-4" id="text-org8b14656">
+<div id="outline-container-org76f1b3c" class="outline-4">
+<h4 id="org76f1b3c">Static Path Analysis Errors</h4>
+<div class="outline-text-4" id="text-org76f1b3c">
 <p>
 Other errors are only true within a given context of traversal &#x2013; within a path:
 </p>
@@ -2275,9 +2274,9 @@ Such errors have the following facts:
 </div>
 </div>
 
-<div id="outline-container-orgf4e4e86" class="outline-4">
-<h4 id="orgf4e4e86">Runtime Errors</h4>
-<div class="outline-text-4" id="text-orgf4e4e86">
+<div id="outline-container-org273f4f2" class="outline-4">
+<h4 id="org273f4f2">Runtime Errors</h4>
+<div class="outline-text-4" id="text-org273f4f2">
 <p>
 Finally, some errors can only occur within the context of evaluation (which is a traversal of the node-tree with values given to <code>stackfn</code> or <code>stackfn-dbg, or the ~defstackfn</code> defined functions that call them)
 </p>
@@ -2297,9 +2296,9 @@ Such errors have the following facts:
 </div>
 </div>
 
-<div id="outline-container-orgd4ea945" class="outline-3">
-<h3 id="orgd4ea945">Error Types</h3>
-<div class="outline-text-3" id="text-orgd4ea945">
+<div id="outline-container-orgd50fe0a" class="outline-3">
+<h3 id="orgd50fe0a">Error Types</h3>
+<div class="outline-text-3" id="text-orgd50fe0a">
 <p>
 Error type are richly descriptive, namespaced keywords.
 Richly descriptive means that their names contain multiple parts that allow them easily distinguished out of context.
@@ -2316,7 +2315,7 @@ For example, here is a list of all of the errors found in the src tree by grep'i
 </pre>
 </div>
 
-<pre class="example" id="orgd71a4d6">
+<pre class="example" id="orgfebfe55">
 - error=parse-illegal-operation
 - error=parse-invoke-arity-not-pos-int
 - error=parse-invoke-fun-not-function
@@ -2344,14 +2343,14 @@ In addition to its use in :err-type, I also use the pattern <code>:&lt;type&gt;=
 </ul>
 </div>
 
-<div id="outline-container-org1827e2a" class="outline-4">
-<h4 id="org1827e2a"><code>:err-type</code> vs <code>:err-zone</code></h4>
-<div class="outline-text-4" id="text-org1827e2a">
+<div id="outline-container-orgd28275c" class="outline-4">
+<h4 id="orgd28275c"><code>:err-type</code> vs <code>:err-zone</code></h4>
+<div class="outline-text-4" id="text-orgd28275c">
 <p>
 Many erroneous conditions that are caught in either parsing or static analysis, also have runtime variants.  These can be seen by binding <code>*stax-errors-prevent-exec*</code> to <code>false</code> or <code>nil</code>, allowing full runtime checking even in the presents of parse or static analysis.
 </p>
 
-<table id="org00bf99d" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org7307317" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 5:</span> Table of Node <code>:err-type</code> <code>:err-zone</code> interaction</caption>
 
 <colgroup>
@@ -2453,14 +2452,14 @@ Many erroneous conditions that are caught in either parsing or static analysis, 
 
 
 <p>
-See <a href="#org34ad60c">Complete Visualization of Parse, Path, and Runtime Errors</a>
+See <a href="#orgba530c5">Complete Visualization of Parse, Path, and Runtime Errors</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org57024d6" class="outline-4">
-<h4 id="org57024d6">Debugging Errors</h4>
-<div class="outline-text-4" id="text-org57024d6">
+<div id="outline-container-org142acfe" class="outline-4">
+<h4 id="org142acfe">Debugging Errors</h4>
+<div class="outline-text-4" id="text-org142acfe">
 <p>
 Finally, some errors should never occur &#x2013; their occurence indicates a serious flaw in the logic of the <code>exec-nodes</code> and <code>stack-op-exec</code> funtions
 </p>
@@ -2473,9 +2472,9 @@ Finally, some errors should never occur &#x2013; their occurence indicates a ser
 </div>
 </div>
 
-<div id="outline-container-orgba216c0" class="outline-2">
-<h2 id="orgba216c0">Execution</h2>
-<div class="outline-text-2" id="text-orgba216c0">
+<div id="outline-container-orgac8fa24" class="outline-2">
+<h2 id="orgac8fa24">Execution</h2>
+<div class="outline-text-2" id="text-orgac8fa24">
 <p>
 Execution starts with <code>stackfn</code> calling <code>exec-tree-with-var-init-map</code> with the <code>node-tree</code> and <code>var-init-map</code>. (or <code>stackfn-dbg</code> calling <code>exec-tree-with-var-init-maps</code>, which then calls <code>exec-tree-with-var-init-map</code> with each <code>var-init-map</code>)
 </p>
@@ -2511,9 +2510,9 @@ Execution starts with <code>stackfn</code> calling <code>exec-tree-with-var-init
 </ul>
 </div>
 
-<div id="outline-container-org1066e2d" class="outline-3">
-<h3 id="org1066e2d">Using Failjure to Simplifying Runtime Errors</h3>
-<div class="outline-text-3" id="text-org1066e2d">
+<div id="outline-container-org329a483" class="outline-3">
+<h3 id="org329a483">Using Failjure to Simplifying Runtime Errors</h3>
+<div class="outline-text-3" id="text-org329a483">
 <p>
 Some of the operations are simple to check for errors and execute.  Pushing a constant, for example, only requires that the stack exists.
 </p>
@@ -2580,7 +2579,7 @@ It leaves the details to <code>kdh.stax.errs/fail-node-do-invoke</code>, which i
 The <code>fail-node-if-&lt;failure-case&gt;</code> functions either add to the node (or its stack or var-map, which is carried by the node) or fails with a NodeFailure containing the node with one of the following errors:
 </p>
 
-<div class="org" id="orga677b28">
+<div class="org" id="org67aa838">
 <ul class="org-ul">
 <li>fail-node-if-invoke-apply-error</li>
 <li>fail-node-if-invoke-arity-error</li>
@@ -2673,7 +2672,7 @@ Now all stack-op-exec methods can follow the same form
 where <code>fail-node-do-&lt;something&gt;</code> is one of:
 </p>
 
-<div class="org" id="orgef590fa">
+<div class="org" id="orgf788fa4">
 <ul class="org-ul">
 <li>fail-node-do-def-var</li>
 <li>fail-node-do-invoke</li>
@@ -2725,9 +2724,9 @@ whose chains of <code>fail-node-if-&lt;Failure-Case&gt;</code> are listed below:
 </div>
 
 
-<div id="outline-container-org699a7d5" class="outline-2">
-<h2 id="org699a7d5">Dynamic Variables</h2>
-<div class="outline-text-2" id="text-org699a7d5">
+<div id="outline-container-org9d8b4d8" class="outline-2">
+<h2 id="org9d8b4d8">Dynamic Variables</h2>
+<div class="outline-text-2" id="text-org9d8b4d8">
 <dl class="org-dl">
 <dt><code>*stax-require-simple-stack-values*</code></dt><dd><ul class="org-ul">
 <li>default is <code>true</code></li>
@@ -2740,7 +2739,7 @@ whose chains of <code>fail-node-if-&lt;Failure-Case&gt;</code> are listed below:
 <dt><code>*stax-errors-prevent-exec*</code></dt><dd><ul class="org-ul">
 <li>default is <code>true</code></li>
 <li>if false, continue to the execution phase even though there are parse errors and/or static analysis errors</li>
-<li>used for testing runtime equivalents of parse/static errors (see <a href="#org00bf99d">Error Zone Table</a> and <a href="#orgea08eda">FLAGS Visualization</a>)</li>
+<li>used for testing runtime equivalents of parse/static errors (see <a href="#org7307317">Error Zone Table</a> and <a href="#org9879869">FLAGS Visualization</a>)</li>
 </ul></dd>
 <dt><code>*stax-perform-path-analysis*</code></dt><dd><ul class="org-ul">
 <li>default is <code>true</code></li>
@@ -2757,9 +2756,9 @@ whose chains of <code>fail-node-if-&lt;Failure-Case&gt;</code> are listed below:
 </dl>
 </div>
 </div>
-<div id="outline-container-org7bda520" class="outline-2">
-<h2 id="org7bda520">Visualization</h2>
-<div class="outline-text-2" id="text-org7bda520">
+<div id="outline-container-orgcf2a3d4" class="outline-2">
+<h2 id="orgcf2a3d4">Visualization</h2>
+<div class="outline-text-2" id="text-orgcf2a3d4">
 <p>
 The node-data map returned by <code>kdh.stax.nodify/build-node-data</code> is large, and dificult to debug.
 </p>
@@ -2768,9 +2767,9 @@ The node-data map returned by <code>kdh.stax.nodify/build-node-data</code> is la
 </p>
 </div>
 
-<div id="outline-container-orgc9b1855" class="outline-3">
-<h3 id="orgc9b1855">Using Tangle to Generate dot</h3>
-<div class="outline-text-3" id="text-orgc9b1855">
+<div id="outline-container-orgc0b0a66" class="outline-3">
+<h3 id="orgc0b0a66">Using Tangle to Generate dot</h3>
+<div class="outline-text-3" id="text-orgc0b0a66">
 <p target="_blank">
 I looked into a few graphing libraries, but most seemed overly complex for the problem at hand: draw a simple tree of nodes and decorate them using the node-data.  I previously used graphviz to draw diagrams manually in dot format using emacs org-mode and babel dot code blocks. So I went back to look for clojure libraries that handle graphviz dot, and found a few, but settled on <a href="https://github.com/Macroz/tangle" target="_blank">tangle</a>.
 </p>
@@ -2916,9 +2915,9 @@ Now a slightly more sophisticated tree like I want <code>if&gt;</code> to be vis
 </div>
 </div>
 
-<div id="outline-container-org8d11e15" class="outline-3">
-<h3 id="org8d11e15">Turning Stax Node Data into dot and SVG</h3>
-<div class="outline-text-3" id="text-org8d11e15">
+<div id="outline-container-org1a5467d" class="outline-3">
+<h3 id="org1a5467d">Turning Stax Node Data into dot and SVG</h3>
+<div class="outline-text-3" id="text-org1a5467d">
 <p>
 <code>kdh.stax.svg/paths-to-dot</code> takes node-data <code>:paths</code> and
 </p>
@@ -3032,16 +3031,16 @@ In code, I use <code>tangle.core/dot-&gt;svg</code> and <code>clojure.data.xml/p
 </div>
 </div>
 
-<div id="outline-container-org208fe8a" class="outline-3">
-<h3 id="org208fe8a">Visualization using <code>kdh.stax.svg</code></h3>
-<div class="outline-text-3" id="text-org208fe8a">
+<div id="outline-container-orga1deb09" class="outline-3">
+<h3 id="orga1deb09">Visualization using <code>kdh.stax.svg</code></h3>
+<div class="outline-text-3" id="text-orga1deb09">
 <p>
-<a id="orge0c02ef"></a>
+<a id="orgb68d0cd"></a>
 </p>
 </div>
-<div id="outline-container-org4409e9b" class="outline-4">
-<h4 id="org4409e9b">Visualizing the RPL Example</h4>
-<div class="outline-text-4" id="text-org4409e9b">
+<div id="outline-container-org80acf51" class="outline-4">
+<h4 id="org80acf51">Visualizing the RPL Example</h4>
+<div class="outline-text-4" id="text-org80acf51">
 <p>
 The <code>add-svg-data</code> function in the namespace <code>kdh.stax.svg</code> converts the node-data <code>:nodes</code>, <code>:paths</code>, and <code>:results</code> into SVG.
 </p>
@@ -3059,9 +3058,9 @@ The <code>add-svg-data</code> function in the namespace <code>kdh.stax.svg</code
 </div>
 </div>
 
-<div id="outline-container-org88f32ab" class="outline-5">
-<h5 id="org88f32ab">Visualizing the RPL Example as a Parse Tree</h5>
-<div class="outline-text-5" id="text-org88f32ab">
+<div id="outline-container-org48119c6" class="outline-5">
+<h5 id="org48119c6">Visualizing the RPL Example as a Parse Tree</h5>
+<div class="outline-text-5" id="text-org48119c6">
 <p>
 The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.stax.svg</code> returns the node-data svg xml decorated with errors in the <code>:nodes</code>.
 </p>
@@ -3076,7 +3075,7 @@ The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.
 </pre>
 </div>
 
-<div class="stax-tree"><figure><figcaption>graph0</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" viewBox="0 0 1408 68"><g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div class="stax-tree"><figure><figcaption>graph0</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1408 68"><g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-29.5" rx="7.2" ry="7.2"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
 :op=!a
@@ -3139,9 +3138,9 @@ The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.
 </div>
 </div>
 
-<div id="outline-container-org0c3d07a" class="outline-5">
-<h5 id="org0c3d07a">Visualizing the RPL Example as Paths</h5>
-<div class="outline-text-5" id="text-org0c3d07a">
+<div id="outline-container-org0f26d42" class="outline-5">
+<h5 id="org0f26d42">Visualizing the RPL Example as Paths</h5>
+<div class="outline-text-5" id="text-org0f26d42">
 <div class="org-src-container">
 <pre class="src src-clojure">(<span style="color: #ffff0b;">-&gt;&gt;</span> RPL-EXAMPLE
      node-data-to-stax-paths-xml
@@ -3151,7 +3150,7 @@ The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.
 </pre>
 </div>
 
-<div class="stax-paths"><div class="stax-path"><figure><figcaption>graph0-path1 : [start&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" viewBox="0 0 1408 68"><g id="graph0-path1 : [start&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div class="stax-paths"><div class="stax-path"><figure><figcaption>graph0-path1 : [start&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1408 68"><g id="graph0-path1 : [start&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-29.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -3216,7 +3215,7 @@ The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.
 :op=(invoke&gt; * 2)
 </title><polygon fill="none" stroke="black" points="1368.4,-23 1285.4,-23 1285.4,0 1368.4,0 1368.4,-23"></polygon><text text-anchor="middle" x="1326.9" y="-7.8" font-family="Times,serif" font-size="14.00">invoke&gt; * 2</text></g><g id="[11 :else 4]--[11 :else 5]" class="edge"><path fill="none" stroke="black" d="M1268.69,-11.5C1273.72,-11.5 1279.47,-11.5 1285.35,-11.5"></path></g><g id="[11 :else 5 ]" class="node"><title>:node-index=[11 :else 5 ]
 :op=&lt;&lt;term&gt;&gt;
-</title><ellipse fill="black" stroke="black" cx="1392.6" cy="-11.5" rx="7.2" ry="7.2"></ellipse></g><g id="[11 :else 5]--[11 :else 5 ]" class="edge"><path fill="none" stroke="black" d="M1368.6,-11.5C1375.04,-11.5 1380.95,-11.5 1385.17,-11.5"></path></g></g></svg></figure></div><div class="stax-path"><figure><figcaption>graph0-path2 : [start&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" viewBox="0 0 1408 68"><g id="graph0-path2 : [start&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1392.6" cy="-11.5" rx="7.2" ry="7.2"></ellipse></g><g id="[11 :else 5]--[11 :else 5 ]" class="edge"><path fill="none" stroke="black" d="M1368.6,-11.5C1375.04,-11.5 1380.95,-11.5 1385.17,-11.5"></path></g></g></svg></figure></div><div class="stax-path"><figure><figcaption>graph0-path2 : [start&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1408 68"><g id="graph0-path2 : [start&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-29.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -3307,9 +3306,9 @@ The <code>node-data-to-stax-tree-xml</code> function in the namespace <code>kdh.
 </div>
 </div>
 
-<div id="outline-container-orgfc612d5" class="outline-5">
-<h5 id="orgfc612d5">RPL Example: Runtime</h5>
-<div class="outline-text-5" id="text-orgfc612d5">
+<div id="outline-container-org0023071" class="outline-5">
+<h5 id="org0023071">RPL Example: Runtime</h5>
+<div class="outline-text-5" id="text-org0023071">
 <p>
 Now that we've seen there are no parse errors and static analysis found no path errors, we can expect <code>stackfn-dbg</code> to produce results when called with values.
 </p>
@@ -3325,7 +3324,7 @@ Now that we've seen there are no parse errors and static analysis found no path 
 </pre>
 </div>
 
-<div class="stax-execs"><div class="stax-exec"><figure><figcaption>graph0-result1 : [start&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" viewBox="0 0 1408 68"><g id="graph0-result1 : [start&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div class="stax-execs"><div class="stax-exec"><figure><figcaption>graph0-result1 : [start&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1408 68"><g id="graph0-result1 : [start&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!a 1, !b 2, !c 4}
 :stack=[]
@@ -3411,7 +3410,7 @@ Now that we've seen there are no parse errors and static analysis found no path 
 :stack=[24]
 </title><polygon fill="none" stroke="black" points="1368.4,-23 1285.4,-23 1285.4,0 1368.4,0 1368.4,-23" data-stax-path="good"></polygon><text text-anchor="middle" x="1326.9" y="-7.8" font-family="Times,serif" font-size="14.00">invoke&gt; * 2</text></g><g id="[11 :else 4]--[11 :else 5]" class="edge"><path fill="none" stroke="black" d="M1268.69,-11.5C1273.72,-11.5 1279.47,-11.5 1285.35,-11.5" data-stax-path="good"></path></g><g id="[11 :else 5 ]" class="node"><title>:node-index=[11 :else 5 ]
 :op=&lt;&lt;term&gt;&gt;
-</title><ellipse fill="black" stroke="black" cx="1392.6" cy="-11.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[11 :else 5]--[11 :else 5 ]" class="edge"><path fill="none" stroke="black" d="M1368.6,-11.5C1375.04,-11.5 1380.95,-11.5 1385.17,-11.5" data-stax-path="good"></path></g></g></svg></figure><div class="stax-exec-variables"><div class="variables"><div class="lside"><label>VARIABLES:</label></div><div class="rside"><table><tr><td class="no-show"></td><th>!a</th><th>!b</th><th>!c</th><th>!v1</th><th>!v2</th></tr><tr><th>Init</th><td>1</td><td>2</td><td>4</td></tr><tr><th>Last</th><td>1</td><td>2</td><td>4</td><td>3</td><td>8</td></tr></table></div></div></div><div class="stax-exec-stack"><div class="stack"><div class="lside"><label>STACK:</label></div><div class="rside"><table><tr><td>24</td></tr></table></div></div></div><div class="stax-exec-output"><div class="output"><div class="lside"><label>OUTPUT:</label></div><div class="rside"><table><tr><td>false!!</td></tr></table></div></div></div><div class="stax-exec-errors"></div></div><div class="stax-exec"><figure><figcaption>graph0-result2 : [start&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" viewBox="0 0 1408 68"><g id="graph0-result2 : [start&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1392.6" cy="-11.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[11 :else 5]--[11 :else 5 ]" class="edge"><path fill="none" stroke="black" d="M1368.6,-11.5C1375.04,-11.5 1380.95,-11.5 1385.17,-11.5" data-stax-path="good"></path></g></g></svg></figure><div class="stax-exec-variables"><div class="variables"><div class="lside"><label>VARIABLES:</label></div><div class="rside"><table><tr><td class="no-show"></td><th>!a</th><th>!b</th><th>!c</th><th>!v1</th><th>!v2</th></tr><tr><th>Init</th><td>1</td><td>2</td><td>4</td></tr><tr><th>Last</th><td>1</td><td>2</td><td>4</td><td>3</td><td>8</td></tr></table></div></div></div><div class="stax-exec-stack"><div class="stack"><div class="lside"><label>STACK:</label></div><div class="rside"><table><tr><td>24</td></tr></table></div></div></div><div class="stax-exec-output"><div class="output"><div class="lside"><label>OUTPUT:</label></div><div class="rside"><table><tr><td>false!!</td></tr></table></div></div></div><div class="stax-exec-errors"></div></div><div class="stax-exec"><figure><figcaption>graph0-result2 : [start&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1408" height="68" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1408 68"><g id="graph0-result2 : [start&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 64)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-64 1403.8,-64 1403.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!a 3, !b 3, !c 3}
 :stack=[]
@@ -3525,14 +3524,14 @@ Now that we've seen there are no parse errors and static analysis found no path 
 
 <p>
 Now let's visualize some errors.
-<a id="orgea08eda"></a>
+<a id="org9879869"></a>
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgefc2c69" class="outline-4">
-<h4 id="orgefc2c69">FLAGS: A Good Example of Bad Nodes</h4>
-<div class="outline-text-4" id="text-orgefc2c69">
+<div id="outline-container-orgd6c9b52" class="outline-4">
+<h4 id="orgd6c9b52">FLAGS: A Good Example of Bad Nodes</h4>
+<div class="outline-text-4" id="text-orgd6c9b52">
 <p>
 Let's see if we can construct a single visualization of each of the major error types:
 </p>
@@ -3721,7 +3720,7 @@ Because the svg often extends past the right side of the page of this document, 
 </p>
 
 <p>
-Below, we define <code>FLAG-DATA</code> as the svg for tree, paths, and execs.  In the <a href="#orge0c02ef">RPL Example Visualization</a> above, we checked the parse and path trees for errors before running with values.  Here, however, we want errors, so we override the normal behavior of <code>stackfn-dbg</code> to exec regardless of pre-execution errors by binding <code>*stax-errors-prevent-exec*</code> to <code>false</code>.
+Below, we define <code>FLAG-DATA</code> as the svg for tree, paths, and execs.  In the <a href="#orgb68d0cd">RPL Example Visualization</a> above, we checked the parse and path trees for errors before running with values.  Here, however, we want errors, so we override the normal behavior of <code>stackfn-dbg</code> to exec regardless of pre-execution errors by binding <code>*stax-errors-prevent-exec*</code> to <code>false</code>.
 </p>
 
 <div class="org-src-container">
@@ -3767,9 +3766,9 @@ Below, we define <code>FLAG-DATA</code> as the svg for tree, paths, and execs.  
 </div>
 </div>
 
-<div id="outline-container-org9769c9c" class="outline-5">
-<h5 id="org9769c9c">FLAGS: Parse Errors</h5>
-<div class="outline-text-5" id="text-org9769c9c">
+<div id="outline-container-org9c4dbea" class="outline-5">
+<h5 id="org9c4dbea">FLAGS: Parse Errors</h5>
+<div class="outline-text-5" id="text-org9c4dbea">
 <p>
 Here, we visualize the tree-xml of <code>FLAG-DATA</code>:
 </p>
@@ -3781,7 +3780,7 @@ Here, we visualize the tree-xml of <code>FLAG-DATA</code>:
 </pre>
 </div>
 
-<div class="stax-tree"><figure><figcaption>graph0</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div class="stax-tree"><figure><figcaption>graph0</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
 :op=!i
@@ -3850,9 +3849,9 @@ Hover over colored nodes for their "TREE ERRORS".  Nodes with Errors are colored
 </div>
 
 
-<div id="outline-container-org177e661" class="outline-5">
-<h5 id="org177e661">FLAGS: Run #1 &#x2013; Happy Path</h5>
-<div class="outline-text-5" id="text-org177e661">
+<div id="outline-container-org1fd6f6c" class="outline-5">
+<h5 id="org1fd6f6c">FLAGS: Run #1 &#x2013; Happy Path</h5>
+<div class="outline-text-5" id="text-org1fd6f6c">
 <p>
 Here is the code to show the first run as a path / exec pair (the code blocks for subsequent runs are not exported, but differ only in <code>row</code> value):
 </p>
@@ -3867,7 +3866,7 @@ Here is the code to show the first run as a path / exec pair (the code blocks fo
 </pre>
 </div>
 
-<div><div class="stax-path"><figure><figcaption>graph0-path1 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path1 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div><div class="stax-path"><figure><figcaption>graph0-path1 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path1 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -3919,7 +3918,7 @@ Here is the code to show the first run as a path / exec pair (the code blocks fo
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="good"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
 :stack-size=1
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="good"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="good"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec"><figure><figcaption>graph0-result1 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result1 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="good"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="good"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec"><figure><figcaption>graph0-result1 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result1 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i 1, !m 1, !s 1, !u 1, !r 1}
 :stack=[]
@@ -3991,10 +3990,10 @@ Here is the code to show the first run as a path / exec pair (the code blocks fo
 </div>
 </div>
 
-<div id="outline-container-org53502ba" class="outline-5">
-<h5 id="org53502ba">FLAGS: Run #2 &#x2013; Failed Invoke &#x2013; Runtime Error</h5>
-<div class="outline-text-5" id="text-org53502ba">
-<div><div class="stax-path"><figure><figcaption>graph0-path2 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path2 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div id="outline-container-org4b8a214" class="outline-5">
+<h5 id="org4b8a214">FLAGS: Run #2 &#x2013; Failed Invoke &#x2013; Runtime Error</h5>
+<div class="outline-text-5" id="text-org4b8a214">
+<div><div class="stax-path"><figure><figcaption>graph0-path2 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;else&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path2 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -4046,7 +4045,7 @@ Here is the code to show the first run as a path / exec pair (the code blocks fo
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="good"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
 :stack-size=1
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="good"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91" data-stax-path="good"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result2 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result2 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="good"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91" data-stax-path="good"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result2 : [start&rarr;then&rarr;then&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result2 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i 1, !m 1, !s 1, !u 1, !r false}
 :stack=[]
@@ -4150,10 +4149,10 @@ Nodes with Runtime Errors are colored by CSS in <a href="svg/stax.css">svg/stax.
 </div>
 </div>
 
-<div id="outline-container-org3b36d60" class="outline-5">
-<h5 id="org3b36d60">FLAGS: Run #3 &#x2013; Insufficient Stack &#x2013; Runtime Error vs Path Error</h5>
-<div class="outline-text-5" id="text-org3b36d60">
-<div><div class="stax-path"><figure><figcaption>graph0-path3 : [start&rarr;then&rarr;then&rarr;then&rarr;else&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path3 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div id="outline-container-orgbddbca6" class="outline-5">
+<h5 id="orgbddbca6">FLAGS: Run #3 &#x2013; Insufficient Stack &#x2013; Runtime Error vs Path Error</h5>
+<div class="outline-text-5" id="text-orgbddbca6">
+<div><div class="stax-path"><figure><figcaption>graph0-path3 : [start&rarr;then&rarr;then&rarr;then&rarr;else&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path3 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -4200,7 +4199,7 @@ Nodes with Runtime Errors are colored by CSS in <a href="svg/stax.css">svg/stax.
 :op=(invoke&gt; + 1)
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="bad"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07" data-stax-path="bad"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result3 : [start&rarr;then&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result3 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07" data-stax-path="bad"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result3 : [start&rarr;then&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result3 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i 1, !m 1, !s 1, !u false, !r 1}
 :stack=[]
@@ -4280,10 +4279,10 @@ Needs 1 item -- but stack is empty</title><polygon fill="none" stroke="black" po
 </div>
 </div>
 
-<div id="outline-container-orgf34933e" class="outline-5">
-<h5 id="orgf34933e">FLAGS: Run #4 &#x2013; Undefined !Var &#x2013; Runtime Error vs Path Error</h5>
-<div class="outline-text-5" id="text-orgf34933e">
-<div><div class="stax-path"><figure><figcaption>graph0-path4 : [start&rarr;then&rarr;then&rarr;else&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path4 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div id="outline-container-orgc6ec1cc" class="outline-5">
+<h5 id="orgc6ec1cc">FLAGS: Run #4 &#x2013; Undefined !Var &#x2013; Runtime Error vs Path Error</h5>
+<div class="outline-text-5" id="text-orgc6ec1cc">
+<div><div class="stax-path"><figure><figcaption>graph0-path4 : [start&rarr;then&rarr;then&rarr;else&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path4 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -4336,7 +4335,7 @@ Needs 1 item -- but stack is empty</title><polygon fill="none" stroke="black" po
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="bad"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
 :stack-size=2
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43" data-stax-path="bad"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result4 : [start&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result4 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43" data-stax-path="bad"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result4 : [start&rarr;then&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result4 : [start&amp;rarr;then&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i 1, !m 1, !s false, !u 1, !r 1}
 :stack=[]
@@ -4411,10 +4410,10 @@ Undefined stack var `!v'</title><polygon fill="none" stroke="black" points="652.
 </div>
 
 
-<div id="outline-container-org0958377" class="outline-5">
-<h5 id="org0958377">FLAGS: Run #5 &#x2013; Malformed Invoke &#x2013; Runtime Error vs Parse Error</h5>
-<div class="outline-text-5" id="text-org0958377">
-<div><div class="stax-path"><figure><figcaption>graph0-path5 : [start&rarr;then&rarr;else&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path5 : [start&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div id="outline-container-org7c33c4f" class="outline-5">
+<h5 id="org7c33c4f">FLAGS: Run #5 &#x2013; Malformed Invoke &#x2013; Runtime Error vs Parse Error</h5>
+<div class="outline-text-5" id="text-org7c33c4f">
+<div><div class="stax-path"><figure><figcaption>graph0-path5 : [start&rarr;then&rarr;else&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path5 : [start&amp;rarr;then&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -4457,7 +4456,7 @@ Undefined stack var `!v'</title><polygon fill="none" stroke="black" points="652.
 :op=(invoke&gt; + 1)
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="bad"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95" data-stax-path="bad"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result5 : [start&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result5 : [start&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95" data-stax-path="bad"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result5 : [start&rarr;then&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result5 : [start&amp;rarr;then&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i 1, !m false, !s 1, !u 1, !r 1}
 :stack=[]
@@ -4527,10 +4526,10 @@ Could not resolve `¿' to iFn</title><polygon fill="none" stroke="black" points=
 </div>
 </div>
 
-<div id="outline-container-org2b5e028" class="outline-5">
-<h5 id="org2b5e028">FLAGS: Run #6 &#x2013; Illegal Operation &#x2013; Runtime Error vs Parse Error</h5>
-<div class="outline-text-5" id="text-org2b5e028">
-<div><div class="stax-path"><figure><figcaption>graph0-path6 : [start&rarr;else&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-path6 : [start&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+<div id="outline-container-orgc0c9d6b" class="outline-5">
+<h5 id="orgc0c9d6b">FLAGS: Run #6 &#x2013; Illegal Operation &#x2013; Runtime Error vs Parse Error</h5>
+<div class="outline-text-5" id="text-orgc0c9d6b">
+<div><div class="stax-path"><figure><figcaption>graph0-path6 : [start&rarr;else&rarr;then&rarr;then&rarr;then&rarr;then&rarr;term]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-path6 : [start&amp;rarr;else&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;then&amp;rarr;term]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :stack-size=0
 </title><ellipse fill="black" stroke="black" cx="7.2" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="good"></ellipse></g><g id="[0]" class="node"><title>:node-index=[0]
@@ -4571,7 +4570,7 @@ Could not resolve `¿' to iFn</title><polygon fill="none" stroke="black" points=
 :op=(invoke&gt; + 1)
 </title><polygon fill="none" stroke="black" points="1151.4,-43 1098.4,-43 1098.4,-20 1151.4,-20 1151.4,-43" data-stax-path="bad"></polygon><text text-anchor="middle" x="1124.9" y="-27.8" font-family="Times,serif" font-size="14.00">★ + 1</text></g><g id="[10 ]" class="node"><title>:node-index=[10 ]
 :op=&lt;&lt;term&gt;&gt;
-</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62" data-stax-path="bad"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result6 : [start&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" viewBox="0 0 1191 70"><g id="graph0-result6 : [start&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
+</title><ellipse fill="black" stroke="black" cx="1175.6" cy="-31.5" rx="7.2" ry="7.2" data-stax-path="bad"></ellipse></g><g id="[10]--[10 ]" class="edge"><path fill="none" stroke="black" d="M1151.68,-31.5C1157.88,-31.5 1163.96,-31.5 1168.3,-31.5" data-stax-path="bad"></path></g><g id="[1 :else 0]--[2]" class="edge"><path fill="none" stroke="black" d="M232.59,-16.75C237.95,-19.16 244.37,-22.05 250.1,-24.62" data-stax-path="bad"></path></g><g id="[3 :else 0]--[4]" class="edge"><path fill="none" stroke="black" d="M457.46,-20.68C463.28,-22.86 469.24,-25.09 474.23,-26.95"></path></g><g id="[5 :else 0]--[6]" class="edge"><path fill="none" stroke="black" d="M652.54,-17.61C657.87,-20.09 664.02,-22.95 669.35,-25.43"></path></g><g id="[7 :else 0]--[8]" class="edge"><path fill="none" stroke="black" d="M874.55,-20.91C880.41,-23.06 886.36,-25.25 891.32,-27.07"></path></g><g id="[9 :then 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1077.43,-46.09C1083.58,-44.16 1090.99,-41.84 1098.07,-39.61" data-stax-path="bad"></path></g><g id="[9 :else 0]--[10]" class="edge"><path fill="none" stroke="black" d="M1081.55,-18.9C1086.84,-20.47 1092.72,-22.22 1098.38,-23.91"></path></g></g></svg></figure></div><div class="stax-exec" has-errors="has-errors"><figure><figcaption>graph0-result6 : [start&rarr;else]</figcaption><?xml version="1.0" encoding="UTF-8"?><svg width="1191" height="70" preserveAspectRatio="xMidYMid meet" version="1.1" contentScriptType="application/ecmascript" contentStyleType="text/css" viewBox="0 0 1191 70"><g id="graph0-result6 : [start&amp;rarr;else]" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 66)"><title>graph0</title><polygon fill="white" stroke="transparent" points="-4,4 -4,-66 1186.8,-66 1186.8,4 -4,4"></polygon><g id="[]" class="node"><title>:node-index=[]
 :op=&lt;&lt;start&gt;&gt;
 :var-map={!i false, !m 1, !s 1, !u 1, !r 1}
 :stack=[]
@@ -4643,9 +4642,9 @@ One errors found in Path Analysis
 </div>
 
 
-<div id="outline-container-org34ad60c" class="outline-4">
-<h4 id="org34ad60c">Complete Visualization of Parse, Path, and Runtime Errors</h4>
-<div class="outline-text-4" id="text-org34ad60c">
+<div id="outline-container-orgba530c5" class="outline-4">
+<h4 id="orgba530c5">Complete Visualization of Parse, Path, and Runtime Errors</h4>
+<div class="outline-text-4" id="text-orgba530c5">
 <p>
 The set of all Runtime Errors and their equivalent Parse and Path Errors, can be seen in the visualization file
 </p>
@@ -5056,9 +5055,9 @@ The runs are numbered backwards below to show their correspondence to the number
 </div>
 </div>
 
-<div id="outline-container-org662ddbb" class="outline-3">
-<h3 id="org662ddbb">Is assigning errors colors wise?</h3>
-<div class="outline-text-3" id="text-org662ddbb">
+<div id="outline-container-orgc0abc3f" class="outline-3">
+<h3 id="orgc0abc3f">Is assigning errors colors wise?</h3>
+<div class="outline-text-3" id="text-orgc0abc3f">
 <p>
 A couple notes on the SVG visualization used in this project.
 </p>
@@ -5110,17 +5109,17 @@ The answer is that the current implementation's style does not create color cont
 </div>
 </div>
 
-<div id="outline-container-org65b6834" class="outline-2">
-<h2 id="org65b6834">Optimization Case Studies</h2>
-<div class="outline-text-2" id="text-org65b6834">
+<div id="outline-container-org7e27d25" class="outline-2">
+<h2 id="org7e27d25">Optimization Case Studies</h2>
+<div class="outline-text-2" id="text-org7e27d25">
 <p>
 Throughout the development of <code>kdh/stax</code>, I optimized several sections of code.  While an exhaustive review is not feasible, I would like to show a few optimizations I made to give a sense of the work I did.
 </p>
 </div>
 
-<div id="outline-container-org9c74c60" class="outline-3">
-<h3 id="org9c74c60">Sorting Paths</h3>
-<div class="outline-text-3" id="text-org9c74c60">
+<div id="outline-container-org329409e" class="outline-3">
+<h3 id="org329409e">Sorting Paths</h3>
+<div class="outline-text-3" id="text-org329409e">
 <p>
 I want <code>build-node-data</code> and <code>build-node-data*</code> to produce the same node-data (specifically <code>:node-tree</code>, and <code>:paths</code>, as the others are derived from these).
 Since paths is a vector of vectors, order matters. Because of their underlying implementations, <code>build-node-data</code> and <code>build-node-data*</code> produce paths in different order.
@@ -5577,9 +5576,9 @@ So <code>kdh.stax.util/sequential-compare</code> is now <code>sequential-compare
 </div>
 </div>
 
-<div id="outline-container-org994ca84" class="outline-3">
-<h3 id="org994ca84">VOVOSON vs VOVON</h3>
-<div class="outline-text-3" id="text-org994ca84">
+<div id="outline-container-org8a9fa51" class="outline-3">
+<h3 id="org8a9fa51">VOVOSON vs VOVON</h3>
+<div class="outline-text-3" id="text-org8a9fa51">
 <p>
 <code>:paths</code> in the node-data is a VOVON (a vector or vectors of nodes).
 </p>
@@ -5738,7 +5737,7 @@ That's why we have metrics, to challenge our assumptions.
 </p>
 
 <p>
-The VOVOSON implementation is now in dev/clj/kdh/stax/nodify<a href="#orgda8565b">*dev.clj</a>
+The VOVOSON implementation is now in dev/clj/kdh/stax/nodify<a href="#org9539a6d">*dev.clj</a>
 </p>
 
 <div class="org-src-container">
@@ -6014,9 +6013,9 @@ The VOVOSON implementation is now in dev/clj/kdh/stax/nodify<a href="#orgda8565b
 </div>
 </div>
 </div>
-<div id="outline-container-orga88a2a4" class="outline-3">
-<h3 id="orga88a2a4"><code>nodify-ops</code> vs <code>nodify-ops*</code></h3>
-<div class="outline-text-3" id="text-orga88a2a4">
+<div id="outline-container-org71cd972" class="outline-3">
+<h3 id="org71cd972"><code>nodify-ops</code> vs <code>nodify-ops*</code></h3>
+<div class="outline-text-3" id="text-org71cd972">
 <ul class="org-ul">
 <li>Both <code>nodify-ops</code> and <code>nodify-ops*</code> build the <code>:node-tree</code>.  But they do this in different ways:
 <ul class="org-ul">
@@ -6036,7 +6035,7 @@ The VOVOSON implementation is now in dev/clj/kdh/stax/nodify<a href="#orgda8565b
 </ul>
 
 <p>
-I thought that because <code>nodify-ops*</code> builds the node-tree in the same traversal as it collects paths, that it might be faster than <code>nodify-ops</code> and <code>node-tree-to-node-paths</code> (basically two traversals), but criterion tells me it is not - at least not as currently implemented.  For that reason, it (and functions only it uses) are relegated to dev/clj/kdh/stax/nodify<a href="#orgda8565b">*dev.clj</a>.
+I thought that because <code>nodify-ops*</code> builds the node-tree in the same traversal as it collects paths, that it might be faster than <code>nodify-ops</code> and <code>node-tree-to-node-paths</code> (basically two traversals), but criterion tells me it is not - at least not as currently implemented.  For that reason, it (and functions only it uses) are relegated to dev/clj/kdh/stax/nodify<a href="#org9539a6d">*dev.clj</a>.
 </p>
 
 <div class="org-src-container">
@@ -6092,9 +6091,9 @@ I thought that because <code>nodify-ops*</code> builds the node-tree in the same
 </div>
 
 
-<div id="outline-container-org9a0df5a" class="outline-3">
-<h3 id="org9a0df5a">KeyFnMap for Decorating SVG Nodes with Op Node Errors</h3>
-<div class="outline-text-3" id="text-org9a0df5a">
+<div id="outline-container-org4e02a3e" class="outline-3">
+<h3 id="org4e02a3e">KeyFnMap for Decorating SVG Nodes with Op Node Errors</h3>
+<div class="outline-text-3" id="text-org4e02a3e">
 <p>
 For the visualization of <code>:node-tree</code>, <code>:paths</code>, and <code>:results</code>, I use SVG in HTML.  While I toyed with directly manipulating the look of SVG (changing the <code>:fill</code> color of a <code>g.node</code>'s <code>:polygon</code>, or the <code>:stroke</code> color of a <code>g.edge</code>'s <code>:path</code> with specter), as soon as I became aware of SVG user data attributes, I focused on marking the SVG with custon attributes that I could then target from CSS.
 SVG custom attributes are named :data-&lt;your-name-here&gt;. These are legal SVG, and are useful for adding data to your SVG elements. However, the user data attributes are just that, attributes.  Attributes are simple &#x2013; i.e cannot contain child values, like elements can.  To convert vectors of error maps into data attributes, I would need to write conversion functions.
@@ -6114,7 +6113,7 @@ I add two custom attributes for node error for the visualization of errors
 The tranformation should look like:
 </p>
 
-<pre class="example" id="org362dea6">
+<pre class="example" id="orgbef0539">
 [{:err-type &lt;keyword-1&gt;}
  {:err-type &lt;keyword-2&gt;}
  ...
@@ -6128,7 +6127,7 @@ The tranformation should look like:
 <li>It is displayed in the label text that pops up when hovering over the node in the visualization</li>
 </ul></dd>
 </dl>
-<pre class="example" id="org20a4a34">
+<pre class="example" id="orgaa4196a">
 [{:err-text &lt;string-1&gt;}
  {:err-text &lt;string-2&gt;}
  ...
@@ -6140,9 +6139,9 @@ To simplified this, I came up with a KeyFnMap, a map of match keys to conversion
 </p>
 </div>
 
-<div id="outline-container-org3a14ced" class="outline-4">
-<h4 id="org3a14ced">First Version</h4>
-<div class="outline-text-4" id="text-org3a14ced">
+<div id="outline-container-org0b8c859" class="outline-4">
+<h4 id="org0b8c859">First Version</h4>
+<div class="outline-text-4" id="text-org0b8c859">
 <p>
 In v1 of the keyfnmap
 </p>
@@ -6207,9 +6206,9 @@ Below, we sit it works, but <code>map-vals-via-keyfnmap-v1</code> has the key fi
 </div>
 </div>
 
-<div id="outline-container-orgc5387e4" class="outline-4">
-<h4 id="orgc5387e4">Second Version</h4>
-<div class="outline-text-4" id="text-orgc5387e4">
+<div id="outline-container-org922255e" class="outline-4">
+<h4 id="org922255e">Second Version</h4>
+<div class="outline-text-4" id="text-org922255e">
 <p>
 In v2 of the keyfnmap
 </p>
@@ -6276,9 +6275,9 @@ Now we've moved the call to <code>key-to-data-stax-key</code> out of <code>map-v
 </div>
 </div>
 </div>
-<div id="outline-container-org4a99e5d" class="outline-4">
-<h4 id="org4a99e5d">Third and Final Version</h4>
-<div class="outline-text-4" id="text-org4a99e5d">
+<div id="outline-container-org0a149bd" class="outline-4">
+<h4 id="org0a149bd">Third and Final Version</h4>
+<div class="outline-text-4" id="text-org0a149bd">
 <p>
 In v3 of the keyfnmap
 </p>
@@ -6343,9 +6342,9 @@ In v3 of the keyfnmap
 
 
 
-<div id="outline-container-orgce5cef6" class="outline-4">
-<h4 id="orgce5cef6">Comparison</h4>
-<div class="outline-text-4" id="text-orgce5cef6">
+<div id="outline-container-orgf4e1283" class="outline-4">
+<h4 id="orgf4e1283">Comparison</h4>
+<div class="outline-text-4" id="text-orgf4e1283">
 <div class="org-src-container">
 <pre class="src src-clojure">
 
@@ -6413,9 +6412,9 @@ In v3 of the keyfnmap
 </div>
 
 
-<div id="outline-container-orgf055bf5" class="outline-2">
-<h2 id="orgf055bf5">Workflow</h2>
-<div class="outline-text-2" id="text-orgf055bf5">
+<div id="outline-container-org205d338" class="outline-2">
+<h2 id="org205d338">Workflow</h2>
+<div class="outline-text-2" id="text-org205d338">
 <p>
 I take "We are looking for an example of the quality of work you would do at RPL." broadly to encompass process as well, so I will outline it here.
 </p>
@@ -6425,9 +6424,9 @@ I am deeply devoted to the principle of continuous improvement of process. It is
 </p>
 </div>
 
-<div id="outline-container-orgaca41a5" class="outline-3">
-<h3 id="orgaca41a5">Keeping up to date</h3>
-<div class="outline-text-3" id="text-orgaca41a5">
+<div id="outline-container-org98b93c9" class="outline-3">
+<h3 id="org98b93c9">Keeping up to date</h3>
+<div class="outline-text-3" id="text-org98b93c9">
 <p>
 Before beginning a new project, I go to latest stable version on all tools.  To make that less risky, I maintain multiple development systems as n and n+1 (where n is current working, and n+1 is latest).
 </p>
@@ -6524,9 +6523,9 @@ Before beginning a new project, I go to latest stable version on all tools.  To 
 </div>
 </div>
 
-<div id="outline-container-org8eeddb6" class="outline-3">
-<h3 id="org8eeddb6">Creating the project</h3>
-<div class="outline-text-3" id="text-org8eeddb6">
+<div id="outline-container-org300a07b" class="outline-3">
+<h3 id="org300a07b">Creating the project</h3>
+<div class="outline-text-3" id="text-org300a07b">
 <p>
 Stax is meant to be a simple library with one user called macro <code>defstackfn</code>, so I started fresh by running lein:
 </p>
@@ -6543,7 +6542,7 @@ Then I changed the file tree around to make a proper starting setup
 <p>
 ¿FIXME?
 </p>
-<pre class="example" id="org1e86521">
+<pre class="example" id="org9a3b175">
 doc
 ├── stax.html (this document)
 ├── stax.org (org-mode file that generates this document)
@@ -6634,9 +6633,9 @@ And I add to project.clj configurations for dev, src, and test
 </div>
 </div>
 
-<div id="outline-container-orgce8fe59" class="outline-3">
-<h3 id="orgce8fe59">Starting an nrepl</h3>
-<div class="outline-text-3" id="text-orgce8fe59">
+<div id="outline-container-org10a2150" class="outline-3">
+<h3 id="org10a2150">Starting an nrepl</h3>
+<div class="outline-text-3" id="text-org10a2150">
 <p>
 I prefer to launch nrepl from the command line (using lein.sh in the project root):
 </p>
@@ -6673,9 +6672,9 @@ If I refactor (like when I split nodes.clj into node.clj and nodify.clj to fix a
 </div>
 </div>
 
-<div id="outline-container-org755f74d" class="outline-3">
-<h3 id="org755f74d">SCM &#x2013; GIT</h3>
-<div class="outline-text-3" id="text-org755f74d">
+<div id="outline-container-orgecfcc9f" class="outline-3">
+<h3 id="orgecfcc9f">SCM &#x2013; GIT</h3>
+<div class="outline-text-3" id="text-orgecfcc9f">
 <p>
 For the early stages of a project like this one (in which I'm the sole coder), I find git gets in the way more than it helps.  But eventually, once the design reaches a level of interdepency, I move a working copy into git and perform feature work on a branch.  This code has been in git locally for about two months, and on GitHub for two weeks to test deploy and user download.
 </p>
@@ -6686,18 +6685,18 @@ I'm still using command line git over magit because I have tooling around the co
 <ul class="org-ul">
 <li>It's especially useful for documenting complex install procedures as it captures privelege escalation (e.g. sudo and su).</li>
 <li>It logs following a command, so unlike normal bash history, it isn't lost if I crash the term</li>
-<li>It's global, meaning I can be a any terminal and logrep for commands enterred at any other terminal</li>
+<li>It's global, meaning I can be at any terminal and logrep for commands enterred at any other terminal</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org27c978f" class="outline-3">
-<h3 id="org27c978f">Testing</h3>
-<div class="outline-text-3" id="text-org27c978f">
+<div id="outline-container-orgdc8429a" class="outline-3">
+<h3 id="orgdc8429a">Testing</h3>
+<div class="outline-text-3" id="text-orgdc8429a">
 </div>
-<div id="outline-container-org23ee3af" class="outline-4">
-<h4 id="org23ee3af">Unit Test</h4>
-<div class="outline-text-4" id="text-org23ee3af">
+<div id="outline-container-org5cc0980" class="outline-4">
+<h4 id="org5cc0980">Unit Test</h4>
+<div class="outline-text-4" id="text-org5cc0980">
 <p>
 Most unit tests are still manual in the 0.1.0 release and reside in the -dev.clj files, though I have begun migrating a couple into the test tree.
 </p>
@@ -6718,11 +6717,11 @@ Most unit tests are still manual in the 0.1.0 release and reside in the -dev.clj
 </div>
 </div>
 </div>
-<div id="outline-container-org26a25ba" class="outline-4">
-<h4 id="org26a25ba">Requirement Testing</h4>
-<div class="outline-text-4" id="text-org26a25ba">
+<div id="outline-container-org1c5440e" class="outline-4">
+<h4 id="org1c5440e">Requirement Testing</h4>
+<div class="outline-text-4" id="text-org1c5440e">
 <p>
-All requirements listed in <a href="#org8848dde">Requirements</a> were tested in dev (N+1)
+All requirements listed in <a href="#orge4a34ba">Requirements</a> were tested in dev (N+1)
 </p>
 <ul class="org-ul">
 <li>java 17</li>
@@ -6731,9 +6730,9 @@ All requirements listed in <a href="#org8848dde">Requirements</a> were tested in
 </ul>
 </div>
 </div>
-<div id="outline-container-orge14ef59" class="outline-4">
-<h4 id="orge14ef59">Deployment Testing</h4>
-<div class="outline-text-4" id="text-orge14ef59">
+<div id="outline-container-orgd96fada" class="outline-4">
+<h4 id="orgd96fada">Deployment Testing</h4>
+<div class="outline-text-4" id="text-orgd96fada">
 <p>
 The installation procedure in <a href="https://github.com/kdhouser24/stax/blob/main/README.md">README.md</a> was taken from my <code>bash-hist.log</code> of downloading the deployed kdh/stax "0.1.0" and maven installing it for the first user test, and was cross verified (i.e. followed to the letter to ensure its sufficiency) for the second user test.
 </p>
@@ -6744,16 +6743,16 @@ The installation procedure in <a href="https://github.com/kdhouser24/stax/blob/m
 </ul>
 </div>
 </div>
-<div id="outline-container-org8c2db8a" class="outline-4">
-<h4 id="org8c2db8a">User Testing</h4>
-<div class="outline-text-4" id="text-org8c2db8a">
+<div id="outline-container-orga34a02b" class="outline-4">
+<h4 id="orga34a02b">User Testing</h4>
+<div class="outline-text-4" id="text-orga34a02b">
 <p>
 After completing my dev testing and testing deploy I began a round of user testing.
 </p>
 </div>
-<div id="outline-container-org46d09c9" class="outline-5">
-<h5 id="org46d09c9">First User Test (stax-user-clj-1-10-3)</h5>
-<div class="outline-text-5" id="text-org46d09c9">
+<div id="outline-container-orgaf71f5b" class="outline-5">
+<h5 id="orgaf71f5b">First User Test (stax-user-clj-1-10-3)</h5>
+<div class="outline-text-5" id="text-orgaf71f5b">
 <ul class="org-ul">
 <li>I added another user to the kdh/stax private repo
 <ul class="org-ul">
@@ -6782,73 +6781,40 @@ After completing my dev testing and testing deploy I began a round of user testi
 <p target="_blank">
 See <a href="user-testing/stax-user-clj-1-10-3/doc/user-test-clojure-1-10-3.html" target="_blank">Test-Report</a>
 </p>
-
-<p>
-<a href="user-testing/stax-user-clj-1-9-0/">Full project tree for stax-user-clj-1-10-3</a>
+<p target="_blank">
+<a href="https://github.com/kdhouser24/stax-user-clj-1-10-3" target="_blank">Full project tree for stax-user-clj-1-10-3</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org35a975c" class="outline-5">
-<h5 id="org35a975c">Second User Test</h5>
-<div class="outline-text-5" id="text-org35a975c">
+<div id="outline-container-org730f815" class="outline-5">
+<h5 id="org730f815">Second User Test (stax-user-clj-1-9-0)</h5>
+<div class="outline-text-5" id="text-org730f815">
 <p>
-I repeated the First User Test with a different version of Clojure (1.9.0 used to match the version used by RPL in project.clj of specter. 
+I repeated the First User Test with a different version of Clojure (1.9.0 matched to the version used by RPL in project.clj of specter). 
 </p>
 <p target="_blank">
 See <a href="user-testing/stax-user-clj-1-9-0/doc/user-test-clojure-1-9-0.html" target="_blank">Test-Report</a>
 </p>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-org0ac2602" class="outline-2">
-<h2 id="org0ac2602">Environment</h2>
-<div class="outline-text-2" id="text-org0ac2602">
-<p>
-I wrote this as in
+<p target="_blank">
+<a href="https://github.com/kdhouser24/stax-user-clj-1-9-0" target="_blank">Full project tree for stax-user-clj-1-9-0</a>
 </p>
-<ul class="org-ul">
-<li>org-mode <code>release​_9.5.4</code></li>
-<li>emacs <code>version 27.2</code></li>
-</ul>
-
-<p>
-The code was built with
-</p>
-<ul class="org-ul">
-<li>CIDER 1.3.0 (Ukraine)</li>
-<li>Leiningen <code>2.9.8</code></li>
-<li>Clojure <code>1.11.1</code></li>
-<li>dot - graphviz version <code>2.43.0</code></li>
-<li>Java ~17.0.3 OpenJDK 64-Bit Server VM on Ubuntu (build 17.0.3+7-Ubuntu-0ubuntu0.20.04.1)</li>
-</ul>
-
-<p>
-The OS
-</p>
-<ul class="org-ul">
-<li>Ubuntu <code>20.04.4 LTS</code></li>
-<li>WSL2 on Windows-11</li>
-</ul>
 </div>
-
-<div id="outline-container-org9953ce3" class="outline-3">
-<h3 id="org9953ce3">Java Class Path</h3>
-<div class="outline-text-3" id="text-org9953ce3">
-<table><caption>Java Class Path</caption><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/test</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/src/clj</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj/resources</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/dev-resources</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/resources</td></tr><tr><td>/mnt/e/Sync/clojure/rpl/stax-deploy/target/classes</td></tr><tr><td>/home/keith/.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar</td></tr><tr><td>/home/keith/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar</td></tr><tr><td>/home/keith/.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar</td></tr><tr><td>/home/keith/.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/clojure/1.11.1/clojure-1.11.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar</td></tr><tr><td>/home/keith/.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar</td></tr><tr><td>/home/keith/.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar</td></tr><tr><td>/home/keith/.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar</td></tr><tr><td>/home/keith/.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar</td></tr><tr><td>/home/keith/.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar</td></tr><tr><td>/home/keith/.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar</td></tr><tr><td>/home/keith/.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar</td></tr><tr><td>/home/keith/.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar</td></tr><tr><td>/home/keith/.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar</td></tr><tr><td>/home/keith/.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar</td></tr><tr><td>/home/keith/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar</td></tr><tr><td>/home/keith/.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar</td></tr><tr><td>/home/keith/.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar</td></tr><tr><td>/home/keith/.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/core.specs.alpha/0.2.62/core.specs.alpha-0.2.62.jar</td></tr><tr><td>/home/keith/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar</td></tr><tr><td>/home/keith/.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar</td></tr><tr><td>/home/keith/.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar</td></tr><tr><td>/home/keith/.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar</td></tr><tr><td>/home/keith/.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/spec.alpha/0.3.218/spec.alpha-0.3.218.jar</td></tr><tr><td>/home/keith/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar</td></tr><tr><td>/home/keith/.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar</td></tr><tr><td>/home/keith/.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar</td></tr><tr><td>/home/keith/.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar</td></tr><tr><td>/home/keith/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar</td></tr><tr><td>/home/keith/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar</td></tr><tr><td>/home/keith/.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar</td></tr><tr><td>/home/keith/.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar</td></tr><tr><td>/home/keith/.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar</td></tr><tr><td>/home/keith/.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar</td></tr><tr><td>/home/keith/.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar</td></tr><tr><td>/home/keith/.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar</td></tr><tr><td>/home/keith/.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar</td></tr><tr><td>/home/keith/.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar</td></tr><tr><td>/home/keith/.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar</td></tr><tr><td>/home/keith/.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar</td></tr><tr><td>/home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar</td></tr></table>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orga9c17ce" class="outline-3">
-<h3 id="orga9c17ce">Java Properties</h3>
-<div class="outline-text-3" id="text-orga9c17ce">
-<div class="ORG" id="org59e7d8e">
+
+<div id="outline-container-org001d177" class="outline-2">
+<h2 id="org001d177">Java Environment</h2>
+<div class="outline-text-2" id="text-org001d177">
+</div>
+<div id="outline-container-orgf472d45" class="outline-3">
+<h3 id="orgf472d45">Java Properties</h3>
+<div class="outline-text-3" id="text-orgf472d45">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption class="t-above"><span class="table-number">Table 9:</span> Java Properties</caption>
+
 
 <colgroup>
 <col  class="org-left" />
@@ -6863,7 +6829,7 @@ The OS
 
 <tr>
 <td class="org-left">clojure.compile.path</td>
-<td class="org-left">/mnt/e/Sync/clojure/rpl/stax/target/classes</td>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/target/classes</td>
 </tr>
 
 <tr>
@@ -7023,7 +6989,7 @@ The OS
 
 <tr>
 <td class="org-left">stax.version</td>
-<td class="org-left">0.1.0-SNAPSHOT</td>
+<td class="org-left">0.1.0</td>
 </tr>
 
 <tr>
@@ -7048,7 +7014,7 @@ The OS
 
 <tr>
 <td class="org-left">sun.java.command</td>
-<td class="org-left">clojure.main -i /tmp/form-init14542468886342858337.clj</td>
+<td class="org-left">clojure.main -i /tmp/form-init1465767877955972607.clj</td>
 </tr>
 
 <tr>
@@ -7068,7 +7034,7 @@ The OS
 
 <tr>
 <td class="org-left">user.dir</td>
-<td class="org-left">/mnt/e/Sync/clojure/rpl/stax</td>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy</td>
 </tr>
 
 <tr>
@@ -7092,19 +7058,368 @@ The OS
 </tr>
 </tbody>
 </table>
-
-</div>
 </div>
 </div>
 
-<div id="outline-container-org5e9f43a" class="outline-3">
-<h3 id="org5e9f43a">Java Class Path</h3>
+
+<div id="outline-container-org6490709" class="outline-3">
+<h3 id="org6490709">Java Class Path</h3>
+<div class="outline-text-3" id="text-org6490709">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/test</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/src/clj</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj/resources</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/dev-resources</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/resources</td>
+</tr>
+
+<tr>
+<td class="org-left">/mnt/e/Sync/clojure/rpl/stax-deploy/target/classes</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/clojure/1.11.1/clojure-1.11.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/core.specs.alpha/0.2.62/core.specs.alpha-0.2.62.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/spec.alpha/0.3.218/spec.alpha-0.3.218.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar</td>
+</tr>
+
+<tr>
+<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Keith D Houser</p>
-<p class="date">Created: 2022-08-01 Mon 17:39</p>
+<p class="date">Created: 2022-08-01 Mon 18:24</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3110,34 +3110,31 @@ But I didn't do that then. The VOVOSON implementation was simpler to write as a 
     #+end_src
 
 
-* Appendix
-** Workflow
+* Workflow
 I take "We are looking for an example of the quality of work you would do at RPL." broadly to encompass process as well, so I will outline it here.
 
-I am deeply devoted to the principle of continuous improvement of process. It is what separates coding from software engineering. The romans would not build above 7 floors because 8 floor structures fell down.  We now build massive towers in earthquake zones that survive.  This is only through continuous improvement!
+I am deeply devoted to the principle of continuous improvement of process. It is what separates software engineering from coding. Roman law did not allow buildings above 7 floors because 8 floor structures fell down.  We now build massive towers in earthquake zones that survive mega-quakes.  This is only through continuous improvement!
 
-*** Keeping up to date
+** Keeping up to date
 Before beginning a new project, I go to latest stable version on all tools.  To make that less risky, I maintain multiple development systems as n and n+1 (where n is current working, and n+1 is latest).
 
-Microsoft Windows 11 Pro
-Version	10.0.22000 Build 22000
+| Component         | N                                  |                                        N+1 |
+|-------------------+------------------------------------+--------------------------------------------|
+| Microsoft Windows | 10 Pro@@html:<br>@@10.0.19044.1826 | 11 Pro @@html:<br>@@10.0.22000 Build 22000 |
+| Ubuntu Server     | 18.04.6 LTS                        |                                20.04.4 LTS |
+| java              | openjdk 11.0.15                    |                             openjdk 17.0.3 |
+| clojure           | 1.10.3 (and 1.9.0†)                |                                     1.11.1 |
+| lein              | 2.9.8                              |                                      2.9.8 |
+| git               | NA                                 |                                     2.25.1 |
+| mvn               | NA                                 |                                      3.8.1 |
+| emacs             | 27.2                               |                                       27.1 |
+| cider             | 1.3.0                              |                                      1.3.0 |
+| cider/cider-nrepl | 0.28.3                             |                                     0.28.3 |
+| dot (graph)       | 2.42.2                             |                                     2.43.0 |
 
-Windows Subsystem for Linux (WSL2)
+† For compatibility, I chose the clojure dependency in the project.clj of com.rpl/specter
 
-Ubuntu to latest LTS (20.04.4 LTS)
-
-emacs 27.2
-
-dot - graphviz version 2.43.0 (0)
-
-org-mode to 9.5.4
-
-CIDER 1.3.0 (Ukraine)
-cider/cider-nrepl "0.28.3"
-
-Java to openJDK version 17
-
-*** Creating the project
+** Creating the project
 Stax is meant to be a simple library with one user called macro ~defstackfn~, so I started fresh by running lein:
 
  #+begin_src bash
@@ -3146,26 +3143,44 @@ Stax is meant to be a simple library with one user called macro ~defstackfn~, so
 
 Then I changed the file tree around to make a proper starting setup
 
+¿FIXME?
 #+begin_example
- src
- └── clj
-     └── kdh  
-         └── stax
-             └── core.clj (the main library namespace, where defstackfn lives)
-         
- dev
- └── clj
-     ├── dev.clj  (experimental code)
-     ├── user.clj (repl entrypoint)
-     └── kdh
-         ├── dev_utils.clj (general utilities for dev only -- not stax library specific)
-         └── stax
-             └── core-dev.clj (playground to work on core without muddying kdh.stax.core namespace)
+doc
+├── stax.html (this document)
+├── stax.org (org-mode file that generates this document)
+└── svg
+    ├── stax.css (css for the svg visualization files)
+    ├── 
+    └── 
+└── clj
+    └── kdh  
+    └── kdh  
+
+src
+└── clj
+    └── kdh  
+        └── stax
+            └── core.clj (the main library namespace, where defstackfn resides)
+
+dev
+└── clj
+    ├── dev.clj  (experimental code)
+    ├── user.clj (repl entrypoint)
+    └── kdh
+        ├── dev_utils.clj (general utilities for dev only -- not stax library specific)
+        └── stax
+            └── core-dev.clj (dev file to build/test core functions outside of kdh.stax.core namespace)
+
+test
+└── clj
+    └── kdh  
+        └── stax
+            └── core_test.clj (the main test file, where tests for defstackfn will reside)
 #+end_example
 
-Because I wrote tooling for a team of testers, I'm accustomed to building front end and back end with web service, so I always add a clj (and if needed cljs and cljc trees below dev and src).
+Having written tooling for a team of testers, I'm accustomed to building clojure projects with front end and back end, so I always add a clj (and if needed cljs and cljc) tree below dev, src, and test.
 
-My lein ~profile.clj~ adds tooling to ~:repl~ so that the build doesn't include unnecessary dependencies.
+My lein ~profile.clj~ adds tooling to ~:repl~ (not ~:dev~) so that the deployed build doesn't include unnecessary dependencies.
 
 #+begin_src clj
 {:repl {:plugins [[cider/cider-nrepl "0.28.3"]
@@ -3185,7 +3200,7 @@ My lein ~profile.clj~ adds tooling to ~:repl~ so that the build doesn't include 
  :user {:plugins [[lein-pprint "1.3.2"]]}}
 #+end_src
 
-And I add to project.clj confiurations for dev and build
+And I add to project.clj configurations for dev, src, and test
 
 #+begin_src clj
 (defproject kdh/stax "0.1.0"
@@ -3193,6 +3208,8 @@ And I add to project.clj confiurations for dev and build
   :repositories [["github" {:url "https://maven.pkg.github.com/kdhouser24/stax"
                             :creds :gpg}]]             
   :source-paths ["src/clj"]
+  ,,,
+  :test-paths ["test/clj"]
   ,,,
   :profiles {:dev
              [:test
@@ -3208,8 +3225,7 @@ And I add to project.clj confiurations for dev and build
 
 #+end_src
 
-
-*** Starting an nrepl  
+** Starting an nrepl  
 
 I prefer to launch nrepl from the command line (using lein.sh in the project root):
 
@@ -3229,142 +3245,235 @@ fi
 
 This starts a headless nrepl (in a named screen if given an argument).  If it completes without errors when started without an argument, I quit and rerun it with the name of the project ~stax~ (screen allows re-attach following accidental disconnect from the terminal).
 
-~lein repl~ leaves me in ns user, which is defined in ~/dev/clj/user.clj~, where a (dev) function exists to enter ns dev defined in ~/dev/clj/dev.clj~. This allows me to keep experimental things in the ns dev and still get an nrepl up and running to debug.
+~lein repl~ leaves me in ns user, which is defined in ~/dev/clj/user.clj~, where a (dev) function exists to enter ns dev defined in ~/dev/clj/dev.clj~. This allows me to keep experimental code in the ns dev and still get an nrepl up and running to debug.
 
 ~/dev/clj/dev.clj~ requires all of the basic: ~clojure.string~ :as ~str~, ~clojure.file.io~ :as ~io~, etc.
 
 If I refactor (like when I split nodes.clj into node.clj and nodify.clj to fix a cyclic dependency), I restart the repl.
 
-*** SCM -- GIT
-For the early stages of a project like this one (in which I'm the sole coder), I find git gets in the way more than it helps.  But eventually, once the design is beginning to gel, I move a working copy into git and perform feature work on a branch.  This code has been in git locally for about a month, and on GitHub for two weeks to test deploy and user download. I'm still using command line git over magit because I have more experience with scripting around the command line.  But I do plan to dive into magit over the weeks following the release of 0.1.0 to get a better feel for it -- I'm sure once I do I'll find ways to use it more (everyone I know who uses it swears by it).
+** SCM -- GIT
+For the early stages of a project like this one (in which I'm the sole coder), I find git gets in the way more than it helps.  But eventually, once the design reaches a level of interdepency, I move a working copy into git and perform feature work on a branch.  This code has been in git locally for about two months, and on GitHub for two weeks to test deploy and user download.
 
-*** Testing
-¿Explain why there is no test?
+I'm still using command line git over magit because I have tooling around the command line (for example, I have a ~bash-hist.sh~ file in ~/etc/profiles.d~ that adds every command enterred at the terminal as a log entry with time, date, user, and session in ~/var/log/bash-hist.log~ and a ~logrep~ function that allows me to mine it for commands I've enterred going back over a decade).
++ It's especially useful for documenting complex install procedures as it captures privelege escalation (e.g. sudo and su).
++ It logs following a command, so unlike normal bash history, it isn't lost if I crash the term
++ It's global, meaning I can be at any terminal and logrep for commands enterred at any other terminal
 
-There is nothing in the test tree for 0.1.0.  This is by choice, because anything pre 0.1.0 is too fluid 
-0.1.0
-
+** Testing
+*** Unit Test
+Most unit tests are still manual in the 0.1.0 release and reside in the -dev.clj files, though I have begun migrating a couple into the test tree.
+#+caption: ~test/clj/kdh/stax/node_test.clj~
+#+begin_src clj
+(deftest node-template-tests
+  (testing "Mismatch between template and predicate"
+    (and (is (pop-node? pop-node-template))
+         (is (push-sef-node? push-sef-node-template))
+         (is (push-var-node? push-var-node-template))
+         (is (def-var-node? def-var-node-template))
+         (is (invoke-node? invoke-node-template))
+         (is (if-node? if-node-template))
+         (is (if-pop-node? if-pop-node-template))
+         (is (illegal-node? illegal-node-template))
+         (is (start-node? start-node-template))
+         (is (terminal-node? terminal-node-template)))))
+#+end_src
+*** Requirement Testing
+All requirements listed in [[*Requirements]] were tested in dev (N+1)
++ java 17 
++ clojure 1.11.1 (latest release)
++ lein 2.9.8 (latest release)
 *** Deployment Testing
+The installation procedure in [[https://github.com/kdhouser24/stax/blob/main/README.md][README.md]] was taken from my ~bash-hist.log~ of downloading the deployed kdh/stax "0.1.0" and maven installing it for the first user test, and was cross verified (i.e. followed to the letter to ensure its sufficiency) for the second user test.
++ java 11
++ clojure 1.10.3 (default for ~lein new~ in latest lein)
++ lein 2.9.8 (latest release)
 *** User Testing
-
 After completing my dev testing and testing deploy I began a round of user testing.
+**** First User Test (stax-user-clj-1-10-3)
 + I added another user to the kdh/stax private repo
   + As that user on another computer I
     + Downloaded the jar and pom
-    + mvn installed jar and pom
+    + mvn installed the jar and pom
     + lein new stax-user
-      + kept Clojure at lein latest () version (1.10.3)
-added dependency for kdh/stax "0.1.0"
-tested RPL example in defstackfn
-retested all requirements still met
-dynamics broke due to namespace resolve
-tried potemkin import-vars in core (that made it worse, it namespaced them to core)
-rewrote defstackfn to absolute namespace for errors and dynamics to fix visibility.
+      + kept Clojure at lein latest version (1.10.3)
++ added dependency for kdh/stax "0.1.0" to project.clj
++ tested RPL example in defstackfn
++ retested all requirements still met
+  + dynamics broke due to namespace resolution issues (not caught in dev because dev had all src files required with :refer :all)
+    + tried potemkin import-vars in core (that made it worse, it namespaced them to core)
+    + rewrote defstackfn to use absolute namespace for errors and dynamics to fix visibility
++ removed the maven install of kdh/stax "0.1.0" and repeated the procedure to verify all requirement
+#+ATTR_HTML: :target _blank
+See [[file:user-testing/stax-user-clj-1-10-3/doc/user-test-clojure-1-10-3.html][Test-Report]]
+#+ATTR_HTML: :target _blank
+[[https://github.com/kdhouser24/stax-user-clj-1-10-3][Full project tree for stax-user-clj-1-10-3]]
 
-* Environment
-  I wrote this as in
-  + org-mode ~release​_9.5.4~
-  + emacs ~version 27.2~
-  
-  The code was built with
-  + CIDER 1.3.0 (Ukraine)
-  + Leiningen ~2.9.8~
-  + Clojure ~1.11.1~
-  + dot - graphviz version ~2.43.0~
-  + Java ~17.0.3 OpenJDK 64-Bit Server VM on Ubuntu (build 17.0.3+7-Ubuntu-0ubuntu0.20.04.1)
+**** Second User Test (stax-user-clj-1-9-0)
+I repeated the First User Test with a different version of Clojure (1.9.0 matched to the version used by RPL in project.clj of specter). 
+#+ATTR_HTML: :target _blank
+See [[file:user-testing/stax-user-clj-1-9-0/doc/user-test-clojure-1-9-0.html][Test-Report]]
+#+ATTR_HTML: :target _blank
+[[https://github.com/kdhouser24/stax-user-clj-1-9-0][Full project tree for stax-user-clj-1-9-0]]
 
-  The OS
-  + Ubuntu ~20.04.4 LTS~
-  + WSL2 on Windows-11
+
+* Java Environment
   
-** Java Class Path
- #+name: class_path
-  #+begin_src clojure :ns user :results output pp :exports results :eval :wrap export html
-  (let [java-class-path
-	(-> (->> (System/getProperties) seq (partition 2) (into {}))
-	    (get "java.class.path")
-	    (str/split #":"))]
-    (->> java-class-path
-	 (mapv (fn [s] [:tr [:td s]]))
-	 (into [:table [:caption "Java Class Path"]])
-	 hiccup.core/html
-	 print))
-  #+end_src
+ 
 ** Java Properties
 #+name: java-properties
-#+begin_src clojure :ns user :results value table :exports results :wrap (src-decorate "export org" "Java Properties")
+#+begin_src clojure :ns user :results value table :exports results
 (->> (System/getProperties)
      seq
      (partition 2)
      (into {})
      (#(dissoc % "java.class.path"))
-   (map-vals #(str/replace % "_" "​_"))
-     (sort-by #(-> % first (str/split #"\.")) path-compare))
+     (map-vals #(str/replace % "_" "​_"))
+     (sort-by #(-> % first (str/split #"\.")) sequential-compare))
 #+end_src
 
-#+RESULTS:
-#+begin_ORG
-  #+caption: Java Properties
-  | apple.awt.UIElement           | true                                                                                                                            |
-  | clojure.compile.path          | /mnt/e/Sync/clojure/rpl/stax/target/classes                                                                                     |
-  | clojure.debug                 | false                                                                                                                           |
-  | file.encoding                 | UTF-8                                                                                                                           |
-  | file.separator                | /                                                                                                                               |
-  | java.home                     | /usr/lib/jvm/java-17-openjdk-amd64                                                                                              |
-  | java.io.tmpdir                | /tmp                                                                                                                            |
-  | java.library.path             | /usr/java/packages/lib:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib |
-  | java.runtime.name             | OpenJDK Runtime Environment                                                                                                     |
-  | java.runtime.version          | 17.0.3+7-Ubuntu-0ubuntu0.20.04.1                                                                                                |
-  | java.specification.name       | Java Platform API Specification                                                                                                 |
-  | java.specification.vendor     | Oracle Corporation                                                                                                              |
-  | java.specification.version    | 17                                                                                                                              |
-  | java.vendor                   | Private Build                                                                                                                   |
-  | java.vendor.url               | Unknown                                                                                                                         |
-  | java.vendor.url.bug           | Unknown                                                                                                                         |
-  | java.version                  | 17.0.3                                                                                                                          |
-  | java.version.date             | 2022-04-19                                                                                                                      |
-  | java.vm.compressedOopsMode    | 32-bit                                                                                                                          |
-  | java.vm.info                  | mixed mode, sharing                                                                                                             |
-  | java.vm.name                  | OpenJDK 64-Bit Server VM                                                                                                        |
-  | java.vm.specification.name    | Java Virtual Machine Specification                                                                                              |
-  | java.vm.specification.vendor  | Oracle Corporation                                                                                                              |
-  | java.vm.specification.version | 17                                                                                                                              |
-  | java.vm.vendor                | Private Build                                                                                                                   |
-  | java.vm.version               | 17.0.3+7-Ubuntu-0ubuntu0.20.04.1                                                                                                |
-  | jdk.debug                     | release                                                                                                                         |
-  | line.separator                | \n                                                                                                                              |
-  | native.encoding               | UTF-8                                                                                                                           |
-  | os.arch                       | amd64                                                                                                                           |
-  | os.name                       | Linux                                                                                                                           |
-  | os.version                    | 5.10.102.1-microsoft-standard-WSL2                                                                                              |
-  | path.separator                | :                                                                                                                               |
-  | stax.version                  | 0.1.0-SNAPSHOT                                                                                                                  |
-  | sun.arch.data.model           | 64                                                                                                                              |
-  | sun.boot.library.path         | /usr/lib/jvm/java-17-openjdk-amd64/lib                                                                                          |
-  | sun.cpu.endian                | little                                                                                                                          |
-  | sun.io.unicode.encoding       | UnicodeLittle                                                                                                                   |
-  | sun.java.command              | clojure.main -i /tmp/form-init14542468886342858337.clj                                                                          |
-  | sun.java.launcher             | SUN​_STANDARD                                                                                                                    |
-  | sun.jnu.encoding              | UTF-8                                                                                                                           |
-  | sun.management.compiler       | HotSpot 64-Bit Tiered Compilers                                                                                                 |
-  | user.dir                      | /mnt/e/Sync/clojure/rpl/stax                                                                                                    |
-  | user.home                     | /home/keith                                                                                                                     |
-  | user.language                 | en                                                                                                                              |
-  | user.name                     | keith                                                                                                                           |
-  | user.timezone                 | America/New​_York                                                                                                                |
-  #+end_ORG
+#+RESULTS: java-properties
+| apple.awt.UIElement           | true                                                                                                                            |
+| clojure.compile.path          | /mnt/e/Sync/clojure/rpl/stax-deploy/target/classes                                                                              |
+| clojure.debug                 | false                                                                                                                           |
+| file.encoding                 | UTF-8                                                                                                                           |
+| file.separator                | /                                                                                                                               |
+| java.home                     | /usr/lib/jvm/java-17-openjdk-amd64                                                                                              |
+| java.io.tmpdir                | /tmp                                                                                                                            |
+| java.library.path             | /usr/java/packages/lib:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib |
+| java.runtime.name             | OpenJDK Runtime Environment                                                                                                     |
+| java.runtime.version          | 17.0.3+7-Ubuntu-0ubuntu0.20.04.1                                                                                                |
+| java.specification.name       | Java Platform API Specification                                                                                                 |
+| java.specification.vendor     | Oracle Corporation                                                                                                              |
+| java.specification.version    | 17                                                                                                                              |
+| java.vendor                   | Private Build                                                                                                                   |
+| java.vendor.url               | Unknown                                                                                                                         |
+| java.vendor.url.bug           | Unknown                                                                                                                         |
+| java.version                  | 17.0.3                                                                                                                          |
+| java.version.date             | 2022-04-19                                                                                                                      |
+| java.vm.compressedOopsMode    | 32-bit                                                                                                                          |
+| java.vm.info                  | mixed mode, sharing                                                                                                             |
+| java.vm.name                  | OpenJDK 64-Bit Server VM                                                                                                        |
+| java.vm.specification.name    | Java Virtual Machine Specification                                                                                              |
+| java.vm.specification.vendor  | Oracle Corporation                                                                                                              |
+| java.vm.specification.version | 17                                                                                                                              |
+| java.vm.vendor                | Private Build                                                                                                                   |
+| java.vm.version               | 17.0.3+7-Ubuntu-0ubuntu0.20.04.1                                                                                                |
+| jdk.debug                     | release                                                                                                                         |
+| line.separator                | \n                                                                                                                              |
+| native.encoding               | UTF-8                                                                                                                           |
+| os.arch                       | amd64                                                                                                                           |
+| os.name                       | Linux                                                                                                                           |
+| os.version                    | 5.10.102.1-microsoft-standard-WSL2                                                                                              |
+| path.separator                | :                                                                                                                               |
+| stax.version                  | 0.1.0                                                                                                                           |
+| sun.arch.data.model           | 64                                                                                                                              |
+| sun.boot.library.path         | /usr/lib/jvm/java-17-openjdk-amd64/lib                                                                                          |
+| sun.cpu.endian                | little                                                                                                                          |
+| sun.io.unicode.encoding       | UnicodeLittle                                                                                                                   |
+| sun.java.command              | clojure.main -i /tmp/form-init1465767877955972607.clj                                                                           |
+| sun.java.launcher             | SUN​_STANDARD                                                                                                                    |
+| sun.jnu.encoding              | UTF-8                                                                                                                           |
+| sun.management.compiler       | HotSpot 64-Bit Tiered Compilers                                                                                                 |
+| user.dir                      | /mnt/e/Sync/clojure/rpl/stax-deploy                                                                                             |
+| user.home                     | /home/keith                                                                                                                     |
+| user.language                 | en                                                                                                                              |
+| user.name                     | keith                                                                                                                           |
+| user.timezone                 | America/New​_York                                                                                                                |
+
 
 ** Java Class Path
- #+name: class_path
-  #+begin_src clojure :ns user :results output pp :exports results :eval :wrap export html
-  (let [java-class-path
-	(-> (->> (System/getProperties) seq (partition 2) (into {}))
-	    (get "java.class.path")
-	    (str/split #":"))]
-    (->> java-class-path
-	 (mapv (fn [s] [:tr [:td s]]))
-	 (into [:table [:caption "Java Class Path"]])
-	 hiccup.core/html
-	 print))
+#+name: java-class-path
+#+begin_src clojure :ns user :results value table :exports results
+(let [java-class-path
+      (-> (->> (System/getProperties) seq (partition 2) (into {}))
+	  (get "java.class.path")
+	  (str/split #":"))]
+  (mapv vector java-class-path))
   #+end_src
 
+  #+RESULTS: java-class-path
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/test                                                                                           |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj                                                                                        |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/src/clj                                                                                        |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/dev/clj/resources                                                                              |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/dev-resources                                                                                  |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/resources                                                                                      |
+  | /mnt/e/Sync/clojure/rpl/stax-deploy/target/classes                                                                                 |
+  | /home/keith/.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar                                                                  |
+  | /home/keith/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar                                    |
+  | /home/keith/.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar                                |
+  | /home/keith/.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar                            |
+  | /home/keith/.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar                                                         |
+  | /home/keith/.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar                                                           |
+  | /home/keith/.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar                                         |
+  | /home/keith/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar                                                            |
+  | /home/keith/.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar                                                |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar |
+  | /home/keith/.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar                                                           |
+  | /home/keith/.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar                                             |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar                       |
+  | /home/keith/.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar                                                                 |
+  | /home/keith/.m2/repository/org/clojure/clojure/1.11.1/clojure-1.11.1.jar                                                           |
+  | /home/keith/.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar                                                           |
+  | /home/keith/.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar                                                              |
+  | /home/keith/.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar                    |
+  | /home/keith/.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar                                                        |
+  | /home/keith/.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar                        |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar                                           |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar                            |
+  | /home/keith/.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar                                                                        |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar                                            |
+  | /home/keith/.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar                                                          |
+  | /home/keith/.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar                                                 |
+  | /home/keith/.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar                                                          |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar                         |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar           |
+  | /home/keith/.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar                                                     |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar   |
+  | /home/keith/.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar                                                                    |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar |
+  | /home/keith/.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar                                             |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar                         |
+  | /home/keith/.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar                                                                      |
+  | /home/keith/.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar                                                          |
+  | /home/keith/.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar                                             |
+  | /home/keith/.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar                                                                    |
+  | /home/keith/.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar                                                  |
+  | /home/keith/.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar                                                        |
+  | /home/keith/.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar                                                                   |
+  | /home/keith/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar                                      |
+  | /home/keith/.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar                                                                    |
+  | /home/keith/.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar                                                                       |
+  | /home/keith/.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar                                                           |
+  | /home/keith/.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar                                                            |
+  | /home/keith/.m2/repository/org/clojure/core.specs.alpha/0.2.62/core.specs.alpha-0.2.62.jar                                         |
+  | /home/keith/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar                                                          |
+  | /home/keith/.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar                                                            |
+  | /home/keith/.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar                                                                       |
+  | /home/keith/.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar                                          |
+  | /home/keith/.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar                                             |
+  | /home/keith/.m2/repository/org/clojure/spec.alpha/0.3.218/spec.alpha-0.3.218.jar                                                   |
+  | /home/keith/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar                                                 |
+  | /home/keith/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar                                              |
+  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar                              |
+  | /home/keith/.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar                                                              |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar   |
+  | /home/keith/.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar                                                   |
+  | /home/keith/.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar                                                              |
+  | /home/keith/.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar                                                               |
+  | /home/keith/.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar                                                         |
+  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar                             |
+  | /home/keith/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar                                             |
+  | /home/keith/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar                                                   |
+  | /home/keith/.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar                                                         |
+  | /home/keith/.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar                                                    |
+  | /home/keith/.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar                                               |
+  | /home/keith/.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar                                                     |
+  | /home/keith/.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar                                            |
+  | /home/keith/.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar                                               |
+  | /home/keith/.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar                                                              |
+  | /home/keith/.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar                                                                    |
+  | /home/keith/.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar                                                           |
+  | /home/keith/.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar                                          |
+  | /home/keith/.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar                                            |
+  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar                       |
