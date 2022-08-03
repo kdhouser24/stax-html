@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-01 Mon 16:16 -->
+<!-- 2022-08-02 Tue 11:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>User Testing Requirements (clojure 1.9.0)</title>
@@ -48,74 +48,74 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8d1d9dc">User Testing Requirements (clojure 1.9.0)</a>
+<li><a href="#org560bd04">User Testing Requirements (clojure 1.9.0)</a>
 <ul>
-<li><a href="#org449b536"><span class="done DONE">DONE</span> Explicit Requirements</a>
+<li><a href="#orge239d31"><span class="done DONE">DONE</span> Explicit Requirements</a>
 <ul>
-<li><a href="#org8a30834">SETUP</a></li>
-<li><a href="#orgf3badd8"><span class="done DONE">DONE</span> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</a></li>
-<li><a href="#org9a77f17"><span class="done DONE">DONE</span> <b>req-e-02</b>: A stack function is defined with "defstackfn"</a></li>
-<li><a href="#org9b84a37"><span class="done DONE">DONE</span> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</a></li>
-<li><a href="#orgc102e32"><span class="done DONE">DONE</span> <b>req-e-04</b>: The stack always starts empty</a></li>
-<li><a href="#org0042fc7"><span class="done DONE">DONE</span> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</a></li>
-<li><a href="#org6f58e87"><span class="done DONE">DONE</span> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</a></li>
-<li><a href="#orgae8d6c8"><span class="done DONE">DONE</span> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</a></li>
-<li><a href="#orge661263"><span class="done DONE">DONE</span> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</a></li>
-<li><a href="#org28c2ba7"><span class="done DONE">DONE</span> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</a></li>
-<li><a href="#org1461745"><span class="done DONE">DONE</span> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</a></li>
-<li><a href="#orgc446cf0"><span class="done DONE">DONE</span> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</a></li>
-<li><a href="#orgb7a83f6"><span class="done DONE">DONE</span> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</a></li>
-<li><a href="#org2cf6959"><span class="done DONE">DONE</span> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</a></li>
-<li><a href="#orgeabfb49"><span class="done DONE">DONE</span> <b>req-e-14</b>: defstackfn should be a macro</a></li>
-<li><a href="#orge9a3871"><span class="done DONE">DONE</span> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</a></li>
-<li><a href="#orgfc55ccd"><span class="done DONE">DONE</span> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</a></li>
-<li><a href="#org87d1510"><span class="done DONE">DONE</span> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</a></li>
-<li><a href="#org6644bf3"><span class="done DONE">DONE</span> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</a></li>
-<li><a href="#org47b36cb"><span class="done DONE">DONE</span> <b>req-e-19</b>: The example below contains all functionality you need to implement.</a></li>
+<li><a href="#orgbf6b563">SETUP</a></li>
+<li><a href="#orgec43ee1"><span class="done DONE">DONE</span> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</a></li>
+<li><a href="#org42bf0d1"><span class="done DONE">DONE</span> <b>req-e-02</b>: A stack function is defined with "defstackfn"</a></li>
+<li><a href="#org878ba57"><span class="done DONE">DONE</span> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</a></li>
+<li><a href="#org438524e"><span class="done DONE">DONE</span> <b>req-e-04</b>: The stack always starts empty</a></li>
+<li><a href="#org87e3344"><span class="done DONE">DONE</span> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</a></li>
+<li><a href="#org39e8907"><span class="done DONE">DONE</span> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</a></li>
+<li><a href="#org8cdf700"><span class="done DONE">DONE</span> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</a></li>
+<li><a href="#org1c0152f"><span class="done DONE">DONE</span> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</a></li>
+<li><a href="#orge314db9"><span class="done DONE">DONE</span> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</a></li>
+<li><a href="#orga4cae33"><span class="done DONE">DONE</span> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</a></li>
+<li><a href="#orgcdb78b6"><span class="done DONE">DONE</span> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</a></li>
+<li><a href="#org9dfdb6e"><span class="done DONE">DONE</span> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</a></li>
+<li><a href="#orgc841986"><span class="done DONE">DONE</span> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</a></li>
+<li><a href="#orgce0bfa4"><span class="done DONE">DONE</span> <b>req-e-14</b>: defstackfn should be a macro</a></li>
+<li><a href="#orgc3720e3"><span class="done DONE">DONE</span> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</a></li>
+<li><a href="#orgaa5dba2"><span class="done DONE">DONE</span> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</a></li>
+<li><a href="#org37226d2"><span class="done DONE">DONE</span> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</a></li>
+<li><a href="#orge1c2e24"><span class="done DONE">DONE</span> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</a></li>
+<li><a href="#org76788c5"><span class="done DONE">DONE</span> <b>req-e-19</b>: The example below contains all functionality you need to implement.</a></li>
 </ul>
 </li>
-<li><a href="#org68fd779"><span class="done DONE">DONE</span> Implicit requirements (<b>req-i-#</b>)</a>
+<li><a href="#org1177f0d"><span class="done DONE">DONE</span> Implicit requirements (<b>req-i-#</b>)</a>
 <ul>
-<li><a href="#org304409c"><span class="done DONE">DONE</span> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</a></li>
-<li><a href="#orgd910c6c"><span class="done DONE">DONE</span> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</a></li>
-<li><a href="#org882b0bd"><span class="done DONE">DONE</span> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</a></li>
-<li><a href="#orgbf585b9"><span class="done DONE">DONE</span> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</a></li>
-<li><a href="#org29a3bee"><span class="done DONE">DONE</span> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</a></li>
-<li><a href="#orgafdb022"><span class="done DONE">DONE</span> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</a></li>
-<li><a href="#org20e3404"><span class="done DONE">DONE</span> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</a></li>
+<li><a href="#orgb64053c"><span class="done DONE">DONE</span> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</a></li>
+<li><a href="#org53b8286"><span class="done DONE">DONE</span> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</a></li>
+<li><a href="#org956b17b"><span class="done DONE">DONE</span> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</a></li>
+<li><a href="#org3280d54"><span class="done DONE">DONE</span> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</a></li>
+<li><a href="#orgf5caff9"><span class="done DONE">DONE</span> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</a></li>
+<li><a href="#org33c996a"><span class="done DONE">DONE</span> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</a></li>
+<li><a href="#org68c0282"><span class="done DONE">DONE</span> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgbd659c2">Environment</a>
+<li><a href="#org8abe7f9">Environment</a>
 <ul>
-<li><a href="#org43d8545">Java Properties</a></li>
-<li><a href="#orgfd96a20">Java Class Path</a></li>
+<li><a href="#org901019d">Java Properties</a></li>
+<li><a href="#orgd11612d">Java Class Path</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8d1d9dc" class="outline-2">
-<h2 id="org8d1d9dc">User Testing Requirements (clojure 1.9.0)</h2>
-<div class="outline-text-2" id="text-org8d1d9dc">
+<div id="outline-container-org560bd04" class="outline-2">
+<h2 id="org560bd04">User Testing Requirements (clojure 1.9.0)</h2>
+<div class="outline-text-2" id="text-org560bd04">
 </div>
-<div id="outline-container-org449b536" class="outline-3">
-<h3 id="org449b536"><span class="done DONE">DONE</span> Explicit Requirements</h3>
-<div class="outline-text-3" id="text-org449b536">
+<div id="outline-container-orge239d31" class="outline-3">
+<h3 id="orge239d31"><span class="done DONE">DONE</span> Explicit Requirements</h3>
+<div class="outline-text-3" id="text-orge239d31">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:10]</span></span></p>
 <p>
 Explicit requirements are taken directly from the assignment. They are split into individual testable requirements, and designated <b>req-e-#:</b> where <b>e</b> means explicit, and <b>#</b> is a number.
 </p>
 </div>
 
-<div id="outline-container-org8a30834" class="outline-4">
-<h4 id="org8a30834">SETUP</h4>
-<div class="outline-text-4" id="text-org8a30834">
+<div id="outline-container-orgbf6b563" class="outline-4">
+<h4 id="orgbf6b563">SETUP</h4>
+<div class="outline-text-4" id="text-orgbf6b563">
 <div class="org-src-container">
 <pre class="src src-clj"><span style="color: #ff9029;">*ns*</span>
-(=&gt; #namespace[user] )
+(=&gt; #namespace[stax-user.core] )
 
 (clojure-version)
 (=&gt; <span style="color: #ff7fff;">"1.9.0"</span> )
@@ -130,9 +130,9 @@ Explicit requirements are taken directly from the assignment. They are split int
 </div>
 </div>
 
-<div id="outline-container-orgf3badd8" class="outline-4">
-<h4 id="orgf3badd8"><span class="done DONE">DONE</span> <a id="org6122d14"></a> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</h4>
-<div class="outline-text-4" id="text-orgf3badd8">
+<div id="outline-container-orgec43ee1" class="outline-4">
+<h4 id="orgec43ee1"><span class="done DONE">DONE</span> <a id="org57fe709"></a> <b>req-e-01</b>: Variables are symbols prefixed with "!", e.g. !v</h4>
+<div class="outline-text-4" id="text-orgec43ee1">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:49]</span></span></p>
 <p>
 <code>kdh.stax.nodify/nodify-op</code> will create a node of type <code>:kdh.stax.node/push-var</code> iff the op passes the predicate <code>kdh.stax.node/!symbol?</code>
@@ -151,7 +151,7 @@ declarations argument to defstackfn is also checked to pass <code>kdh.stax.node/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgd7cb9d0">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-01</span> [a b c] a b c)
+<pre class="src src-clj" id="org52f9745">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-01</span> [a b c] a b c)
 <span style="color: #767283;">;;</span><span style="color: #767283; font-style: italic;">!&gt;  FAIL in () (core.clj:85)</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">expected: (every? !symbol? declarations)</span>
 <span style="color: #767283;">;;   </span><span style="color: #767283; font-style: italic;">actual: (not (every? #function[kdh.stax.node/!symbol?] [a b c]))</span>
@@ -159,9 +159,9 @@ declarations argument to defstackfn is also checked to pass <code>kdh.stax.node/
 </div>
 </div>
 </div>
-<div id="outline-container-org9a77f17" class="outline-4">
-<h4 id="org9a77f17"><span class="done DONE">DONE</span> <a id="org90a27c4"></a> <b>req-e-02</b>: A stack function is defined with "defstackfn"</h4>
-<div class="outline-text-4" id="text-org9a77f17">
+<div id="outline-container-org42bf0d1" class="outline-4">
+<h4 id="org42bf0d1"><span class="done DONE">DONE</span> <a id="org15d78f6"></a> <b>req-e-02</b>: A stack function is defined with "defstackfn"</h4>
+<div class="outline-text-4" id="text-org42bf0d1">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:50]</span></span></p>
 
 <p>
@@ -169,7 +169,7 @@ Define a trivial stack function (with no declarations and only push numbers).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgea74b87">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-02</span> [] 1 2 3)
+<pre class="src src-clj" id="org5f7f050">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-02</span> [] 1 2 3)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-02 )
 
 (f-req-e-02)
@@ -179,13 +179,13 @@ Define a trivial stack function (with no declarations and only push numbers).
 </div>
 </div>
 
-<div id="outline-container-org9b84a37" class="outline-4">
-<h4 id="org9b84a37"><span class="done DONE">DONE</span> <a id="org6fd37c6"></a> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</h4>
-<div class="outline-text-4" id="text-org9b84a37">
+<div id="outline-container-org878ba57" class="outline-4">
+<h4 id="org878ba57"><span class="done DONE">DONE</span> <a id="orgeca4c8a"></a> <b>req-e-03</b>: The first argument is the input declaration which also provides variable names to the arguments</h4>
+<div class="outline-text-4" id="text-org878ba57">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:50]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org238876c">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-03</span> [!a !b !c] !b !a !c)
+<pre class="src src-clj" id="org6e62db6">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-03</span> [!a !b !c] !b !a !c)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-03 )
 
 (f-req-e-03 <span style="color: #34c8d8; font-weight: bold;">:a</span> <span style="color: #34c8d8; font-weight: bold;">:b</span> <span style="color: #34c8d8; font-weight: bold;">:c</span>)
@@ -195,9 +195,9 @@ Define a trivial stack function (with no declarations and only push numbers).
 </div>
 </div>
 
-<div id="outline-container-orgc102e32" class="outline-4">
-<h4 id="orgc102e32"><span class="done DONE">DONE</span> <a id="org13944ec"></a> <b>req-e-04</b>: The stack always starts empty</h4>
-<div class="outline-text-4" id="text-orgc102e32">
+<div id="outline-container-org438524e" class="outline-4">
+<h4 id="org438524e"><span class="done DONE">DONE</span> <a id="orgb66e292"></a> <b>req-e-04</b>: The stack always starts empty</h4>
+<div class="outline-text-4" id="text-org438524e">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:54]</span></span></p>
 
 <p>
@@ -205,7 +205,7 @@ Let's pop an empty stack to see what happens
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org40556f7">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-04</span> [] &lt;pop&gt;)
+<pre class="src src-clj" id="orge48e3ba">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-04</span> [] &lt;pop&gt;)
 <span style="color: #767283;">;;</span><span style="color: #767283; font-style: italic;">+&gt;</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">1st Path Errors [&gt;-start-term-&gt;]:</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">     `&lt;pop&gt;' at op[0] node[0]:</span>
@@ -223,7 +223,7 @@ However, I recognize that others like Exceptions, so I allow them with a dynamic
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org4a19cec">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
+<pre class="src src-clj" id="orgbc8008c">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
   (<span style="color: #ffff0b;">try</span> (<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-04</span> [] &lt;pop&gt;)
            (<span style="color: #ffff0b;">catch</span> Exception e [(ex-message e)
                                (ex-data e)])))
@@ -251,12 +251,12 @@ Exceptions or not, I've proved the stack is initially empty!
 </div>
 </div>
 
-<div id="outline-container-org0042fc7" class="outline-4">
-<h4 id="org0042fc7"><span class="done DONE">DONE</span> <a id="org512201a"></a> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</h4>
-<div class="outline-text-4" id="text-org0042fc7">
+<div id="outline-container-org87e3344" class="outline-4">
+<h4 id="org87e3344"><span class="done DONE">DONE</span> <a id="org7b06918"></a> <b>req-e-05</b>: The implementation of a stackfn is a sequence of stack operations</h4>
+<div class="outline-text-4" id="text-org87e3344">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:55]</span></span></p>
 <div class="org-src-container">
-<pre class="src src-clj" id="orgfd80852">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-05</span> [!a] !a 2 &lt;pop&gt; 3 (invoke&gt; = 2)
+<pre class="src src-clj" id="orgb082ced">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-05</span> [!a] !a 2 &lt;pop&gt; 3 (invoke&gt; = 2)
   (if&gt; <span style="color: #ff7fff;">"!a == 3"</span> else&gt; <span style="color: #ff7fff;">"!a &lt;&gt; 3"</span>) (invoke&gt; println 1))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-05 )
 
@@ -271,9 +271,9 @@ Exceptions or not, I've proved the stack is initially empty!
 </div>
 </div>
 </div>
-<div id="outline-container-org6f58e87" class="outline-4">
-<h4 id="org6f58e87"><span class="done DONE">DONE</span> <a id="orgfba66ca"></a> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</h4>
-<div class="outline-text-4" id="text-org6f58e87">
+<div id="outline-container-org39e8907" class="outline-4">
+<h4 id="org39e8907"><span class="done DONE">DONE</span> <a id="org8259610"></a> <b>req-e-06</b>: Using a constant as a stack operation pushes that value onto the stack</h4>
+<div class="outline-text-4" id="text-org39e8907">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:55]</span></span></p>
 
 <p>
@@ -310,7 +310,7 @@ Let's push one of each onto the stack
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgdd4ebf1">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-06</span> [] <span style="color: #ff7fff;">"string"</span> 42 <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span>)
+<pre class="src src-clj" id="orgdf55a46">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-06</span> [] <span style="color: #ff7fff;">"string"</span> 42 <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span>)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-06 )
 
 (f-req-e-06)
@@ -320,13 +320,13 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-orgae8d6c8" class="outline-4">
-<h4 id="orgae8d6c8"><span class="done DONE">DONE</span> <a id="org06bd765"></a> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</h4>
-<div class="outline-text-4" id="text-orgae8d6c8">
+<div id="outline-container-org8cdf700" class="outline-4">
+<h4 id="org8cdf700"><span class="done DONE">DONE</span> <a id="org1f85ed8"></a> <b>req-e-07</b>: A variable is assigned the top value of the stack by appending "​+" to the variable name,  e.g. !v​+</h4>
+<div class="outline-text-4" id="text-org8cdf700">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:56]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clojure" id="orgfea6b07">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-07</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1)
+<pre class="src src-clojure" id="org6ab4eaf">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-07</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-07 )
 
 (f-req-e-07)
@@ -340,13 +340,13 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-orge661263" class="outline-4">
-<h4 id="orge661263"><span class="done DONE">DONE</span> <a id="org806a413"></a> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</h4>
-<div class="outline-text-4" id="text-orge661263">
+<div id="outline-container-org1c0152f" class="outline-4">
+<h4 id="org1c0152f"><span class="done DONE">DONE</span> <a id="org95eca78"></a> <b>req-e-08</b>: A function is invoked with "invoke&gt;".</h4>
+<div class="outline-text-4" id="text-org1c0152f">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:56]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orge9167fd">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-08</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1 (invoke&gt; println 1))
+<pre class="src src-clj" id="orga1fd338">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-08</span> [] <span style="color: #ff7fff;">"string"</span> 42 !v1+ <span style="color: #ff7fff;">\z</span> <span style="color: #34c8d8; font-weight: bold;">true</span> <span style="color: #34c8d8; font-weight: bold;">false</span> <span style="color: #34c8d8; font-weight: bold;">nil</span> <span style="color: #34c8d8; font-weight: bold;">:bubba</span> !v1 (invoke&gt; println 1))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-08 )
 
 (f-req-e-08)
@@ -357,9 +357,9 @@ Let's push one of each onto the stack
 </div>
 </div>
 
-<div id="outline-container-org28c2ba7" class="outline-4">
-<h4 id="org28c2ba7"><span class="done DONE">DONE</span> <a id="orgd2d7bd5"></a> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</h4>
-<div class="outline-text-4" id="text-org28c2ba7">
+<div id="outline-container-orge314db9" class="outline-4">
+<h4 id="orge314db9"><span class="done DONE">DONE</span> <a id="org71e7e88"></a> <b>req-e-09</b>: "invoke&gt;" takes as input the operation</h4>
+<div class="outline-text-4" id="text-orge314db9">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 15:56]</span></span></p>
 
 <p>
@@ -367,7 +367,7 @@ The first argument to <code>invoke&gt;</code> must be a function (in this exampl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org7d547fc">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-09</span> [!a !b] !a !b (invoke&gt; + 2))
+<pre class="src src-clj" id="org6797260">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-09</span> [!a !b] !a !b (invoke&gt; + 2))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-09 )
 
 (f-req-e-09 2 3)
@@ -388,9 +388,9 @@ The error is not on the function, but on its arguments. I include it to show tha
 </div>
 </div>
 
-<div id="outline-container-org1461745" class="outline-4">
-<h4 id="org1461745"><span class="done DONE">DONE</span> <a id="orgc6fc088"></a> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</h4>
-<div class="outline-text-4" id="text-org1461745">
+<div id="outline-container-orga4cae33" class="outline-4">
+<h4 id="orga4cae33"><span class="done DONE">DONE</span> <a id="org9c2a8fb"></a> <b>req-e-10</b>: "invoke&gt;" takes as input the arity to use</h4>
+<div class="outline-text-4" id="text-orga4cae33">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:01]</span></span></p>
 
 <p>
@@ -398,7 +398,7 @@ My implementation only accepts pos-int arity, as I understand invoke&gt; to invo
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org3f9acd2">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-10</span> [!a !b] !a !b (invoke&gt; + 2))
+<pre class="src src-clj" id="org545f876">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-10</span> [!a !b] !a !b (invoke&gt; + 2))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-10 )
 
 (f-req-e-10 2 3)
@@ -407,10 +407,6 @@ My implementation only accepts pos-int arity, as I understand invoke&gt; to invo
 (<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-10*</span> [!a !b] !a !b (invoke&gt; + 0))
 <span style="color: #767283;">;;</span><span style="color: #767283; font-style: italic;">+&gt;</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">Global Operation Tree Errors: </span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">     `(invoke&gt; + 0)' at op[2] node[2]:</span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">              0 is not a valid arity (must be pos-int)!</span>
-<span style="color: #767283;">;;</span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">1st Path Errors [&gt;-start-term-&gt;]: </span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">     `(invoke&gt; + 0)' at op[2] node[2]:</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">              0 is not a valid arity (must be pos-int)!</span>
 (=&gt; <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">defstackfn-produced-errors</span> )
@@ -422,46 +418,36 @@ Or, if you prefer Exceptions&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org91e033d">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
+<pre class="src src-clj" id="orgaae05ad">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
   (<span style="color: #ffff0b;">try</span> (<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-10*</span> [!a !b] !a !b (invoke&gt; + 0))
            (<span style="color: #ffff0b;">catch</span> Exception e [(ex-message e)
                                (ex-data e)])))
 (=&gt;
  [<span style="color: #ff7fff;">"defstackfn produced errors"</span>
   {<span style="color: #34c8d8; font-weight: bold;">:error-data</span> [[<span style="color: #ff7fff;">"Global Operation Tree Errors: "</span>
-                     [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=invoke</span>,
-                       <span style="color: #34c8d8; font-weight: bold;">:op</span> (invoke&gt; + 0),
-                       <span style="color: #34c8d8; font-weight: bold;">:fun</span> +,
-                       <span style="color: #34c8d8; font-weight: bold;">:arity</span> 0,
-                       <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-invoke-arity-not-pos-int</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"0 is not a valid arity (must be pos-int)!"</span>}],
-                       <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [2],
-                       <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [2]}]]
-                    [<span style="color: #ff7fff;">"1st Path Errors [&gt;-start-term-&gt;]: "</span>
-                     [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=invoke</span>,
-                       <span style="color: #34c8d8; font-weight: bold;">:op</span> (invoke&gt; + 0),
-                       <span style="color: #34c8d8; font-weight: bold;">:fun</span> +,
-                       <span style="color: #34c8d8; font-weight: bold;">:arity</span> 0,
-                       <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-invoke-arity-not-pos-int</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"0 is not a valid arity (must be pos-int)!"</span>}],
-                       <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [2],
-                       <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [2]}]]],
-   <span style="color: #34c8d8; font-weight: bold;">:error-text</span> <span style="color: #ff7fff;">"</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">Global Operation Tree Errors: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`(invoke&gt; + 0)' at op[2] node[2]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> 0 is not a valid arity (must be pos-int)!</span><span style="color: #ffffff; font-weight: bold;">\n\n</span><span style="color: #ff7fff;">1st Path Errors [&gt;-start-term-&gt;]: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`(invoke&gt; + 0)' at op[2] node[2]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> 0 is not a valid arity (must be pos-int)!</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">"</span>}]
+                 [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=invoke</span>,
+                   <span style="color: #34c8d8; font-weight: bold;">:op</span> (invoke&gt; + 0),
+                   <span style="color: #34c8d8; font-weight: bold;">:fun</span> +,
+                   <span style="color: #34c8d8; font-weight: bold;">:arity</span> 0,
+                   <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
+                             <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-invoke-arity-not-pos-int</span>,
+                             <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"0 is not a valid arity (must be pos-int)!"</span>}],
+                   <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [2],
+                   <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [2]}]]],
+   <span style="color: #34c8d8; font-weight: bold;">:error-text</span> <span style="color: #ff7fff;">"</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">Global Operation Tree Errors: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`(invoke&gt; + 0)' at op[2] node[2]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> 0 is not a valid arity (must be pos-int)!</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">"</span>}]
 )
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc446cf0" class="outline-4">
-<h4 id="orgc446cf0"><span class="done DONE">DONE</span> <a id="orgcbb3b05"></a> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</h4>
-<div class="outline-text-4" id="text-orgc446cf0">
+<div id="outline-container-orgcdb78b6" class="outline-4">
+<h4 id="orgcdb78b6"><span class="done DONE">DONE</span> <a id="orgb273a30"></a> <b>req-e-11</b>: &lt;pop&gt; is a special operation which removes the top value of the stack</h4>
+<div class="outline-text-4" id="text-orgcdb78b6">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:01]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgfde66e2">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-11</span> [] 1 2 &lt;pop&gt; 3 )
+<pre class="src src-clj" id="org04ae64c">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-11</span> [] 1 2 &lt;pop&gt; 3 )
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-11 )
 
 (f-req-e-11)
@@ -475,13 +461,13 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-orgb7a83f6" class="outline-4">
-<h4 id="orgb7a83f6"><span class="done DONE">DONE</span> <a id="org210e2ce"></a> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</h4>
-<div class="outline-text-4" id="text-orgb7a83f6">
+<div id="outline-container-org9dfdb6e" class="outline-4">
+<h4 id="org9dfdb6e"><span class="done DONE">DONE</span> <a id="orgc8dc8e2"></a> <b>req-e-12</b>: if&gt; tests if the top value of the stack is truthy to determine which branch to follow.</h4>
+<div class="outline-text-4" id="text-org9dfdb6e">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:02]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgdfdd3ce">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-12</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
+<pre class="src src-clj" id="org46a8609">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-12</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-12 )
 
 (f-req-e-12 3)
@@ -494,13 +480,13 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org2cf6959" class="outline-4">
-<h4 id="org2cf6959"><span class="done DONE">DONE</span> <a id="org99f5c03"></a> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</h4>
-<div class="outline-text-4" id="text-org2cf6959">
+<div id="outline-container-orgc841986" class="outline-4">
+<h4 id="orgc841986"><span class="done DONE">DONE</span> <a id="org3daf4af"></a> <b>req-e-13</b>: The branches of if are separated with "else&gt;"</h4>
+<div class="outline-text-4" id="text-orgc841986">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:07]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org6181f95">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
+<pre class="src src-clj" id="org912815b">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13 )
 
 (f-req-e-13 3)
@@ -516,7 +502,7 @@ Note, my implementation works with a missing <code>else&gt;</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgaae3bdd">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13*</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span>))
+<pre class="src src-clj" id="org815b061">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13*</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13* )
 
 (f-req-e-13* 3)
@@ -532,7 +518,7 @@ It works with an empty else&gt;.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgee94f12">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13**</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt;))
+<pre class="src src-clj" id="org144d6e6">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13**</span> [!a] !a (invoke&gt; even? 1) (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt;))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13** )
 
 (f-req-e-13** 3)
@@ -548,7 +534,7 @@ It works with an empty then (the ops between the <code>if&gt;</code> and <code>e
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure" id="orgead769b">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13***</span> [!a] !a (invoke&gt; even? 1) (if&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
+<pre class="src src-clojure" id="orgfc63c25">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13***</span> [!a] !a (invoke&gt; even? 1) (if&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13*** )
 
 (f-req-e-13*** 3)
@@ -564,7 +550,7 @@ It even works with an empty then and missing else&gt;.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org714724e">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13****</span> [!a] !a (invoke&gt; even? 1) (if&gt;))
+<pre class="src src-clj" id="org8de6bf6">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-13****</span> [!a] !a (invoke&gt; even? 1) (if&gt;))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-13**** )
 
 (f-req-e-13**** 3)
@@ -576,13 +562,13 @@ It even works with an empty then and missing else&gt;.
 </div>
 </div>
 </div>
-<div id="outline-container-orgeabfb49" class="outline-4">
-<h4 id="orgeabfb49"><span class="done DONE">DONE</span> <a id="orgeb3566d"></a> <b>req-e-14</b>: defstackfn should be a macro</h4>
-<div class="outline-text-4" id="text-orgeabfb49">
+<div id="outline-container-orgce0bfa4" class="outline-4">
+<h4 id="orgce0bfa4"><span class="done DONE">DONE</span> <a id="org43a425d"></a> <b>req-e-14</b>: defstackfn should be a macro</h4>
+<div class="outline-text-4" id="text-orgce0bfa4">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:08]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgefd03a2">(meta #'defstackfn)
+<pre class="src src-clj" id="orga81850c">(meta #'defstackfn)
 (=&gt;
  {<span style="color: #34c8d8; font-weight: bold;">:arglists</span> ([stackfn-sym declarations &amp; operations]),
   <span style="color: #34c8d8; font-weight: bold;">:doc</span> <span style="color: #ff7fff;">"Defines a stack function that takes declaration as its args,</span>
@@ -599,43 +585,37 @@ It even works with an empty then and missing else&gt;.
 </div>
 </div>
 
-<div id="outline-container-orge9a3871" class="outline-4">
-<h4 id="orge9a3871"><span class="done DONE">DONE</span> <a id="org7019efd"></a> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</h4>
-<div class="outline-text-4" id="text-orge9a3871">
+<div id="outline-container-orgc3720e3" class="outline-4">
+<h4 id="orgc3720e3"><span class="done DONE">DONE</span> <a id="orge25b17b"></a> <b>req-e-15</b>: defstackfn should produce a function invokable like any other function.</h4>
+<div class="outline-text-4" id="text-orgc3720e3">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:08]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org0c305f4">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-15</span> [!a !b !c] !c !b !a)
+<pre class="src src-clj" id="orga823cbd">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-15</span> [!a !b !c] !c !b !a)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-15 )
 
 (f-req-e-15 1 2 3)
-
 (=&gt; [3 2 1] )
 
 (<span style="color: #ffff0b;">-&gt;&gt;</span> [1 2 3 <span style="color: #34c8d8; font-weight: bold;">:a</span> <span style="color: #34c8d8; font-weight: bold;">:b</span> <span style="color: #34c8d8; font-weight: bold;">:c</span>]
          (partition 3)
          (map (partial apply f-req-e-15)))
-
 (=&gt; ([3 2 1] [<span style="color: #34c8d8; font-weight: bold;">:c</span> <span style="color: #34c8d8; font-weight: bold;">:b</span> <span style="color: #34c8d8; font-weight: bold;">:a</span>]) )
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfc55ccd" class="outline-4">
-<h4 id="orgfc55ccd"><span class="done DONE">DONE</span> <a id="org4169bab"></a> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</h4>
-<div class="outline-text-4" id="text-orgfc55ccd">
+<div id="outline-container-orgaa5dba2" class="outline-4">
+<h4 id="orgaa5dba2"><span class="done DONE">DONE</span> <a id="orgee8c631"></a> <b>req-e-16</b>: defstackfn should provide an informative error if there's an invalid stack operation</h4>
+<div class="outline-text-4" id="text-orgaa5dba2">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:09]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orge48e48b">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-16</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
+<pre class="src src-clj" id="org30f40ac">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-16</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
 (=&gt; <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">defstackfn-produced-errors</span> )
 <span style="color: #767283;">;;</span><span style="color: #767283; font-style: italic;">+&gt;</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">Global Operation Tree Errors: </span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">     `else&gt;' at op[1 3] node[1 :else 0]:</span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">              else&gt; is not an allowed op</span>
-<span style="color: #767283;">;;</span>
-<span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">2nd Path Errors [&gt;-start-else-term-&gt;]: </span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">     `else&gt;' at op[1 3] node[1 :else 0]:</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">              else&gt; is not an allowed op</span>
 </pre>
@@ -646,42 +626,34 @@ Or, if you prefer Exceptions&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgd08d6f0">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
+<pre class="src src-clj" id="org26aa654">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
   (<span style="color: #ffff0b;">try</span> (<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-16</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> (if&gt; <span style="color: #ff7fff;">"even"</span> else&gt; else&gt; <span style="color: #ff7fff;">"odd"</span>))
            (<span style="color: #ffff0b;">catch</span> Exception e [(ex-message e)
                                (ex-data e)])))
 (=&gt;
  [<span style="color: #ff7fff;">"defstackfn produced errors"</span>
   {<span style="color: #34c8d8; font-weight: bold;">:error-data</span> [[<span style="color: #ff7fff;">"Global Operation Tree Errors: "</span>
-                     [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=illegal</span>,
-                       <span style="color: #34c8d8; font-weight: bold;">:op</span> else&gt;,
-                       <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-illegal-operation</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"else&gt; is not an allowed op"</span>}],
-                       <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [1 <span style="color: #34c8d8; font-weight: bold;">:else</span> 0],
-                       <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [1 3]}]]
-                    [<span style="color: #ff7fff;">"2nd Path Errors [&gt;-start-else-term-&gt;]: "</span>
-                     [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=illegal</span>,
-                       <span style="color: #34c8d8; font-weight: bold;">:op</span> else&gt;,
-                       <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errors</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-illegal-operation</span>,
-                                 <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"else&gt; is not an allowed op"</span>}],
-                       <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [1 <span style="color: #34c8d8; font-weight: bold;">:else</span> 0],
-                       <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [1 3]}]]],
-   <span style="color: #34c8d8; font-weight: bold;">:error-text</span> <span style="color: #ff7fff;">"</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">Global Operation Tree Errors: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`else&gt;' at op[1 3] node[1 :else 0]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> else&gt; is not an allowed op</span><span style="color: #ffffff; font-weight: bold;">\n\n</span><span style="color: #ff7fff;">2nd Path Errors [&gt;-start-else-term-&gt;]: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`else&gt;' at op[1 3] node[1 :else 0]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> else&gt; is not an allowed op</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">"</span>}]
+                 [{<span style="color: #34c8d8; font-weight: bold;">:op-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.node</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">op=illegal</span>,
+                   <span style="color: #34c8d8; font-weight: bold;">:op</span> else&gt;,
+                   <span style="color: #34c8d8; font-weight: bold;">:errors</span> [{<span style="color: #34c8d8; font-weight: bold;">:err-zone</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">zone=tree</span>,
+                             <span style="color: #34c8d8; font-weight: bold;">:err-type</span> <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">error=parse-illegal-operation</span>,
+                             <span style="color: #34c8d8; font-weight: bold;">:err-text</span> <span style="color: #ff7fff;">"else&gt; is not an allowed op"</span>}],
+                   <span style="color: #34c8d8; font-weight: bold;">:node-index</span> [1 <span style="color: #34c8d8; font-weight: bold;">:else</span> 0],
+                   <span style="color: #34c8d8; font-weight: bold;">:op-index</span> [1 3]}]]],
+   <span style="color: #34c8d8; font-weight: bold;">:error-text</span> <span style="color: #ff7fff;">"</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">Global Operation Tree Errors: </span><span style="color: #ffffff; font-weight: bold;">\n\t</span><span style="color: #ff7fff;">`else&gt;' at op[1 3] node[1 :else 0]:</span><span style="color: #ffffff; font-weight: bold;">\n\t\t</span><span style="color: #ff7fff;"> else&gt; is not an allowed op</span><span style="color: #ffffff; font-weight: bold;">\n</span><span style="color: #ff7fff;">"</span>}]
 )
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org87d1510" class="outline-4">
-<h4 id="org87d1510"><span class="done DONE">DONE</span> <a id="org8c66c16"></a> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</h4>
-<div class="outline-text-4" id="text-org87d1510">
+<div id="outline-container-org37226d2" class="outline-4">
+<h4 id="org37226d2"><span class="done DONE">DONE</span> <a id="org874e860"></a> <b>req-e-17</b>: defstackfn should provide an informative error if there's a variable is referenced that doesn't exist.</h4>
+<div class="outline-text-4" id="text-org37226d2">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:09]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgb1e2298">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-17</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> !a)
+<pre class="src src-clj" id="orgff9e675">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-17</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> !a)
 (=&gt; <span style="color: #34c8d8; font-weight: bold;">:</span><span style="color: #9fcb66;">kdh.stax.errs</span><span style="color: #cfccd2; background-color: #25202a;">/</span><span style="color: #34c8d8; font-weight: bold;">defstackfn-produced-errors</span> )
 <span style="color: #767283;">;;</span><span style="color: #767283; font-style: italic;">+&gt;</span>
 <span style="color: #767283;">;; </span><span style="color: #767283; font-style: italic;">1st Path Errors [&gt;-start-term-&gt;]:</span>
@@ -695,7 +667,7 @@ Or, if you prefer Exceptions&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="org8e3df4b">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
+<pre class="src src-clj" id="org852ebc1">(<span style="color: #ffff0b;">binding</span> [<span style="color: #9fcb66;">kdh.stax.errs</span>/<span style="color: #4ac964;">*stax-throw-on-error*</span> <span style="color: #34c8d8; font-weight: bold;">true</span>]
   (<span style="color: #ffff0b;">try</span> (<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-17</span> [] <span style="color: #34c8d8; font-weight: bold;">true</span> !a)
            (<span style="color: #ffff0b;">catch</span> Exception e [(ex-message e)
                                (ex-data e)])))
@@ -719,13 +691,13 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 </div>
-<div id="outline-container-org6644bf3" class="outline-4">
-<h4 id="org6644bf3"><span class="done DONE">DONE</span> <a id="orgb2a1757"></a> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</h4>
-<div class="outline-text-4" id="text-org6644bf3">
+<div id="outline-container-orge1c2e24" class="outline-4">
+<h4 id="orge1c2e24"><span class="done DONE">DONE</span> <a id="org4c5730a"></a> <b>req-e-18</b>: It should be possible to shadow vars (naming a new local the name of an existing variable).</h4>
+<div class="outline-text-4" id="text-orge1c2e24">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:10]</span></span></p>
 
 <div class="org-src-container">
-<pre class="src src-clj" id="orgd04b302">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-18</span> [!a !b] !a <span style="color: #34c8d8; font-weight: bold;">true</span> !b !a+ 3 !b+ <span style="color: #ff7fff;">"help"</span> !a !b)
+<pre class="src src-clj" id="orgb220d80">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-e-18</span> [!a !b] !a <span style="color: #34c8d8; font-weight: bold;">true</span> !b !a+ 3 !b+ <span style="color: #ff7fff;">"help"</span> !a !b)
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-e-18 )
 
 (f-req-e-18 <span style="color: #34c8d8; font-weight: bold;">:red</span> <span style="color: #34c8d8; font-weight: bold;">:blue</span>)
@@ -735,9 +707,9 @@ Or, if you prefer Exceptions&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org47b36cb" class="outline-4">
-<h4 id="org47b36cb"><span class="done DONE">DONE</span> <a id="org50d81e5"></a> <b>req-e-19</b>: The example below contains all functionality you need to implement.</h4>
-<div class="outline-text-4" id="text-org47b36cb">
+<div id="outline-container-org76788c5" class="outline-4">
+<h4 id="org76788c5"><span class="done DONE">DONE</span> <a id="orgd7d472b"></a> <b>req-e-19</b>: The example below contains all functionality you need to implement.</h4>
+<div class="outline-text-4" id="text-org76788c5">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:10]</span></span></p>
 <p>
 This is not a testable requirement, but I will rely on it for justification of implicit requirements
@@ -745,20 +717,20 @@ This is not a testable requirement, but I will rely on it for justification of i
 </div>
 </div>
 </div>
-<div id="outline-container-org68fd779" class="outline-3">
-<h3 id="org68fd779"><span class="done DONE">DONE</span> Implicit requirements (<b>req-i-#</b>)</h3>
-<div class="outline-text-3" id="text-org68fd779">
+<div id="outline-container-org1177f0d" class="outline-3">
+<h3 id="org1177f0d"><span class="done DONE">DONE</span> Implicit requirements (<b>req-i-#</b>)</h3>
+<div class="outline-text-3" id="text-org1177f0d">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:14]</span></span></p>
 <p>
 Implicit requirements are those not expressed in the explicit requirements, but implied by them or by simple logical extension.
 </p>
 </div>
-<div id="outline-container-org304409c" class="outline-4">
-<h4 id="org304409c"><span class="done DONE">DONE</span> <a id="org9a6c282"></a> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</h4>
-<div class="outline-text-4" id="text-org304409c">
+<div id="outline-container-orgb64053c" class="outline-4">
+<h4 id="orgb64053c"><span class="done DONE">DONE</span> <a id="org430b633"></a> <b>req-i-01</b>: <code>defstackfn</code> can take an empty declarations argument</h4>
+<div class="outline-text-4" id="text-orgb64053c">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:10]</span></span></p>
 <div class="org-src-container">
-<pre class="src src-clj" id="org81025e2">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-01</span> [] 1 2 (invoke&gt; + 2))
+<pre class="src src-clj" id="orgd8a4acf">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-01</span> [] 1 2 (invoke&gt; + 2))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-i-01 )
 
 (f-req-i-01)
@@ -767,9 +739,9 @@ Implicit requirements are those not expressed in the explicit requirements, but 
 </div>
 </div>
 </div>
-<div id="outline-container-orgd910c6c" class="outline-4">
-<h4 id="orgd910c6c"><span class="done DONE">DONE</span> <a id="org70cd157"></a> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</h4>
-<div class="outline-text-4" id="text-orgd910c6c">
+<div id="outline-container-org53b8286" class="outline-4">
+<h4 id="org53b8286"><span class="done DONE">DONE</span> <a id="orgc615e3d"></a> <b>req-i-02</b>: <code>if&gt;</code> consumes the top of the stack</h4>
+<div class="outline-text-4" id="text-org53b8286">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:10]</span></span></p>
 <p>
 According to the explicit requirements,
@@ -800,9 +772,9 @@ Therefore, I deduce an implicit requirement that <code>if&gt;</code> first tests
 </p>
 </div>
 </div>
-<div id="outline-container-org882b0bd" class="outline-4">
-<h4 id="org882b0bd"><span class="done DONE">DONE</span> <a id="org00f0195"></a> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</h4>
-<div class="outline-text-4" id="text-org882b0bd">
+<div id="outline-container-org956b17b" class="outline-4">
+<h4 id="org956b17b"><span class="done DONE">DONE</span> <a id="org982b58a"></a> <b>req-i-03</b>: <code>!v​+</code> (define variable and assign it top of stack) does not consume the top of the stack</h4>
+<div class="outline-text-4" id="text-org956b17b">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:11]</span></span></p>
 <p>
 Otherwise the following section of the example would not be correct
@@ -829,15 +801,15 @@ push of value in stack variable <code>!c</code> would result in a stack of <code
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbf585b9" class="outline-4">
-<h4 id="orgbf585b9"><span class="done DONE">DONE</span> <a id="org666916a"></a> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</h4>
-<div class="outline-text-4" id="text-orgbf585b9">
+<div id="outline-container-org3280d54" class="outline-4">
+<h4 id="org3280d54"><span class="done DONE">DONE</span> <a id="org9e7b1b4"></a> <b>req-i-04</b>: <code>(invoke&gt; fun n)</code> applies n items off the top of the stack in stack order (i.e. reverse of underlying vector's order)</h4>
+<div class="outline-text-4" id="text-org3280d54">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:12]</span></span></p>
 <p>
 This is not explicitly stated in the assignment.  And it is not evident in the example, where all invoked functions are either associative functions (<code>+</code>, <code>*</code>, and <code>=</code>) with arity=2, or are only given n=1 (e.g. <code>println</code>).  But I find this an implicit requirement of stack logic.  If an invoked function of one argument takes its argument from the top of the stack, then a function of two should take its first from the top, pop the stack, then take its next from the new top.  Internally, this is accomplished with the <code>apply</code> of the reverse (through <code>rseq</code>) of the <code>subvec</code> of the last <code>n</code> items in the stack.
 </p>
 <div class="org-src-container">
-<pre class="src src-clj" id="org19fc016">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-04</span> [] 1 2 3 4 (invoke&gt; println 4))
+<pre class="src src-clj" id="org115f285">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-04</span> [] 1 2 3 4 (invoke&gt; println 4))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-i-04 )
 
 (f-req-i-04)
@@ -846,12 +818,12 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-org29a3bee" class="outline-4">
-<h4 id="org29a3bee"><span class="done DONE">DONE</span> <a id="org8137df9"></a> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</h4>
-<div class="outline-text-4" id="text-org29a3bee">
+<div id="outline-container-orgf5caff9" class="outline-4">
+<h4 id="orgf5caff9"><span class="done DONE">DONE</span> <a id="org73aa309"></a> <b>req-i-05</b>: <code>(invoke&gt; fun n)</code> for the sake of consistency, the return value of invoke should be <i>constant</i> (i.e. self-evaluating)</h4>
+<div class="outline-text-4" id="text-orgf5caff9">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:12]</span></span></p>
 <div class="org-src-container">
-<pre class="src src-clj" id="org98c4410">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; vector 3))
+<pre class="src src-clj" id="org410b775">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; vector 3))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-i-05 )
 
 
@@ -953,12 +925,12 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-orgafdb022" class="outline-4">
-<h4 id="orgafdb022"><span class="done DONE">DONE</span> <a id="org9d06e74"></a> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</h4>
-<div class="outline-text-4" id="text-orgafdb022">
+<div id="outline-container-org33c996a" class="outline-4">
+<h4 id="org33c996a"><span class="done DONE">DONE</span> <a id="org491ff2b"></a> <b>req-i-06</b>: For the sake of consistency, values passed to the defstackfn defined function should be <i>constant</i> (i.e. self-evaluating)</h4>
+<div class="outline-text-4" id="text-org33c996a">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:13]</span></span></p>
 <div class="org-src-container">
-<pre class="src src-clj" id="orge072407">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; println 3))
+<pre class="src src-clj" id="org2877bb2">(<span style="color: #ffff0b;">defstackfn</span> <span style="color: #ff996f;">f-req-i-05</span> [!a !b !c] !a !b !c (invoke&gt; println 3))
 (=&gt; <span style="color: #9fcb66;">#'user</span>/f-req-i-05 )
 
 
@@ -978,9 +950,9 @@ This is not explicitly stated in the assignment.  And it is not evident in the e
 </div>
 </div>
 </div>
-<div id="outline-container-org20e3404" class="outline-4">
-<h4 id="org20e3404"><span class="done DONE">DONE</span> <a id="org4951fa1"></a> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</h4>
-<div class="outline-text-4" id="text-org20e3404">
+<div id="outline-container-org68c0282" class="outline-4">
+<h4 id="org68c0282"><span class="done DONE">DONE</span> <a id="orgb05fc38"></a> <b>req-i-07</b>: <code>kdh.stax.core/defstackfn</code> creates a named function that returns the remaining stack as a vector</h4>
+<div class="outline-text-4" id="text-org68c0282">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2022-07-29 Fri 16:14]</span></span></p>
 <p>
 Internally, I represent the stack as a vector whose rightmost value is its top.  This choice is idiomatic because <code>clojure.core/pop</code> of a vector returns a vector like it's argument, but without the last item. I note that none of the stack state comments in the given example show any enclosing structure.  And they all treat the right-most as the top.  Of course, there is nothing preventing the choice of a list or queue, as pop works on those. It is just my reasoned and experience choice to use a vector.
@@ -993,13 +965,13 @@ Further, I return the stack and not its top because that would destroy important
 </div>
 </div>
 </div>
-<div id="outline-container-orgbd659c2" class="outline-2">
-<h2 id="orgbd659c2">Environment</h2>
-<div class="outline-text-2" id="text-orgbd659c2">
+<div id="outline-container-org8abe7f9" class="outline-2">
+<h2 id="org8abe7f9">Environment</h2>
+<div class="outline-text-2" id="text-org8abe7f9">
 </div>
-<div id="outline-container-org43d8545" class="outline-3">
-<h3 id="org43d8545">Java Properties</h3>
-<div class="outline-text-3" id="text-org43d8545">
+<div id="outline-container-org901019d" class="outline-3">
+<h3 id="org901019d">Java Properties</h3>
+<div class="outline-text-3" id="text-org901019d">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1010,18 +982,13 @@ Further, I return the stack and not its top because that would destroy important
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">apple.awt.UIElement</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
 <td class="org-left">awt.toolkit</td>
 <td class="org-left">sun.awt.X11.XToolkit</td>
 </tr>
 
 <tr>
 <td class="org-left">clojure.compile.path</td>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes</td>
+<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-deploy/doc/user-testing/stax-user-clj-1-9-0/target/classes</td>
 </tr>
 
 <tr>
@@ -1032,6 +999,11 @@ Further, I return the stack and not its top because that would destroy important
 <tr>
 <td class="org-left">file.encoding</td>
 <td class="org-left">UTF-8</td>
+</tr>
+
+<tr>
+<td class="org-left">file.encoding.pkg</td>
+<td class="org-left">sun.io</td>
 </tr>
 
 <tr>
@@ -1050,8 +1022,23 @@ Further, I return the stack and not its top because that would destroy important
 </tr>
 
 <tr>
+<td class="org-left">java.class.version</td>
+<td class="org-left">52.0</td>
+</tr>
+
+<tr>
+<td class="org-left">java.endorsed.dirs</td>
+<td class="org-left">/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/endorsed</td>
+</tr>
+
+<tr>
+<td class="org-left">java.ext.dirs</td>
+<td class="org-left">/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext:/usr/java/packages/lib/ext</td>
+</tr>
+
+<tr>
 <td class="org-left">java.home</td>
-<td class="org-left">/usr/lib/jvm/java-11-openjdk-amd64</td>
+<td class="org-left">/usr/lib/jvm/java-8-openjdk-amd64/jre</td>
 </tr>
 
 <tr>
@@ -1061,7 +1048,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.library.path</td>
-<td class="org-left">/usr/java/packages/lib:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib</td>
+<td class="org-left">/usr/java/packages/lib/amd64:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib</td>
 </tr>
 
 <tr>
@@ -1071,7 +1058,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.runtime.version</td>
-<td class="org-left">11.0.15+10-Ubuntu-0ubuntu0.20.04.1</td>
+<td class="org-left">1.8.0​_312-8u312-b07-0ubuntu1~20.04-b07</td>
 </tr>
 
 <tr>
@@ -1086,7 +1073,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.specification.version</td>
-<td class="org-left">11</td>
+<td class="org-left">1.8</td>
 </tr>
 
 <tr>
@@ -1096,32 +1083,22 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.vendor.url</td>
-<td class="org-left">Unknown</td>
+<td class="org-left"><a href="http://java.oracle.com/">http://java.oracle.com/</a></td>
 </tr>
 
 <tr>
 <td class="org-left">java.vendor.url.bug</td>
-<td class="org-left">Unknown</td>
+<td class="org-left"><a href="http://bugreport.sun.com/bugreport/">http://bugreport.sun.com/bugreport/</a></td>
 </tr>
 
 <tr>
 <td class="org-left">java.version</td>
-<td class="org-left">11.0.15</td>
-</tr>
-
-<tr>
-<td class="org-left">java.version.date</td>
-<td class="org-left">2022-04-19</td>
-</tr>
-
-<tr>
-<td class="org-left">java.vm.compressedOopsMode</td>
-<td class="org-left">Zero based</td>
+<td class="org-left">1.8.0​_312</td>
 </tr>
 
 <tr>
 <td class="org-left">java.vm.info</td>
-<td class="org-left">mixed mode, sharing</td>
+<td class="org-left">mixed mode</td>
 </tr>
 
 <tr>
@@ -1141,7 +1118,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.vm.specification.version</td>
-<td class="org-left">11</td>
+<td class="org-left">1.8</td>
 </tr>
 
 <tr>
@@ -1151,12 +1128,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">java.vm.version</td>
-<td class="org-left">11.0.15+10-Ubuntu-0ubuntu0.20.04.1</td>
-</tr>
-
-<tr>
-<td class="org-left">jdk.debug</td>
-<td class="org-left">release</td>
+<td class="org-left">25.312-b07</td>
 </tr>
 
 <tr>
@@ -1195,18 +1167,18 @@ Further, I return the stack and not its top because that would destroy important
 </tr>
 
 <tr>
+<td class="org-left">sun.boot.class.path</td>
+<td class="org-left">/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes</td>
+</tr>
+
+<tr>
 <td class="org-left">sun.boot.library.path</td>
-<td class="org-left">/usr/lib/jvm/java-11-openjdk-amd64/lib</td>
+<td class="org-left">/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64</td>
 </tr>
 
 <tr>
 <td class="org-left">sun.cpu.endian</td>
 <td class="org-left">little</td>
-</tr>
-
-<tr>
-<td class="org-left">sun.cpu.isalist</td>
-<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -1216,7 +1188,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">sun.java.command</td>
-<td class="org-left">clojure.main -i /tmp/form-init12004853467191983387.clj</td>
+<td class="org-left">clojure.main -i /tmp/form-init8395309977680219555.clj</td>
 </tr>
 
 <tr>
@@ -1241,7 +1213,7 @@ Further, I return the stack and not its top because that would destroy important
 
 <tr>
 <td class="org-left">user.dir</td>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0</td>
+<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-deploy/doc/user-testing/stax-user-clj-1-9-0</td>
 </tr>
 
 <tr>
@@ -1268,9 +1240,9 @@ Further, I return the stack and not its top because that would destroy important
 </div>
 </div>
 
-<div id="outline-container-orgfd96a20" class="outline-3">
-<h3 id="orgfd96a20">Java Class Path</h3>
-<div class="outline-text-3" id="text-orgfd96a20">
+<div id="outline-container-orgd11612d" class="outline-3">
+<h3 id="orgd11612d">Java Class Path</h3>
+<div class="outline-text-3" id="text-orgd11612d">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1279,339 +1251,339 @@ Further, I return the stack and not its top because that would destroy important
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/test</td>
+<td class="org-left">​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/test</td>
 </tr>
 
 <tr>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/src</td>
+<td class="org-left">​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/src</td>
 </tr>
 
 <tr>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/dev-resources</td>
+<td class="org-left">​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/dev-resources</td>
 </tr>
 
 <tr>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/resources</td>
+<td class="org-left">​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/resources</td>
 </tr>
 
 <tr>
-<td class="org-left">/mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes</td>
+<td class="org-left">​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/target​/classes</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/djblue​/portal​/0.28.0​/portal-0.28.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/fasterxml​/jackson​/core​/jackson-core​/2.8.7​/jackson-core-2.8.7.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-model-builder​/3.5.3​/maven-model-builder-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-builder-support​/3.5.3​/maven-builder-support-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/nrepl​/incomplete​/0.1.0​/incomplete-0.1.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/msgpack​/msgpack​/0.6.12​/msgpack-0.6.12.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/httpcomponents​/httpclient​/4.5.3​/httpclient-4.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/commons-io​/commons-io​/2.5​/commons-io-2.5.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-model​/3.5.3​/maven-model-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-wagon​/1.0.3​/maven-resolver-transport-wagon-1.0.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/criterium​/criterium​/0.4.4​/criterium-0.4.4.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-java​/1.0.362​/transit-java-1.0.362.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-util​/1.1.1​/maven-resolver-util-1.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/rpl​/specter​/1.1.4​/specter-1.1.4.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/data.xml​/0.0.8​/data.xml-0.0.8.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/google​/guava​/guava​/20.0​/guava-20.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-repository-metadata​/3.5.3​/maven-repository-metadata-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/javax​/xml​/bind​/jaxb-api​/2.3.0​/jaxb-api-2.3.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-resolver-provider​/3.5.3​/maven-resolver-provider-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-utils​/3.1.0​/plexus-utils-3.1.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-provider-api​/3.0.0​/wagon-provider-api-3.0.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/fipp​/fipp​/0.6.23​/fipp-0.6.23.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-http​/3.0.0​/wagon-http-3.0.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/net​/cgrand​/macrovich​/0.2.1​/macrovich-0.2.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-js​/0.8.874​/transit-js-0.8.874.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/mvxcvi​/arrangement​/1.2.0​/arrangement-1.2.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-api​/1.1.1​/maven-resolver-api-1.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-component-annotations​/1.7.1​/plexus-component-annotations-1.7.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/rewrite-clj​/rewrite-clj​/0.6.1​/rewrite-clj-0.6.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/kdh/stax/0.1.0/stax-0.1.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/kdh​/stax​/0.1.0​/stax-0.1.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-http​/1.0.3​/maven-resolver-transport-http-1.0.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/zprint​/zprint​/1.1.1​/zprint-1.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-connector-basic​/1.0.3​/maven-resolver-connector-basic-1.0.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/core.rrb-vector​/0.1.2​/core.rrb-vector-0.1.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-spi​/1.1.1​/maven-resolver-spi-1.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/mvxcvi​/puget​/1.3.1​/puget-1.3.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/tcrawley​/dynapath​/1.0.0​/dynapath-1.0.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/httpcomponents​/httpcore​/4.4.6​/httpcore-4.4.6.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/macroz​/tangle​/0.2.2​/tangle-0.2.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/rewrite-cljs​/rewrite-cljs​/0.4.5​/rewrite-cljs-0.4.5.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/borkdude​/sci​/0.2.1-alpha.1​/sci-0.2.1-alpha.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/clojure/1.9.0/clojure-1.9.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/clojure​/1.9.0​/clojure-1.9.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/jsoup​/jsoup​/1.7.2​/jsoup-1.7.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/googlecode​/json-simple​/json-simple​/1.1.1​/json-simple-1.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/hiccup​/hiccup​/1.0.5​/hiccup-1.0.5.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/nrepl​/nrepl​/0.8.3​/nrepl-0.8.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/clj-tuple​/clj-tuple​/0.2.2​/clj-tuple-0.2.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/flatland​/ordered​/1.5.7​/ordered-1.5.7.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/javax​/inject​/javax.inject​/1​/javax.inject-1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/flatland​/useful​/0.11.6​/useful-0.11.6.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/core.specs.alpha/0.1.24/core.specs.alpha-0.1.24.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/core.specs.alpha​/0.1.24​/core.specs.alpha-0.1.24.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/hashp​/hashp​/0.2.1​/hashp-0.2.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/borkdude​/sci.impl.reflector​/0.0.1​/sci.impl.reflector-0.0.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-cljs​/0.8.269​/transit-cljs-0.8.269.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/slf4j​/jcl-over-slf4j​/1.6.2​/jcl-over-slf4j-1.6.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/commons​/commons-lang3​/3.5​/commons-lang3-3.5.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-http-shared​/3.0.0​/wagon-http-shared-3.0.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/potemkin​/potemkin​/0.4.5​/potemkin-0.4.5.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-file​/1.0.3​/maven-resolver-transport-file-1.0.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/tools.reader​/1.3.6​/tools.reader-1.3.6.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/failjure​/failjure​/2.2.0​/failjure-2.2.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/riddley​/riddley​/0.1.12​/riddley-0.1.12.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/data.json​/2.4.0​/data.json-2.4.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-interpolation​/1.24​/plexus-interpolation-1.24.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/commons-logging​/commons-logging​/1.2​/commons-logging-1.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/commons-codec​/commons-codec​/1.9​/commons-codec-1.9.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/cider​/cider-nrepl​/0.28.3​/cider-nrepl-0.28.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/cemerick​/pomegranate​/1.1.0​/pomegranate-1.1.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-clj​/1.0.329​/transit-clj-1.0.329.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/tools.macro​/0.1.1​/tools.macro-0.1.1.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/borkdude​/edamame​/0.0.11-alpha.28​/edamame-0.0.11-alpha.28.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/javassist​/javassist​/3.18.1-GA​/javassist-3.18.1-GA.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/http-kit​/http-kit​/2.6.0​/http-kit-2.6.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/medley​/medley​/1.4.0​/medley-1.4.0.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/slf4j​/slf4j-api​/1.6.2​/slf4j-api-1.6.2.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/clojure/spec.alpha/0.1.143/spec.alpha-0.1.143.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/clojure​/spec.alpha​/0.1.143​/spec.alpha-0.1.143.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-artifact​/3.5.3​/maven-artifact-3.5.3.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/clj-stacktrace​/clj-stacktrace​/0.2.8​/clj-stacktrace-0.2.8.jar</td>
 </tr>
 
 <tr>
-<td class="org-left"><i>home/keith</i>.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar</td>
+<td class="org-left">​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-impl​/1.1.1​/maven-resolver-impl-1.1.1.jar</td>
 </tr>
 </tbody>
 </table>
@@ -1621,7 +1593,7 @@ Further, I return the stack and not its top because that would destroy important
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Keith D Houser</p>
-<p class="date">Created: 2022-08-01 Mon 16:16</p>
+<p class="date">Created: 2022-08-02 Tue 11:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

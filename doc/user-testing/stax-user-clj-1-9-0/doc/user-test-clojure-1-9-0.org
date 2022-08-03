@@ -19,7 +19,7 @@ CLOSED: [2022-07-29 Fri 16:10]
 *** SETUP
 #+begin_src clj
 ,*ns*
-(=> #namespace[user] )
+(=> #namespace[stax-user.core] )
 
 (clojure-version)
 (=> "1.9.0" )
@@ -239,10 +239,6 @@ My implementation only accepts pos-int arity, as I understand invoke> to invoke 
 ;; Global Operation Tree Errors: 
 ;; 	`(invoke> + 0)' at op[2] node[2]:
 ;; 		 0 is not a valid arity (must be pos-int)!
-;;
-;; 1st Path Errors [>-start-term->]: 
-;; 	`(invoke> + 0)' at op[2] node[2]:
-;; 		 0 is not a valid arity (must be pos-int)!
 (=> :kdh.stax.errs/defstackfn-produced-errors )
 #+end_src
 
@@ -257,26 +253,16 @@ Or, if you prefer Exceptions...
 (=>
  ["defstackfn produced errors"
   {:error-data [["Global Operation Tree Errors: "
-		     [{:op-type :kdh.stax.node/op=invoke,
-		       :op (invoke> + 0),
-		       :fun +,
-		       :arity 0,
-		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
-				 :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
-				 :err-text "0 is not a valid arity (must be pos-int)!"}],
-		       :node-index [2],
-		       :op-index [2]}]]
-		    ["1st Path Errors [>-start-term->]: "
-		     [{:op-type :kdh.stax.node/op=invoke,
-		       :op (invoke> + 0),
-		       :fun +,
-		       :arity 0,
-		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
-				 :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
-				 :err-text "0 is not a valid arity (must be pos-int)!"}],
-		       :node-index [2],
-		       :op-index [2]}]]],
-   :error-text "\nGlobal Operation Tree Errors: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n\n1st Path Errors [>-start-term->]: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n"}]
+                 [{:op-type :kdh.stax.node/op=invoke,
+                   :op (invoke> + 0),
+                   :fun +,
+                   :arity 0,
+                   :errors [{:err-zone :kdh.stax.errs/zone=tree,
+                             :err-type :kdh.stax.errs/error=parse-invoke-arity-not-pos-int,
+                             :err-text "0 is not a valid arity (must be pos-int)!"}],
+                   :node-index [2],
+                   :op-index [2]}]]],
+   :error-text "\nGlobal Operation Tree Errors: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n"}]
 )
 #+end_src
 
@@ -407,13 +393,11 @@ CLOSED: [2022-07-29 Fri 16:08]
 (=> #'user/f-req-e-15 )
 
 (f-req-e-15 1 2 3)
-
 (=> [3 2 1] )
 
 (->> [1 2 3 :a :b :c]
 	 (partition 3)
 	 (map (partial apply f-req-e-15)))
-
 (=> ([3 2 1] [:c :b :a]) )
 #+end_src
 
@@ -426,10 +410,6 @@ CLOSED: [2022-07-29 Fri 16:09]
 (=> :kdh.stax.errs/defstackfn-produced-errors )
 ;;+>
 ;; Global Operation Tree Errors: 
-;; 	`else>' at op[1 3] node[1 :else 0]:
-;; 		 else> is not an allowed op
-;;
-;; 2nd Path Errors [>-start-else-term->]: 
 ;; 	`else>' at op[1 3] node[1 :else 0]:
 ;; 		 else> is not an allowed op
 #+end_src
@@ -445,22 +425,14 @@ Or, if you prefer Exceptions...
 (=>
  ["defstackfn produced errors"
   {:error-data [["Global Operation Tree Errors: "
-		     [{:op-type :kdh.stax.node/op=illegal,
-		       :op else>,
-		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
-				 :err-type :kdh.stax.errors/error=parse-illegal-operation,
-				 :err-text "else> is not an allowed op"}],
-		       :node-index [1 :else 0],
-		       :op-index [1 3]}]]
-		    ["2nd Path Errors [>-start-else-term->]: "
-		     [{:op-type :kdh.stax.node/op=illegal,
-		       :op else>,
-		       :errors [{:err-zone :kdh.stax.errors/zone=tree,
-				 :err-type :kdh.stax.errors/error=parse-illegal-operation,
-				 :err-text "else> is not an allowed op"}],
-		       :node-index [1 :else 0],
-		       :op-index [1 3]}]]],
-   :error-text "\nGlobal Operation Tree Errors: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n\n2nd Path Errors [>-start-else-term->]: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n"}]
+                 [{:op-type :kdh.stax.node/op=illegal,
+                   :op else>,
+                   :errors [{:err-zone :kdh.stax.errs/zone=tree,
+                             :err-type :kdh.stax.errs/error=parse-illegal-operation,
+                             :err-text "else> is not an allowed op"}],
+                   :node-index [1 :else 0],
+                   :op-index [1 3]}]]],
+   :error-text "\nGlobal Operation Tree Errors: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n"}]
 )
 #+end_src
 
@@ -716,57 +688,57 @@ CLOSED: [2022-07-29 Fri 16:14]
 #+end_src
 
 #+RESULTS: java-properties
-| apple.awt.UIElement           | true                                                                                                                            |
-| awt.toolkit                   | sun.awt.X11.XToolkit                                                                                                            |
-| clojure.compile.path          | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes                                                                      |
-| clojure.debug                 | false                                                                                                                           |
-| file.encoding                 | UTF-8                                                                                                                           |
-| file.separator                | /                                                                                                                               |
-| java.awt.graphicsenv          | sun.awt.X11GraphicsEnvironment                                                                                                  |
-| java.awt.printerjob           | sun.print.PSPrinterJob                                                                                                          |
-| java.home                     | /usr/lib/jvm/java-11-openjdk-amd64                                                                                              |
-| java.io.tmpdir                | /tmp                                                                                                                            |
-| java.library.path             | /usr/java/packages/lib:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib |
-| java.runtime.name             | OpenJDK Runtime Environment                                                                                                     |
-| java.runtime.version          | 11.0.15+10-Ubuntu-0ubuntu0.20.04.1                                                                                              |
-| java.specification.name       | Java Platform API Specification                                                                                                 |
-| java.specification.vendor     | Oracle Corporation                                                                                                              |
-| java.specification.version    | 11                                                                                                                              |
-| java.vendor                   | Private Build                                                                                                                   |
-| java.vendor.url               | Unknown                                                                                                                         |
-| java.vendor.url.bug           | Unknown                                                                                                                         |
-| java.version                  | 11.0.15                                                                                                                         |
-| java.version.date             | 2022-04-19                                                                                                                      |
-| java.vm.compressedOopsMode    | Zero based                                                                                                                      |
-| java.vm.info                  | mixed mode, sharing                                                                                                             |
-| java.vm.name                  | OpenJDK 64-Bit Server VM                                                                                                        |
-| java.vm.specification.name    | Java Virtual Machine Specification                                                                                              |
-| java.vm.specification.vendor  | Oracle Corporation                                                                                                              |
-| java.vm.specification.version | 11                                                                                                                              |
-| java.vm.vendor                | Private Build                                                                                                                   |
-| java.vm.version               | 11.0.15+10-Ubuntu-0ubuntu0.20.04.1                                                                                              |
-| jdk.debug                     | release                                                                                                                         |
-| line.separator                | \n                                                                                                                              |
-| os.arch                       | amd64                                                                                                                           |
-| os.name                       | Linux                                                                                                                           |
-| os.version                    | 5.10.102.1-microsoft-standard-WSL2                                                                                              |
-| path.separator                | :                                                                                                                               |
-| stax-user.version             | 0.1.0-SNAPSHOT                                                                                                                  |
-| sun.arch.data.model           | 64                                                                                                                              |
-| sun.boot.library.path         | /usr/lib/jvm/java-11-openjdk-amd64/lib                                                                                          |
-| sun.cpu.endian                | little                                                                                                                          |
-| sun.cpu.isalist               |                                                                                                                                 |
-| sun.io.unicode.encoding       | UnicodeLittle                                                                                                                   |
-| sun.java.command              | clojure.main -i /tmp/form-init12004853467191983387.clj                                                                          |
-| sun.java.launcher             | SUN​_STANDARD                                                                                                                    |
-| sun.jnu.encoding              | UTF-8                                                                                                                           |
-| sun.management.compiler       | HotSpot 64-Bit Tiered Compilers                                                                                                 |
-| sun.os.patch.level            | unknown                                                                                                                         |
-| user.dir                      | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0                                                                                     |
-| user.home                     | /home/keith                                                                                                                     |
-| user.language                 | en                                                                                                                              |
-| user.name                     | keith                                                                                                                           |
-| user.timezone                 | America/New​_York                                                                                                                |
+| awt.toolkit                   | sun.awt.X11.XToolkit                                                                                                                                                                                                                                                                                                                                                                                                          |
+| clojure.compile.path          | /mnt/e/Sync/Clojure/rpl/stax-deploy/doc/user-testing/stax-user-clj-1-9-0/target/classes                                                                                                                                                                                                                                                                                                                                       |
+| clojure.debug                 | false                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| file.encoding                 | UTF-8                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| file.encoding.pkg             | sun.io                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| file.separator                | /                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| java.awt.graphicsenv          | sun.awt.X11GraphicsEnvironment                                                                                                                                                                                                                                                                                                                                                                                                |
+| java.awt.printerjob           | sun.print.PSPrinterJob                                                                                                                                                                                                                                                                                                                                                                                                        |
+| java.class.version            | 52.0                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| java.endorsed.dirs            | /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/endorsed                                                                                                                                                                                                                                                                                                                                                                            |
+| java.ext.dirs                 | /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext:/usr/java/packages/lib/ext                                                                                                                                                                                                                                                                                                                                                      |
+| java.home                     | /usr/lib/jvm/java-8-openjdk-amd64/jre                                                                                                                                                                                                                                                                                                                                                                                         |
+| java.io.tmpdir                | /tmp                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| java.library.path             | /usr/java/packages/lib/amd64:/usr/lib/x86​_64-linux-gnu/jni:/lib/x86​_64-linux-gnu:/usr/lib/x86​_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib                                                                                                                                                                                                                                                                                         |
+| java.runtime.name             | OpenJDK Runtime Environment                                                                                                                                                                                                                                                                                                                                                                                                   |
+| java.runtime.version          | 1.8.0​_312-8u312-b07-0ubuntu1~20.04-b07                                                                                                                                                                                                                                                                                                                                                                                        |
+| java.specification.name       | Java Platform API Specification                                                                                                                                                                                                                                                                                                                                                                                               |
+| java.specification.vendor     | Oracle Corporation                                                                                                                                                                                                                                                                                                                                                                                                            |
+| java.specification.version    | 1.8                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| java.vendor                   | Private Build                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| java.vendor.url               | http://java.oracle.com/                                                                                                                                                                                                                                                                                                                                                                                                       |
+| java.vendor.url.bug           | http://bugreport.sun.com/bugreport/                                                                                                                                                                                                                                                                                                                                                                                           |
+| java.version                  | 1.8.0​_312                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| java.vm.info                  | mixed mode                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| java.vm.name                  | OpenJDK 64-Bit Server VM                                                                                                                                                                                                                                                                                                                                                                                                      |
+| java.vm.specification.name    | Java Virtual Machine Specification                                                                                                                                                                                                                                                                                                                                                                                            |
+| java.vm.specification.vendor  | Oracle Corporation                                                                                                                                                                                                                                                                                                                                                                                                            |
+| java.vm.specification.version | 1.8                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| java.vm.vendor                | Private Build                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| java.vm.version               | 25.312-b07                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| line.separator                | \n                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| os.arch                       | amd64                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| os.name                       | Linux                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| os.version                    | 5.10.102.1-microsoft-standard-WSL2                                                                                                                                                                                                                                                                                                                                                                                            |
+| path.separator                | :                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| stax-user.version             | 0.1.0-SNAPSHOT                                                                                                                                                                                                                                                                                                                                                                                                                |
+| sun.arch.data.model           | 64                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| sun.boot.class.path           | /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-amd64/jre/classes |
+| sun.boot.library.path         | /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64                                                                                                                                                                                                                                                                                                                                                                               |
+| sun.cpu.endian                | little                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| sun.io.unicode.encoding       | UnicodeLittle                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| sun.java.command              | clojure.main -i /tmp/form-init8395309977680219555.clj                                                                                                                                                                                                                                                                                                                                                                         |
+| sun.java.launcher             | SUN​_STANDARD                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| sun.jnu.encoding              | UTF-8                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| sun.management.compiler       | HotSpot 64-Bit Tiered Compilers                                                                                                                                                                                                                                                                                                                                                                                               |
+| sun.os.patch.level            | unknown                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| user.dir                      | /mnt/e/Sync/Clojure/rpl/stax-deploy/doc/user-testing/stax-user-clj-1-9-0                                                                                                                                                                                                                                                                                                                                                      |
+| user.home                     | /home/keith                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| user.language                 | en                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| user.name                     | keith                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| user.timezone                 | America/New​_York                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ** Java Class Path
 #+name: java-class-path
@@ -774,92 +746,93 @@ CLOSED: [2022-07-29 Fri 16:14]
 (let [java-class-path
       (-> (->> (System/getProperties) seq (partition 2) (into {}))
 	  (get "java.class.path")
+          (str/replace #"([+_/])" "​$1" )
 	  (str/split #":"))]
   (mapv vector java-class-path))
   #+end_src
 
   #+RESULTS: java-class-path
-  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/test                                                                                   |
-  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/src                                                                                    |
-  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/dev-resources                                                                          |
-  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/resources                                                                              |
-  | /mnt/e/Sync/Clojure/rpl/stax-user-clj-1-9-0/target/classes                                                                         |
-  | /home/keith/.m2/repository/djblue/portal/0.28.0/portal-0.28.0.jar                                                                  |
-  | /home/keith/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.7/jackson-core-2.8.7.jar                                    |
-  | /home/keith/.m2/repository/org/apache/maven/maven-model-builder/3.5.3/maven-model-builder-3.5.3.jar                                |
-  | /home/keith/.m2/repository/org/apache/maven/maven-builder-support/3.5.3/maven-builder-support-3.5.3.jar                            |
-  | /home/keith/.m2/repository/org/nrepl/incomplete/0.1.0/incomplete-0.1.0.jar                                                         |
-  | /home/keith/.m2/repository/org/msgpack/msgpack/0.6.12/msgpack-0.6.12.jar                                                           |
-  | /home/keith/.m2/repository/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar                                         |
-  | /home/keith/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar                                                            |
-  | /home/keith/.m2/repository/org/apache/maven/maven-model/3.5.3/maven-model-3.5.3.jar                                                |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.0.3/maven-resolver-transport-wagon-1.0.3.jar |
-  | /home/keith/.m2/repository/criterium/criterium/0.4.4/criterium-0.4.4.jar                                                           |
-  | /home/keith/.m2/repository/com/cognitect/transit-java/1.0.362/transit-java-1.0.362.jar                                             |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.1.1/maven-resolver-util-1.1.1.jar                       |
-  | /home/keith/.m2/repository/com/rpl/specter/1.1.4/specter-1.1.4.jar                                                                 |
-  | /home/keith/.m2/repository/org/clojure/data.xml/0.0.8/data.xml-0.0.8.jar                                                           |
-  | /home/keith/.m2/repository/com/google/guava/guava/20.0/guava-20.0.jar                                                              |
-  | /home/keith/.m2/repository/org/apache/maven/maven-repository-metadata/3.5.3/maven-repository-metadata-3.5.3.jar                    |
-  | /home/keith/.m2/repository/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar                                                        |
-  | /home/keith/.m2/repository/org/apache/maven/maven-resolver-provider/3.5.3/maven-resolver-provider-3.5.3.jar                        |
-  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-utils/3.1.0/plexus-utils-3.1.0.jar                                           |
-  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.0.0/wagon-provider-api-3.0.0.jar                            |
-  | /home/keith/.m2/repository/fipp/fipp/0.6.23/fipp-0.6.23.jar                                                                        |
-  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http/3.0.0/wagon-http-3.0.0.jar                                            |
-  | /home/keith/.m2/repository/net/cgrand/macrovich/0.2.1/macrovich-0.2.1.jar                                                          |
-  | /home/keith/.m2/repository/com/cognitect/transit-js/0.8.874/transit-js-0.8.874.jar                                                 |
-  | /home/keith/.m2/repository/mvxcvi/arrangement/1.2.0/arrangement-1.2.0.jar                                                          |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.1.1/maven-resolver-api-1.1.1.jar                         |
-  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar           |
-  | /home/keith/.m2/repository/rewrite-clj/rewrite-clj/0.6.1/rewrite-clj-0.6.1.jar                                                     |
-  | /home/keith/.m2/repository/kdh/stax/0.1.0/stax-0.1.0.jar                                                                           |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.0.3/maven-resolver-transport-http-1.0.3.jar   |
-  | /home/keith/.m2/repository/zprint/zprint/1.1.1/zprint-1.1.1.jar                                                                    |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.0.3/maven-resolver-connector-basic-1.0.3.jar |
-  | /home/keith/.m2/repository/org/clojure/core.rrb-vector/0.1.2/core.rrb-vector-0.1.2.jar                                             |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.1.1/maven-resolver-spi-1.1.1.jar                         |
-  | /home/keith/.m2/repository/mvxcvi/puget/1.3.1/puget-1.3.1.jar                                                                      |
-  | /home/keith/.m2/repository/org/tcrawley/dynapath/1.0.0/dynapath-1.0.0.jar                                                          |
-  | /home/keith/.m2/repository/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar                                             |
-  | /home/keith/.m2/repository/macroz/tangle/0.2.2/tangle-0.2.2.jar                                                                    |
-  | /home/keith/.m2/repository/rewrite-cljs/rewrite-cljs/0.4.5/rewrite-cljs-0.4.5.jar                                                  |
-  | /home/keith/.m2/repository/borkdude/sci/0.2.1-alpha.1/sci-0.2.1-alpha.1.jar                                                        |
-  | /home/keith/.m2/repository/org/clojure/clojure/1.9.0/clojure-1.9.0.jar                                                             |
-  | /home/keith/.m2/repository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar                                                                   |
-  | /home/keith/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar                                      |
-  | /home/keith/.m2/repository/hiccup/hiccup/1.0.5/hiccup-1.0.5.jar                                                                    |
-  | /home/keith/.m2/repository/nrepl/nrepl/0.8.3/nrepl-0.8.3.jar                                                                       |
-  | /home/keith/.m2/repository/clj-tuple/clj-tuple/0.2.2/clj-tuple-0.2.2.jar                                                           |
-  | /home/keith/.m2/repository/org/flatland/ordered/1.5.7/ordered-1.5.7.jar                                                            |
-  | /home/keith/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar                                                          |
-  | /home/keith/.m2/repository/org/flatland/useful/0.11.6/useful-0.11.6.jar                                                            |
-  | /home/keith/.m2/repository/org/clojure/core.specs.alpha/0.1.24/core.specs.alpha-0.1.24.jar                                         |
-  | /home/keith/.m2/repository/hashp/hashp/0.2.1/hashp-0.2.1.jar                                                                       |
-  | /home/keith/.m2/repository/borkdude/sci.impl.reflector/0.0.1/sci.impl.reflector-0.0.1.jar                                          |
-  | /home/keith/.m2/repository/com/cognitect/transit-cljs/0.8.269/transit-cljs-0.8.269.jar                                             |
-  | /home/keith/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar                                                 |
-  | /home/keith/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar                                              |
-  | /home/keith/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.0.0/wagon-http-shared-3.0.0.jar                              |
-  | /home/keith/.m2/repository/potemkin/potemkin/0.4.5/potemkin-0.4.5.jar                                                              |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-file/1.0.3/maven-resolver-transport-file-1.0.3.jar   |
-  | /home/keith/.m2/repository/org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.jar                                                   |
-  | /home/keith/.m2/repository/failjure/failjure/2.2.0/failjure-2.2.0.jar                                                              |
-  | /home/keith/.m2/repository/riddley/riddley/0.1.12/riddley-0.1.12.jar                                                               |
-  | /home/keith/.m2/repository/org/clojure/data.json/2.4.0/data.json-2.4.0.jar                                                         |
-  | /home/keith/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar                             |
-  | /home/keith/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar                                             |
-  | /home/keith/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar                                                   |
-  | /home/keith/.m2/repository/cider/cider-nrepl/0.28.3/cider-nrepl-0.28.3.jar                                                         |
-  | /home/keith/.m2/repository/com/cemerick/pomegranate/1.1.0/pomegranate-1.1.0.jar                                                    |
-  | /home/keith/.m2/repository/com/cognitect/transit-clj/1.0.329/transit-clj-1.0.329.jar                                               |
-  | /home/keith/.m2/repository/org/clojure/tools.macro/0.1.1/tools.macro-0.1.1.jar                                                     |
-  | /home/keith/.m2/repository/borkdude/edamame/0.0.11-alpha.28/edamame-0.0.11-alpha.28.jar                                            |
-  | /home/keith/.m2/repository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar                                               |
-  | /home/keith/.m2/repository/http-kit/http-kit/2.6.0/http-kit-2.6.0.jar                                                              |
-  | /home/keith/.m2/repository/medley/medley/1.4.0/medley-1.4.0.jar                                                                    |
-  | /home/keith/.m2/repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar                                                           |
-  | /home/keith/.m2/repository/org/clojure/spec.alpha/0.1.143/spec.alpha-0.1.143.jar                                                   |
-  | /home/keith/.m2/repository/org/apache/maven/maven-artifact/3.5.3/maven-artifact-3.5.3.jar                                          |
-  | /home/keith/.m2/repository/clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar                                            |
-  | /home/keith/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.1.1/maven-resolver-impl-1.1.1.jar                       |
+  | ​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/test                                                      |
+  | ​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/src                                                       |
+  | ​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/dev-resources                                             |
+  | ​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/resources                                                 |
+  | ​/mnt​/e​/Sync​/Clojure​/rpl​/stax-deploy​/doc​/user-testing​/stax-user-clj-1-9-0​/target​/classes                                            |
+  | ​/home​/keith​/.m2​/repository​/djblue​/portal​/0.28.0​/portal-0.28.0.jar                                                                  |
+  | ​/home​/keith​/.m2​/repository​/com​/fasterxml​/jackson​/core​/jackson-core​/2.8.7​/jackson-core-2.8.7.jar                                    |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-model-builder​/3.5.3​/maven-model-builder-3.5.3.jar                                |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-builder-support​/3.5.3​/maven-builder-support-3.5.3.jar                            |
+  | ​/home​/keith​/.m2​/repository​/org​/nrepl​/incomplete​/0.1.0​/incomplete-0.1.0.jar                                                         |
+  | ​/home​/keith​/.m2​/repository​/org​/msgpack​/msgpack​/0.6.12​/msgpack-0.6.12.jar                                                           |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/httpcomponents​/httpclient​/4.5.3​/httpclient-4.5.3.jar                                         |
+  | ​/home​/keith​/.m2​/repository​/commons-io​/commons-io​/2.5​/commons-io-2.5.jar                                                            |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-model​/3.5.3​/maven-model-3.5.3.jar                                                |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-wagon​/1.0.3​/maven-resolver-transport-wagon-1.0.3.jar |
+  | ​/home​/keith​/.m2​/repository​/criterium​/criterium​/0.4.4​/criterium-0.4.4.jar                                                           |
+  | ​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-java​/1.0.362​/transit-java-1.0.362.jar                                             |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-util​/1.1.1​/maven-resolver-util-1.1.1.jar                       |
+  | ​/home​/keith​/.m2​/repository​/com​/rpl​/specter​/1.1.4​/specter-1.1.4.jar                                                                 |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/data.xml​/0.0.8​/data.xml-0.0.8.jar                                                           |
+  | ​/home​/keith​/.m2​/repository​/com​/google​/guava​/guava​/20.0​/guava-20.0.jar                                                              |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-repository-metadata​/3.5.3​/maven-repository-metadata-3.5.3.jar                    |
+  | ​/home​/keith​/.m2​/repository​/javax​/xml​/bind​/jaxb-api​/2.3.0​/jaxb-api-2.3.0.jar                                                        |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-resolver-provider​/3.5.3​/maven-resolver-provider-3.5.3.jar                        |
+  | ​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-utils​/3.1.0​/plexus-utils-3.1.0.jar                                           |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-provider-api​/3.0.0​/wagon-provider-api-3.0.0.jar                            |
+  | ​/home​/keith​/.m2​/repository​/fipp​/fipp​/0.6.23​/fipp-0.6.23.jar                                                                        |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-http​/3.0.0​/wagon-http-3.0.0.jar                                            |
+  | ​/home​/keith​/.m2​/repository​/net​/cgrand​/macrovich​/0.2.1​/macrovich-0.2.1.jar                                                          |
+  | ​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-js​/0.8.874​/transit-js-0.8.874.jar                                                 |
+  | ​/home​/keith​/.m2​/repository​/mvxcvi​/arrangement​/1.2.0​/arrangement-1.2.0.jar                                                          |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-api​/1.1.1​/maven-resolver-api-1.1.1.jar                         |
+  | ​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-component-annotations​/1.7.1​/plexus-component-annotations-1.7.1.jar           |
+  | ​/home​/keith​/.m2​/repository​/rewrite-clj​/rewrite-clj​/0.6.1​/rewrite-clj-0.6.1.jar                                                     |
+  | ​/home​/keith​/.m2​/repository​/kdh​/stax​/0.1.0​/stax-0.1.0.jar                                                                           |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-http​/1.0.3​/maven-resolver-transport-http-1.0.3.jar   |
+  | ​/home​/keith​/.m2​/repository​/zprint​/zprint​/1.1.1​/zprint-1.1.1.jar                                                                    |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-connector-basic​/1.0.3​/maven-resolver-connector-basic-1.0.3.jar |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/core.rrb-vector​/0.1.2​/core.rrb-vector-0.1.2.jar                                             |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-spi​/1.1.1​/maven-resolver-spi-1.1.1.jar                         |
+  | ​/home​/keith​/.m2​/repository​/mvxcvi​/puget​/1.3.1​/puget-1.3.1.jar                                                                      |
+  | ​/home​/keith​/.m2​/repository​/org​/tcrawley​/dynapath​/1.0.0​/dynapath-1.0.0.jar                                                          |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/httpcomponents​/httpcore​/4.4.6​/httpcore-4.4.6.jar                                             |
+  | ​/home​/keith​/.m2​/repository​/macroz​/tangle​/0.2.2​/tangle-0.2.2.jar                                                                    |
+  | ​/home​/keith​/.m2​/repository​/rewrite-cljs​/rewrite-cljs​/0.4.5​/rewrite-cljs-0.4.5.jar                                                  |
+  | ​/home​/keith​/.m2​/repository​/borkdude​/sci​/0.2.1-alpha.1​/sci-0.2.1-alpha.1.jar                                                        |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/clojure​/1.9.0​/clojure-1.9.0.jar                                                             |
+  | ​/home​/keith​/.m2​/repository​/org​/jsoup​/jsoup​/1.7.2​/jsoup-1.7.2.jar                                                                   |
+  | ​/home​/keith​/.m2​/repository​/com​/googlecode​/json-simple​/json-simple​/1.1.1​/json-simple-1.1.1.jar                                      |
+  | ​/home​/keith​/.m2​/repository​/hiccup​/hiccup​/1.0.5​/hiccup-1.0.5.jar                                                                    |
+  | ​/home​/keith​/.m2​/repository​/nrepl​/nrepl​/0.8.3​/nrepl-0.8.3.jar                                                                       |
+  | ​/home​/keith​/.m2​/repository​/clj-tuple​/clj-tuple​/0.2.2​/clj-tuple-0.2.2.jar                                                           |
+  | ​/home​/keith​/.m2​/repository​/org​/flatland​/ordered​/1.5.7​/ordered-1.5.7.jar                                                            |
+  | ​/home​/keith​/.m2​/repository​/javax​/inject​/javax.inject​/1​/javax.inject-1.jar                                                          |
+  | ​/home​/keith​/.m2​/repository​/org​/flatland​/useful​/0.11.6​/useful-0.11.6.jar                                                            |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/core.specs.alpha​/0.1.24​/core.specs.alpha-0.1.24.jar                                         |
+  | ​/home​/keith​/.m2​/repository​/hashp​/hashp​/0.2.1​/hashp-0.2.1.jar                                                                       |
+  | ​/home​/keith​/.m2​/repository​/borkdude​/sci.impl.reflector​/0.0.1​/sci.impl.reflector-0.0.1.jar                                          |
+  | ​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-cljs​/0.8.269​/transit-cljs-0.8.269.jar                                             |
+  | ​/home​/keith​/.m2​/repository​/org​/slf4j​/jcl-over-slf4j​/1.6.2​/jcl-over-slf4j-1.6.2.jar                                                 |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/commons​/commons-lang3​/3.5​/commons-lang3-3.5.jar                                              |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/wagon​/wagon-http-shared​/3.0.0​/wagon-http-shared-3.0.0.jar                              |
+  | ​/home​/keith​/.m2​/repository​/potemkin​/potemkin​/0.4.5​/potemkin-0.4.5.jar                                                              |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-transport-file​/1.0.3​/maven-resolver-transport-file-1.0.3.jar   |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/tools.reader​/1.3.6​/tools.reader-1.3.6.jar                                                   |
+  | ​/home​/keith​/.m2​/repository​/failjure​/failjure​/2.2.0​/failjure-2.2.0.jar                                                              |
+  | ​/home​/keith​/.m2​/repository​/riddley​/riddley​/0.1.12​/riddley-0.1.12.jar                                                               |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/data.json​/2.4.0​/data.json-2.4.0.jar                                                         |
+  | ​/home​/keith​/.m2​/repository​/org​/codehaus​/plexus​/plexus-interpolation​/1.24​/plexus-interpolation-1.24.jar                             |
+  | ​/home​/keith​/.m2​/repository​/commons-logging​/commons-logging​/1.2​/commons-logging-1.2.jar                                             |
+  | ​/home​/keith​/.m2​/repository​/commons-codec​/commons-codec​/1.9​/commons-codec-1.9.jar                                                   |
+  | ​/home​/keith​/.m2​/repository​/cider​/cider-nrepl​/0.28.3​/cider-nrepl-0.28.3.jar                                                         |
+  | ​/home​/keith​/.m2​/repository​/com​/cemerick​/pomegranate​/1.1.0​/pomegranate-1.1.0.jar                                                    |
+  | ​/home​/keith​/.m2​/repository​/com​/cognitect​/transit-clj​/1.0.329​/transit-clj-1.0.329.jar                                               |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/tools.macro​/0.1.1​/tools.macro-0.1.1.jar                                                     |
+  | ​/home​/keith​/.m2​/repository​/borkdude​/edamame​/0.0.11-alpha.28​/edamame-0.0.11-alpha.28.jar                                            |
+  | ​/home​/keith​/.m2​/repository​/org​/javassist​/javassist​/3.18.1-GA​/javassist-3.18.1-GA.jar                                               |
+  | ​/home​/keith​/.m2​/repository​/http-kit​/http-kit​/2.6.0​/http-kit-2.6.0.jar                                                              |
+  | ​/home​/keith​/.m2​/repository​/medley​/medley​/1.4.0​/medley-1.4.0.jar                                                                    |
+  | ​/home​/keith​/.m2​/repository​/org​/slf4j​/slf4j-api​/1.6.2​/slf4j-api-1.6.2.jar                                                           |
+  | ​/home​/keith​/.m2​/repository​/org​/clojure​/spec.alpha​/0.1.143​/spec.alpha-0.1.143.jar                                                   |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/maven-artifact​/3.5.3​/maven-artifact-3.5.3.jar                                          |
+  | ​/home​/keith​/.m2​/repository​/clj-stacktrace​/clj-stacktrace​/0.2.8​/clj-stacktrace-0.2.8.jar                                            |
+  | ​/home​/keith​/.m2​/repository​/org​/apache​/maven​/resolver​/maven-resolver-impl​/1.1.1​/maven-resolver-impl-1.1.1.jar                       |
