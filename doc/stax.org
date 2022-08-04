@@ -22,7 +22,7 @@
 
 This document covers the development of ~kdh/stax~ version "0.1.0", which is an implementation of the requirements in
 #+ATTR_HTML: :target _blank
-[[file:doc/rpl-take-home-project1-clj.pdf][rpl-take-home-project1-clj.pdf]]
+[[file:rpl-take-home-project1-clj.pdf][rpl-take-home-project1-clj.pdf]]
 
 I wrote this as an org-mode document in emacs and exported it to HTML using [[https://github.com/fniessen/org-html-themes][org-html-themes]] (theme ReadTheOrg).  If you use org-mode, I highly recommend ReadTheOrg and another package [[https://github.com/fniessen/emacs-leuven-theme][emacs-leuven-theme]] (by the same author) whose leuven-dark theme colors the code examples in this document.
 
