@@ -235,10 +235,6 @@ My implementation only accepts pos-int arity, as I understand invoke> to invoke 
 ;; Global Operation Tree Errors: 
 ;; 	`(invoke> + 0)' at op[2] node[2]:
 ;; 		 0 is not a valid arity (must be pos-int)!
-;;
-;; 1st Path Errors [>-start-term->]: 
-;; 	`(invoke> + 0)' at op[2] node[2]:
-;; 		 0 is not a valid arity (must be pos-int)!
 (=> :kdh.stax.errs/defstackfn-produced-errors )
 #+end_src
 
@@ -261,18 +257,8 @@ Or, if you prefer Exceptions...
 			     :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
 			     :err-text "0 is not a valid arity (must be pos-int)!"}],
 		   :node-index [2],
-		   :op-index [2]}]]
-		["1st Path Errors [>-start-term->]: "
-		 [{:op-type :kdh.stax.node/op=invoke,
-		   :op (invoke> + 0),
-		   :fun +,
-		   :arity 0,
-		   :errors [{:err-zone :kdh.stax.errors/zone=tree,
-			     :err-type :kdh.stax.errors/error=parse-invoke-arity-not-pos-int,
-			     :err-text "0 is not a valid arity (must be pos-int)!"}],
-		   :node-index [2],
 		   :op-index [2]}]]],
-   :error-text "\nGlobal Operation Tree Errors: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n\n1st Path Errors [>-start-term->]: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n"}]
+   :error-text "\nGlobal Operation Tree Errors: \n\t`(invoke> + 0)' at op[2] node[2]:\n\t\t 0 is not a valid arity (must be pos-int)!\n"}]
 )
 #+end_src
 
@@ -413,7 +399,7 @@ CLOSED: [2022-07-29 Fri 13:00]
 (=> ([3 2 1] [:c :b :a]) )
 #+end_src
 
-*** DONE <<req-e-16>> *req-e-16*: defstackfn should provide an informative error if there's an invalid stack operation
+*** DONE COMMENT <<req-e-16>> *req-e-16*: defstackfn should provide an informative error if there's an invalid stack operation
 CLOSED: [2022-07-29 Fri 13:03]
 
 #+name: f-req-e-16
@@ -422,10 +408,6 @@ CLOSED: [2022-07-29 Fri 13:03]
 (=> :kdh.stax.errs/defstackfn-produced-errors )
 ;;+>
 ;; Global Operation Tree Errors: 
-;; 	`else>' at op[1 3] node[1 :else 0]:
-;; 		 else> is not an allowed op
-;;
-;; 2nd Path Errors [>-start-else-term->]: 
 ;; 	`else>' at op[1 3] node[1 :else 0]:
 ;; 		 else> is not an allowed op
     #+end_src
@@ -447,16 +429,8 @@ Or, if you prefer Exceptions...
 			     :err-type :kdh.stax.errors/error=parse-illegal-operation,
 			     :err-text "else> is not an allowed op"}],
 		   :node-index [1 :else 0],
-		   :op-index [1 3]}]]
-		["2nd Path Errors [>-start-else-term->]: "
-		 [{:op-type :kdh.stax.node/op=illegal,
-		   :op else>,
-		   :errors [{:err-zone :kdh.stax.errors/zone=tree,
-			     :err-type :kdh.stax.errors/error=parse-illegal-operation,
-			     :err-text "else> is not an allowed op"}],
-		   :node-index [1 :else 0],
 		   :op-index [1 3]}]]],
-   :error-text "\nGlobal Operation Tree Errors: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n\n2nd Path Errors [>-start-else-term->]: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n"}]
+   :error-text "\nGlobal Operation Tree Errors: \n\t`else>' at op[1 3] node[1 :else 0]:\n\t\t else> is not an allowed op\n"}]
 )
     #+end_src
 
